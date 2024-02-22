@@ -10,7 +10,7 @@
             @csrf
 
             <div class="mt-4">
-                <x-label for="user_handle" value="{{ __('User handle') }}" />
+                <x-label for="user_handle" value="{{ __('User Handle') }}" />
                 <x-input id="user_handle" class="block mt-1 w-full" type="text" name="user_handle" required autocomplete="userhandel" />
             </div>
 
@@ -35,10 +35,10 @@
             </div>
 
             <div class="mt-4">
-                <x-label for="gender" value="{{ __('gender') }}" />
+                <x-label for="gender" value="{{ __('Gender') }}" />
                 <input id="gender-male" type="radio" name="gender" value="male"> Male
                 <input id="gender-female"style="margin-left: 20px;" type="radio" name="gender" value="female"> Female
-            </div>            
+            </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())
                 <div class="mt-4">
