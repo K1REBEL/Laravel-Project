@@ -11,19 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
-            $table->id();
-            $table->string('caption');
-            $table->foreignId('user_id')->constrained();
+        Schema::create('followers', function (Blueprint $table) {
+            $table->id('followed_user_id');
+            $table->foreignId('follower_user_id');
             $table->timestamps();
-    });
-}
+
+        });
+    }
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('posts');
+        Schema::dropIfExists('followers');
     }
 };
