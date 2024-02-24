@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('hashtags', function (Blueprint $table) {
-            $table->id('post_id');
+            $table->id();
+            $table->foreignId('post_id')->constrained();
             $table->string('hashtag');
         });
     }
