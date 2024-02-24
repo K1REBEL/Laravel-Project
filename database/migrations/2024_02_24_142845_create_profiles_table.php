@@ -13,19 +13,12 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
-
-            $table->string('Phone_No');
-
-            $table->string('Website');
-
-            $table->string('Bio');
-
+            $table->string('phone');
+            $table->string('website');
+            $table->string('bio');
             $table->string('profile_photo_path', 2048)->nullable();
-
             $table->string('gender');
-            
             $table->unsignedBigInteger('user_id');
-
             $table->timestamps();
         });
     }

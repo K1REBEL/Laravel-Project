@@ -9,11 +9,11 @@ class Hashtag extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'post_id','hashtag',
+        'hashtag',
     ];
     public function Post ()
     {
         return $this->belongsToMany(Post::class);
-        
+
     }
 }

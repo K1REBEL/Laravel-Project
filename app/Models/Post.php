@@ -11,30 +11,30 @@ class Post extends Model
     protected $fillable = [
         'caption','user_id',
     ];
-    public function User ()
+    public function user()
     {
         return $this->belongsTo(User::class);
-        
+
     }
-    public function Comment ()
+    public function comments()
     {
         return $this->hasMany(Comment::class);
-        
+
     }
-    public function Like ()
+    public function likes()
     {
         return $this->hasMany(Like::class);
-        
+
     }
-    public function Hashtag ()
+    public function hashtag()
     {
-        return $this->hasMany(Hashtag::class);
-        
+        return $this->belongsToMany(Hashtag::class);
+
     }
-    public function Media ()
+    public function media()
     {
         return $this->hasMany(Media::class);
-        
+
     }
 
 }
