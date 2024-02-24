@@ -67,5 +67,14 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
         
     }
-
+    public function Follower ()
+    {
+        return $this->hasMany(Follower::class);
+        
+    }
+    public function Blocking ()
+    {
+        return $this->hasMany(Blocking::class);
+        
+    }
 }
