@@ -30,7 +30,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'gender',
-        'user_handle'
+        'user_handle',
+        'phone'
     ];
 
     /**
@@ -65,21 +66,21 @@ class User extends Authenticatable implements MustVerifyEmail
     public function Profile ()
     {
         return $this->belongsTo(Profile::class);
-        
+
     }
     public function Post ()
     {
         return $this->hasMany(Post::class);
-        
+
     }
     public function Follower ()
     {
         return $this->hasMany(Follower::class);
-        
+
     }
     public function Blocking ()
     {
         return $this->hasMany(Blocking::class);
-        
+
     }
 }

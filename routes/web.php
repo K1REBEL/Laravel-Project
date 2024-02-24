@@ -1,7 +1,8 @@
 <?php
 
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
-
+use Laravel\Fortify\Features;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,3 +30,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
