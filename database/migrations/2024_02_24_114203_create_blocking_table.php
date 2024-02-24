@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('blocking', function (Blueprint $table) {
             $table->id('id');
-            $table->foreignId('user_id')->constrained();
-            $table->foreignId('blocked_user_id')->constrained();
+            $table->unsignedBigInteger('user_id')->constrained();
+            $table->unsignedBigInteger('blocked_user_id')->constrained();
             $table->timestamps();
         });
     }
