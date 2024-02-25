@@ -1,9 +1,8 @@
-<x-guest-layout>
-    <x-slot name="header">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        {{ __('Welcome to instagram') }}
-    </h2>
-</x-slot>
+  @extends('main.blade.php')  
+  @section('title')
+Welcome to Instagram
+@endsection
+@section('Content')
 
 <h1 class="mx-auto my-5 text-center">Welcome to Instagram</h1>
 <div class="box">
@@ -24,4 +23,4 @@
     </div>
 </div>
 </div>
-</x-guest-layout>
+@endsection
