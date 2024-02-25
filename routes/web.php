@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -32,3 +33,5 @@ Route::middleware([
 });
 
 
+Route::post('/users/{user}/follow', [UserController::class, 'follow'])->name('users.follow');
+Route::post('/users/{user}/unfollow', [UserController::class, 'unfollow'])->name('users.unfollow');
