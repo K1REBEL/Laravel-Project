@@ -13,8 +13,23 @@ class PostController extends Controller
      */
     public function index()
     {
-//        $posts = Post::with('comments','likes','hashtags','media','user')->get();
-//        return view('posts.index',compact('posts'));
+       $posts = Post::with('comments','likes','hashtag','media','user')->get();
+       $filteredPosts = collect($posts)->map(function ($post) {
+        return [
+            'id' => $post->id,
+            'caption' => $post->caption,
+            'updated_at' => $post->updated_at,
+            'latest_comment' => $post->comments->sortByDesc('updated_at')->first(),
+            'comment_count' => $post->comments->count(),
+            'like_count' => $post->likes->count(),
+            'hashtag_names' => $post->hashtag->pluck('name'),
+            'media_urls' => $post->media->pluck('url'),
+            'user_id' => $post->user->id,
+            'user_handle' => $post->user->user_handle,
+            'profile_photo_url' => $post->user->profile_photo_url,
+        ];
+    });
+       return response()->json($filteredPosts);
     }
 
     /**

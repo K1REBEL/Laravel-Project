@@ -28,7 +28,7 @@ class Post extends Model
     }
     public function hashtag()
     {
-        return $this->belongsToMany(Hashtag::class);
+        return $this->hasMany(Hashtag::class);
 
     }
     public function media()
