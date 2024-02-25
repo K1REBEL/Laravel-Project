@@ -31,3 +31,14 @@ Route::middleware([
     })->name('dashboard');
 });
 
+
+
+Route::get('/users/home', function(){
+    return view('users.home');
+});
+
+
+Route::get('/users/follower', function(){
+    return view('users.follower');
+});
+
