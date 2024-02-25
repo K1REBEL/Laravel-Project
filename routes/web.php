@@ -18,7 +18,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/welcome', function () {
-    return view('welcome');
+    return view('welcomepage.instawelcome');
 });
 
 Route::middleware([
