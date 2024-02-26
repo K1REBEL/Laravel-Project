@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Features;
@@ -22,15 +24,31 @@ Route::get('/welcome', function () {
     return view('welcomepage.instawelcome');
 });
 
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->resource('users', UserController::class);
+
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::get('/dashboard', function () {
+//         return view('dashboard');
+//     })->name('dashboard');
+// });
+
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::redirect('/dashboard', '/users');
 });
+
 
 
 
@@ -39,12 +57,13 @@ Route::get('/users/home', function(){
 });
 
 
-Route::get('/users/follower', function(){
-    return view('users.follower');
-});
+// Route::get('/users/follower', function(){
+//     return view('users.follower');
+// });
 
 
 Route::resource('/posts', PostController::class);
+Route::resource('/users', UserController::class);
 
 
 

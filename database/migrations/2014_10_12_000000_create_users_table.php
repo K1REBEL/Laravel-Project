@@ -18,6 +18,9 @@ return new class extends Migration
             $table->string('password');
             $table->string('user_handle');
             $table->string('phone');
+            $table->string('website')->nullable();
+            $table->string('bio')->nullable();
+            $table->string('profile_photo_path', 2048)->nullable();
             $table->string('gender');
             $table->string('email_verified_at')->nullable();
             $table->rememberToken();

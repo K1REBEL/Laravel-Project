@@ -3,6 +3,8 @@
 namespace App\Actions\Fortify;
 
 use App\Models\User;
+use App\Models\Profile;
+// use App\Actions\Fortify\CreateProfile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
@@ -29,6 +31,24 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
+        // $user = User::create([
+        //     'name' => $input['name'],
+        //     'email' => $input['email'],
+        //     'password' => Hash::make($input['password']),
+        //     'user_handle' => $input['user_handle'],
+        // ]);
+
+        // $profile = Profile::create([
+        //     'gender' => $input['gender'],
+        //     'phone' => $input['phone'],
+        //     'user_handle' => $input['user_handle'],
+        // ]);
+
+        // $user->profile()->save($profile);
+
+        // // create_profile($input['gender'], $input['phone'], $input['user_handle']);
+        // return $user;
+
         return User::create([
             'name' => $input['name'],
             'email' => $input['email'],
@@ -38,4 +58,6 @@ class CreateNewUser implements CreatesNewUsers
             'phone' =>$input['phone']
         ]);
     }
+
+    
 }
