@@ -448,9 +448,9 @@
 
                 <div class="profile-user-settings">
 
-                    <h1 class="profile-user-name">{{ $user->name }}</h1>
+                    <h1 class="profile-user-name">{{$user->user_handle}}</h1>
 
-                    <a href="/edit" class="btn profile-edit-btn">Edit Profile</a>
+                    <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
 
                 </div>
 
@@ -570,7 +570,6 @@ function hidePopup() {
     const popupContainer = document.querySelector(".popup-container");
     popupContainer.style.display = "none";
 }
-
     </script>
 </body>
 </html>

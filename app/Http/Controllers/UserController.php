@@ -4,20 +4,24 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index()
     {
-        if ($user->id === auth()->id()){
-        return ('fasff' . $user->id);
+        if (auth()->id()) {
+            $user = User::where('id',auth()->id())->get()->first();
+//            return User::where('id',auth()->id())->get();
+            return view('userProfile.myprofile',compact('user'));
+        }
     }
-    return ('asffadf' . $user);
 
-}
     /**
      * Show the form for creating a new resource.
      */
@@ -45,10 +49,10 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id,User $user)
+    public function edit(string $id)
     {
-        if ($user->id === auth()->id()){
-        // $user = User::findorfail($id);
+        if (auth()->id()){
+         $user = User::findorfail($id);
         return view('userProfile.edit',compact('user'));
         }
     }
@@ -58,8 +62,9 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $user = User::findorfail($id);
-        $user->update([
+        if (auth()->id()){
+        $users = User::findorfail($id);
+        $users->update([
             'email'=> $request->email,
             'name'=> $request->name,
             'phone'=> $request->phone,
@@ -67,8 +72,8 @@ class UserController extends Controller
             'bio'=> $request->bio,
             'website'=>$request->website
         ]);
-        return response()->json($user);
-    }
+        return redirect()->route('users.index');
+    }}
 
     /**
      * Remove the specified resource from storage.
@@ -78,23 +83,23 @@ class UserController extends Controller
         //
     }
 
-    // public function follow(User $user)
-    // {
-    //     if ($user->id === auth()->id()) {
-    //         throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
-    //     }
-    //     auth()->user()->following()->attach($user->id);
-    //     return redirect()->back();
-    // }
+     public function follow(User $user)
+     {
+         if ($user->id === auth()->id()) {
+             throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
+         }
+         auth()->user()->following()->attach($user->id);
+         return redirect()->back();
+     }
 
-    // public function unfollow(User $user)
-    // {
-    //     auth()->user()->following()->detach($user->id);
-    //     return redirect()->back();
-    // }
+     public function unfollow(User $user)
+     {
+         auth()->user()->following()->detach($user->id);
+         return redirect()->back();
+     }
 
-    // public function isFollowing(User $user)
-    // {
-    //     return $this->following()->where('followed_id', $user->id)->exists();
-    // }
+     public function isFollowing(User $user)
+     {
+         return $this->following()->where('followed_id', $user->id)->exists();
+     }
 }

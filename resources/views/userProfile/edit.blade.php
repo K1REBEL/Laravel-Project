@@ -28,40 +28,41 @@
           <div class="col-md-9 personal-info">
             <h3>Personal info</h3>
 
-            <form class="form-horizontal" role="form">
-
+            <form class="form-horizontal" role="form" action="{{route('users.update',$user->id)}}" method="POST">
+                @csrf
+                @method('PUT')
             <div class="form-group">
                     <label class="col-lg-3 control-label">phone</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="tel" >
+                        <input class="form-control" type="tel" id="phone" name="phone" value="{{$user->phone}}">
                     </div>
               </div>
 
               <div class="form-group">
                     <label class="col-lg-3 control-label">email</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="email" >
+                        <input class="form-control" type="email" id="email" name="email" value="{{$user->email}}">
                     </div>
               </div>
 
               <div class="form-group">
                     <label class="col-lg-3 control-label">full name</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="name" >
+                        <input class="form-control" type="name" id="name" name="name" value="{{$user->name}}">
                     </div>
               </div>
 
               <div class="form-group">
                     <label class="col-lg-3 control-label">Website</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" value="">
+                        <input class="form-control" type="text" id="website" name="website" value="{{$user->website}}">
                     </div>
               </div>
 
               <div class="form-group">
                     <label class="col-lg-3 control-label">Bio</label>
                     <div class="col-lg-8">
-                        <input class="form-control" type="text" value="">
+                        <input class="form-control" type="text" id="bio" name="bio" value="{{$user->bio}}">
                     </div>
               </div>
 
@@ -69,9 +70,9 @@
                 <label class="col-lg-3 control-label">gender</label>
                 <div class="col-lg-8">
                   <div class="ui-select">
-                    <select id="gender" class="form-control">
-                      <option value="male">male</option>
-                      <option value="female">female</option>
+                    <select id="gender" class="form-control" name="gender">
+                      <option value="{{$user->gender}}">male</option>
+                      <option value="{{$user->gender}}">female</option>
                     </select>
                   </div>
                 </div>
@@ -80,7 +81,7 @@
              <!-- Button -->
              <div class="form-group mt-3">
                 <div class="col-lg-offset-3 col-lg-8">
-                   <button type="button" class="btn btn-primary">Save Changes</button>
+                   <button type="submit'" class="btn btn-primary">Save Changes</button>
                 </div>
              </div>
 
