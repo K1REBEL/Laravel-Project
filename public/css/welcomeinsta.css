@@ -1,0 +1,48 @@
+
+
+
+h1{
+    font-family: cursive;
+}
+
+input{
+    border-color:#d3cfcf ;
+    outline: none;
+}
+
+p{
+    font-weight: 500;
+}
+a{
+    text-decoration: none;
+
+}
+.container{
+   gap:  100px;
+}
+
+.logreg{
+    width: 400px;
+    height: fit-content;
+    justify-content: space-evenly;
+    gap: 100px;
+}
+.button{
+    font-weight: 500;
+    font-size: 20px;
+    color: white;
+}
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+  }
+  .slideshow{
+    width: 1500px;
+  }
+  footer{
+    position: absolute;
+    bottom: 0;
+  }

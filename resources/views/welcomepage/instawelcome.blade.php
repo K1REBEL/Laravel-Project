@@ -4,24 +4,68 @@ Welcome to Instagram
 @endsection
 @section('content')
 
+
+
+
+
+
+
 <h1 class="mx-auto my-5 text-center">Welcome to Instagram</h1>
-<div class="box">
 
-<div class=" my-5 h-100 container align-items-center  d-flex ">
-    <div class="w-100 h-100 " >
-        <img class="rounded  " src="https://securityintelligence.com/wp-content/uploads/2016/08/identity-theft-and-social-media.jpg" alt="">
-    </div>
-    <div class="" >
-        <form  method="POST" action="{{url('/login') }}"  class=" logform  d-flex flex-column   p-4 border rounded-2   text-center   ">
-@csrf
-<input name="email" class="mb-3 rounded px-2" type="text"  placeholder="username,email">
-<input name="password" class="mb-3 rounded px-2" type="password" placeholder="password">
-<input class="rounded button bg-primary  " type="submit" value="login">
-<p class="">Did You Forget the password ? Never Mind &#128526; <br>  <a class="text-primary" href="{{url('http://127.0.0.1:8000/forgot-password')}}">Click Here</a>   </p>
-<p class="">Don't have account ? What are you waiting for ? <br> <span><a class="text-primary" href="{{url('register')}}">">have a one</a>  </span> </p>
 
-        </form>
+<div class="box ">
+
+<div class=" my-5  container align-items-center  d-flex ">
+
+    <div id="carouselExampleSlidesOnly" class="  slideshow carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <div class="carousel-item active">
+            <img class="d-block w-100 rounded " src="https://securityintelligence.com/wp-content/uploads/2016/08/identity-theft-and-social-media.jpg" alt="First slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100 rounded" src="https://www.loopreturns.com/wp-content/uploads/2023/07/AdobeStock_614704568.jpeg" alt="Second slide">
+          </div>
+          <div class="carousel-item">
+            <img class="d-block w-100 rounded" src="https://img.freepik.com/premium-photo/friends-with-phone-funny-meme-social-media-relax-outdoor-during-coffee-break-communication-technology-women-together-city-comedy-with-5g-network-laughing-content-online_590464-156521.jpg" alt="Third slide">
+          </div>
+        </div>
+      </div>
+
+
+    <div class="logreg  d-flex  flex-column   p-4 border rounded-2   text-center ">
+<a class=" " href="{{url('register')}}"><input class="  w-100 rounded button bg-primary  "  type="submit" value="register"></a>
+<a class=" " href="{{url('login')}}"><input class="rounded w-100 button bg-primary  " type="submit" value="login"></a>
+
+
     </div>
+
+
 </div>
+
 </div>
+
+
+
+<footer class=" w-100 text-center text-lg-start bg-body-tertiary text-muted">
+    <section class="d-flex justify-content-center   p-4 border-bottom">
+     
+  
+       
+        <a href="" class="me-4 text-reset">
+About
+        </a>
+        <a href="" class="me-4 text-reset">
+Privacy
+        </a>
+        <a href="" class="me-4 text-reset">
+ Terms
+        </a>
+       
+    </section>
+</footer>
+
+
+
+
+
 @endsection
