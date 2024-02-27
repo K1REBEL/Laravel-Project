@@ -30,9 +30,14 @@ class PostController extends Controller
         ];
     });
     //    return response()->json($filteredPosts);
-    return view('users.home',compact('filteredPosts'));
+   //  $jsonData = $filteredPosts->toJson();
+    // $view = view('users.home')->with('data', $filteredPosts);
+   //  return view('users.home',compact('jsonData'));
+    // return $view;
+    // log::info($Posts);
+    $jsonData = $filteredPosts->toJson();
+    return view('users.home', compact('jsonData'));
 }
-
     /**
      * Show the form for creating a new resource.
      */
