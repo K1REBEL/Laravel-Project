@@ -1,0 +1,38 @@
+
+
+
+h1{
+    font-family: cursive;
+}
+
+input{
+    border-color:#d3cfcf ;
+    outline: none;
+}
+
+p{
+    font-weight: 500;
+}
+a{
+    text-decoration: none;
+
+}
+.container{
+   gap:  100px;
+}
+
+.logform{
+    width: 400px;
+    height: 500px;
+    justify-content: space-evenly;
+}
+.button{
+    font-weight: 500;
+}
+.box {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10px;
+  }
