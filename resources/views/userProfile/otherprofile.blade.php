@@ -90,11 +90,11 @@
 .profile-website {
     float: left;
     width: calc(66.666% - 2rem);
-    margin-top: 2rem; /* Adjust the top margin to add space */
+    margin-top: 2rem; 
 }
 
 .profile-user-settings {
-    margin-top: 7rem; /* Increase the top margin */
+    margin-top: 7rem; 
 }
 
 .profile-user-name {
@@ -218,6 +218,7 @@
 
         /* Popup Container */
         .popup-container {
+            flex-direction:row;
             position: fixed;
             top: 50%;
             left: 50%;
@@ -248,19 +249,36 @@
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
         }
+ 
+        .popup-caption h1,
+.popup-caption p {
+    display: inline;
+    margin-right: 10px; 
+}
+        .popup-caption h1 {
+    font-size: 24px;
+}
 
-        .popup-caption,
-        .popup-icons {
-            font-size:1.7rem;
-            margin-top: 8px;
-            font-weight: bold;
-        }
+.popup-caption p {
+    font-size: 16px;
+}
 
-        .popup-icons{
-            display: flex;
-            justify-content: center;
-            align-items: ;
-        }
+.popup-icons {
+    margin-bottom: 10px;
+    font-size: 2.5rem;
+    margin-top: 8px;
+    font-weight: bold;
+}
+
+.popup-icons {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center; 
+}
+
+.popup-icons i {
+    margin-right: 15px; 
+}
 
         .popup-comments {
             font-size:1.5rem;
@@ -538,80 +556,88 @@
         </div>
     </main>
 
-    <div class="container" >
+    <div class="container">
         <div class="popup-container">
             <div class="popup-content">
                 <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
                 <img class="popup-image" src="" alt="Popup Image">
-                <div class="popup-icons"></div>
+                <div class="popup-icons">
+                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                    <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
+                    <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+                </div>
                 <div class="popup-caption"></div>
                 <div class="popup-comments"></div>
             </div>
         </div>
     </div>
 
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const galleryItems = document.querySelectorAll(".gallery-item");
 
-   <script>
-       document.addEventListener("DOMContentLoaded", function () {
-    const galleryItems = document.querySelectorAll(".gallery-item");
+            galleryItems.forEach(function (item) {
+                item.addEventListener("click", function () {
+                    displayPopup(item);
+                });
+            });
 
-    galleryItems.forEach(function (item) {
-        item.addEventListener("click", function () {
-            displayPopup(item);
+            function displayPopup(item) {
+                const popupContainer = document.querySelector(".popup-container");
+                const imageUrl = item.querySelector(".gallery-image").src;
+                const popupImage = document.querySelector(".popup-image");
+                const popupIcons = document.querySelector(".popup-icons");
+                const popupCaption = document.querySelector(".popup-caption");
+                const popupComments = document.querySelector(".popup-comments");
+                const profileUserName = document.querySelector(".profile-user-name").textContent;
+
+
+                popupImage.src = imageUrl;
+
+                popupIcons.innerHTML = `
+                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                    <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
+                    <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+                `;
+
+                popupCaption.innerHTML = `<h1>${profileUserName}</h1><p>hiiiiii</p>`;
+
+                popupComments.innerHTML = '';
+                const dummyComments = [
+                    { profilePic: 'path_to_profile_picture_1.jpg', username: 'User1', comment: 'Comment 1' },
+                    { profilePic: 'path_to_profile_picture_2.jpg', username: 'User2', comment: 'Comment 2' },
+                ];
+                dummyComments.forEach(comment => {
+                    const userComment = document.createElement('div');
+                    userComment.classList.add('user-comment');
+                    userComment.innerHTML = `
+                        <img class="user-profile-picture" src="${comment.profilePic}" alt="User Profile Picture">
+                        <div class="user-details">
+                            <span class="user-name">${comment.username}</span>
+                            <p class="user-comment-text">${comment.comment}</p>
+                        </div>
+                    `;
+                    popupComments.appendChild(userComment);
+                });
+
+                popupContainer.style.display = "block";
+            }
         });
-    });
 
-    function displayPopup(item) {
-        const popupContainer = document.querySelector(".popup-container");
-        const imageUrl = item.querySelector(".gallery-image").src;
-        const popupImage = document.querySelector(".popup-image");
-        const popupIcons = document.querySelector(".popup-icons");
-        const popupCaption = document.querySelector(".popup-caption");
-        const popupComments = document.querySelector(".popup-comments");
+        function hidePopup() {
+            const popupContainer = document.querySelector(".popup-container");
+            popupContainer.style.display = "none";
+        }
 
-        popupImage.src = imageUrl;
-
-popupIcons.innerHTML = `
-    <i class="far fa-heart"></i> 
-    <i class="far fa-comment"></i>
-    <i class="far fa-bookmark"></i>
-
-`;
-
-popupCaption.innerHTML=`
-<p>hiiiiii</p>`;
-
-        /////////comment////////
-        popupComments.innerHTML = '';
-        //dummy comments 
-        const dummyComments = [
-            { profilePic: 'path_to_profile_picture_1.jpg', username: 'User1', comment: 'Comment 1' },
-            { profilePic: 'path_to_profile_picture_2.jpg', username: 'User2', comment: 'Comment 2' },
-        ];
-        // Append comments to popupComments
-        dummyComments.forEach(comment => {
-            const userComment = document.createElement('div');
-            userComment.classList.add('user-comment');
-            userComment.innerHTML = `
-                <img class="user-profile-picture" src="${comment.profilePic}" alt="User Profile Picture">
-                <div class="user-details">
-                    <span class="user-name">${comment.username}</span>
-                    <p class="user-comment-text">${comment.comment}</p>
-                </div>
-            `;
-            popupComments.appendChild(userComment);
-        });
-        // popupSavedItems.innerHTML = saveIcon;
-    
-        popupContainer.style.display = "block";
+        function toggleIconFill(icon) {
+    if (icon.classList.contains('far')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+    } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
     }
-});
-
-function hidePopup() {
-    const popupContainer = document.querySelector(".popup-container");
-    popupContainer.style.display = "none";
 }
-
     </script>
 </body>
 </html>
