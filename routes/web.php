@@ -66,4 +66,43 @@ Route::resource('/posts', PostController::class);
 Route::resource('/users', UserController::class);
 
 
+Route::get('/', function () {
+    return view('welcome');
+});
+Route::get('/welcome', function () {
+    return view('welcome');
+});
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified',
+])->group(function () {
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
+});
+
+
+
+Route::get('/users/home', function(){
+    return view('users.home');
+});
+
+
+Route::get('/users/followers', function(){
+    return view('users.followers');
+});
+
+
+
+Route::get('/users/following', function(){
+    return view('users.following');
+});
+
+Route::get('/users/blocked', function(){
+    return view('users.blocked');
+});
+
+// hello
 
