@@ -466,8 +466,7 @@
 
                 <div class="profile-bio">
 
-                    <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit</p>
+                    <p><span class="profile-real-name">{{$user->name}}</span> {{$user->bio}}</p>
 
                 </div>
 
