@@ -65,6 +65,12 @@ Route::get('/users/home', function(){
 Route::resource('/posts', PostController::class);
 Route::resource('/users', UserController::class);
 
+Route::post('posts/{post}/like',[PostController::class,'like'] )->name('posts.like');
+Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('posts.unlike');
+
+
+Route::post('users/{user}/follow',[UserController::class,'follow'])->name('users.follow');
+Route::post('users/{user}/unfollow',[UserController::class,'unfollow'])->name('users.unfollow');
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,15 +79,15 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+//Route::middleware([
+//    'auth:sanctum',
+//    config('jetstream.auth_session'),
+//    'verified',
+//])->group(function () {
+//    Route::get('/dashboard', function () {
+//        return view('dashboard');
+//    })->name('dashboard');
+//});
 
 
 

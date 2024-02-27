@@ -96,4 +96,16 @@ class PostController extends Controller
         $post->delete();
         return redirect()->route('posts.index');
     }
+
+    public function like(Post $post)
+    {
+        $post->likes()->create(['user_id' => auth()->id()]);
+        return response()->json(['message' => 'Post liked successfully']);
+    }
+
+    public function unlike(Post $post)
+    {
+        $post->likes()->where('user_id', auth()->id())->delete();
+        return response()->json(['message' => 'Post unliked successfully']);
+    }
 }
