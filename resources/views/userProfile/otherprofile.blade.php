@@ -59,91 +59,100 @@
             clip: rect(1px, 1px, 1px, 1px);
         }
 
-        /* Profile Section */
+/* Profile Section */
+.profile {
+    padding: 3rem 0;
+}
 
-        .profile {
-            padding: 2rem 0;
-        }
+.profile::after {
+    content: "";
+    display: block;
+    clear: both;
+}
 
-        .profile::after {
-            content: "";
-            display: block;
-            clear: both;
-        }
+.profile-image {
+    float: left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 3rem;
+}
 
-        .profile-image {
-            float: left;
-            width: calc(33.333% - 1rem);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin-right: 3rem;
-        }
+.profile-image img {
+    border-radius: 50%;
+}
 
-        .profile-image img {
-            border-radius: 50%;
-        }
+.profile-user-settings,
+.profile-stats,
+.profile-bio,
+.profile-name,
+.profile-website {
+    float: left;
+    width: calc(66.666% - 2rem);
+    margin-top: 2rem; /* Adjust the top margin to add space */
+}
 
-        .profile-user-settings,
-        .profile-stats,
-        .profile-bio {
-            float: left;
-            width: calc(66.666% - 2rem);
-        }
+.profile-user-settings {
+    margin-top: 7rem; /* Increase the top margin */
+}
 
-        .profile-user-settings {
-            margin-top: 1.1rem;
-        }
+.profile-user-name {
+    display: inline-block;
+    font-size: 3.2rem;
+    font-weight: 300;
+}
 
-        .profile-user-name {
-            display: inline-block;
-            font-size: 3.2rem;
-            font-weight: 300;
-        }
+.profile-stats li {
+    display: inline-block;
+    font-size: 1.6rem;
+    line-height: 2;
+    margin-right: 4rem;
+    cursor: pointer;
+}
 
-        .profile-edit-btn {
-            font-size: 1.4rem;
-            line-height: 1.8;
-            border: 0.1rem solid #dbdbdb;
-            border-radius: 0.3rem;
-            padding: 0 2.4rem;
-            margin-left: 2rem;
-        }
+.profile-stats li:last-of-type {
+    margin-right: 0;
+}
 
-        .profile-settings-btn {
-            font-size: 2rem;
-            margin-left: 1rem;
-        }
+.profile-name {
+    margin-top: 4rem; 
+    font-size: 1.6rem;
+    font-weight: 200;
+    line-height: 1.5;
+}
 
-        .profile-stats {
-            margin-top: 2.3rem;
-        }
+.profile-bio {
+    font-size: 1.6rem;
+    font-weight: 400;
+    line-height: 1.5;
+    margin-top: 2rem; 
+}
 
-        .profile-stats li {
-            display: inline-block;
-            font-size: 1.6rem;
-            line-height: 1.5;
-            margin-right: 4rem;
-            cursor: pointer;
-        }
+.profile-website {
+    margin-top: 2rem;
+    font-size: 1.3rem;
+    font-weight: 200;
+    line-height: 1.5;
+}
 
-        .profile-stats li:last-of-type {
-            margin-right: 0;
-        }
+.profile-real-name,
+.profile-stat-count {
+    font-weight: 600;
+}
 
-        .profile-bio {
-            font-size: 1.6rem;
-            font-weight: 400;
-            line-height: 1.5;
-            margin-top: 2.3rem;
-        }
+.add-new-image {
+    margin-top: 10px;
+    display: block;
+}
 
-        .profile-real-name,
-        .profile-stat-count,
-        .profile-edit-btn {
-            font-weight: 600;
-        }
+.profile-real-name {
+    margin-bottom: 10px;
+}
 
+.website {
+    color: blue;
+}
         /* Gallery Section */
 
         .gallery {
@@ -214,8 +223,8 @@
             left: 50%;
             transform: translate(-50%, -50%);
             background-color: white;
-            width: 90%;
-            max-width: 400px;
+            width: 100%;
+            max-width: 500px;
             border-radius: 12px;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
             z-index: 1000;
@@ -240,12 +249,21 @@
             border-top-right-radius: 12px;
         }
 
-        .popup-caption {
+        .popup-caption,
+        .popup-icons {
+            font-size:1.7rem;
             margin-top: 8px;
             font-weight: bold;
         }
 
+        .popup-icons{
+            display: flex;
+            justify-content: center;
+            align-items: ;
+        }
+
         .popup-comments {
+            font-size:1.5rem;
             margin-top: 8px;
         }
 
@@ -271,6 +289,7 @@
         }
 
         .popup-saved-items {
+            font-size:1.5rem;
             margin-top: 8px;
         }
 
@@ -298,7 +317,9 @@
             .profile-image,
             .profile-user-settings,
             .profile-bio,
-            .profile-stats {
+            .profile-stats,
+            .profile-name,
+            .profile-website {
                 float: none;
                 width: auto;
             }
@@ -318,25 +339,15 @@
                 font-size: 2.2rem;
             }
 
-            .profile-edit-btn {
-                order: 1;
-                padding: 0;
-                text-align: center;
-                margin-top: 1rem;
-            }
-
-            .profile-edit-btn {
-                margin-left: 0;
-            }
-
             .profile-bio {
                 font-size: 1.4rem;
                 margin-top: 1.5rem;
             }
 
-            .profile-edit-btn,
             .profile-bio,
-            .profile-stats {
+            .profile-stats,
+            .profile-name,
+            .profile-website {
                 flex-basis: 100%;
             }
 
@@ -369,7 +380,7 @@
             .profile {
                 display: grid;
                 grid-template-columns: 1fr 2fr;
-                grid-template-rows: repeat(3, auto);
+                grid-template-rows: repeat(5, auto);
                 grid-column-gap: 3rem;
                 align-items: center;
             }
@@ -388,10 +399,12 @@
             .profile-user-settings,
             .profile-stats,
             .profile-bio,
+            .profile-name,
+            .profile-website,
             .gallery-item,
             .gallery {
                 width: auto;
-                margin: 0;
+                margin:0.5rem;
             }
 
             @media (max-width: 40rem) {
@@ -410,27 +423,36 @@
                     grid-gap: 1rem;
                 }
 
-                .profile-edit-btn,
                 .profile-stats,
-                .profile-bio {
+                .profile-bio,
+                .profile-name,
+                .profile-website {
                     grid-column: 1 / -1;
                 }
 
                 .profile-user-settings,
-                .profile-edit-btn,
-                .profile-settings-btn,
                 .profile-bio,
-                .profile-stats {
+                .profile-website,
+                .profile-stats,
+                .profile-name{
                     margin: 0;
                 }
             }
         }
 
         .btn.profile-edit-btn {
-            text-decoration: none;
+            text-decoration: none; 
         }
 
         /* //////////////////buttons/////////////// */
+        .button-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0rem;
+            margin-left: 30%;
+            margin-right: 20%;
+        }
         .follow-btn,
         .block-btn {
             text-align: center;
@@ -444,8 +466,8 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-bottom: 20px;
-            margin-right: 20px;
+            margin-bottom: 10px; 
+            margin-right: 20px; 
         }
 
         .follow-btn:hover {
@@ -463,71 +485,52 @@
 </head>
 
 <body>
-    <header>
-
-        <div class="container">
-
-            <div class="profile">
-
-                <div class="profile-image">
-
-                    <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-                        alt="">
-
-                </div>
-
-                <div class="profile-user-settings">
-
-                    <h1 class="profile-user-name">janedoe_</h1>
-
-                </div>
-
-                <div class="profile-stats">
-
-                    <ul>
-                        <li><span class="profile-stat-count">164</span> posts</li>
-                        <li><span class="profile-stat-count">188</span> followers</li>
-                        <li><span class="profile-stat-count">206</span> following</li>
-                    </ul>
-
-                </div>
-
-                <div class="profile-bio">
-                    <p><span class="profile-real-name">Jane Doe</span> Lorem ipsum dolor sit, amet consectetur adipisicing elit</p>
-                </div>
-
-
-
+<header>
+    <div class="container">
+        <div class="profile">
+            <div class="profile-image">
+                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="Profile Image">
             </div>
-            <div style="display: flex; justify-content: center; align-items: center;">
-                    <button class="follow-btn">Follow</button>
-                    <button class="block-btn">Block</button>
-               </div>
-
+            <div class="profile-user-settings">
+                <h1 class="profile-user-name">@janedoe_</h1>
             </div>
-            <!-- End of profile section -->
+            <div class="profile-stats">
+                <ul>
+                    <li><span class="profile-stat-count">164</span> posts</li>
+                    <li><span class="profile-stat-count">188</span> followers</li>
+                    <li><span class="profile-stat-count">206</span> following</li>
+                </ul>
+            </div>
+            <div class="profile-name">
+                <p class="profile-real-name">Jane Doe</p>
+            </div>
+            <div class="profile-bio">
+                <p class="bio">Lorem ipsum dolor sit, amet consectetur adipisicing elit</p>
+            </div>
+            <div class="profile-website">
+                <p class="website">example.com</p>
+            </div>
+
+
         </div>
-        <!-- End of container -->
+        <div class="button-container">
+            <button class="follow-btn">Follow</button>
+            <button class="block-btn">Block</button>
+        </div>
+    </div>
+</header>
 
-    </header>
 
     <main>
         <div class="container">
             <div class="gallery">
                 <div class="gallery-item" tabindex="0">
-
-                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
-                        class="gallery-image" alt="">
-
+                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
                     <div class="gallery-item-info">
-
                         <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                                    aria-hidden="true"></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                                    class="far fa-comment" aria-hidden="true"></i> 2</li>
-                            <li class="gallery-item-save"><span class="visually-hidden"></span><i
-                                    class="far fa-bookmark" aria-hidden="true"></i></li>
+                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
+                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
                         </ul>
                     </div>
                 </div>
@@ -535,15 +538,14 @@
         </div>
     </main>
 
-    <div class="container">
-            <!-- Popup Container -->
+    <div class="container" >
         <div class="popup-container">
             <div class="popup-content">
                 <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
-                <img class="popup-image" src="" alt="">
+                <img class="popup-image" src="" alt="Popup Image">
+                <div class="popup-icons"></div>
                 <div class="popup-caption"></div>
                 <div class="popup-comments"></div>
-                <div class="popup-saved-items"></div>
             </div>
         </div>
     </div>
@@ -562,19 +564,26 @@
     function displayPopup(item) {
         const popupContainer = document.querySelector(".popup-container");
         const imageUrl = item.querySelector(".gallery-image").src;
-        const likes = item.querySelector(".gallery-item-likes").textContent;
-        const comments = item.querySelector(".gallery-item-comments").textContent;
-        const saveIcon = item.querySelector(".gallery-item-save").innerHTML;
         const popupImage = document.querySelector(".popup-image");
+        const popupIcons = document.querySelector(".popup-icons");
         const popupCaption = document.querySelector(".popup-caption");
         const popupComments = document.querySelector(".popup-comments");
-        const popupSavedItems = document.querySelector(".popup-saved-items");
 
         popupImage.src = imageUrl;
-        popupCaption.innerHTML = `<i class="far fa-heart"></i> ${likes}`;
+
+popupIcons.innerHTML = `
+    <i class="far fa-heart"></i> 
+    <i class="far fa-comment"></i>
+    <i class="far fa-bookmark"></i>
+
+`;
+
+popupCaption.innerHTML=`
+<p>hiiiiii</p>`;
+
         /////////comment////////
         popupComments.innerHTML = '';
-        //dummy comments
+        //dummy comments 
         const dummyComments = [
             { profilePic: 'path_to_profile_picture_1.jpg', username: 'User1', comment: 'Comment 1' },
             { profilePic: 'path_to_profile_picture_2.jpg', username: 'User2', comment: 'Comment 2' },
@@ -592,8 +601,8 @@
             `;
             popupComments.appendChild(userComment);
         });
-        popupSavedItems.innerHTML = saveIcon;
-
+        // popupSavedItems.innerHTML = saveIcon;
+    
         popupContainer.style.display = "block";
     }
 });
