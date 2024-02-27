@@ -74,30 +74,31 @@
   <!-- ===================start posts=============== -->
 
   <!-- =====================post1==================== -->
-  {{-- @foreach($posts as $post) --}}
+  @foreach($filteredPosts as $post)
   <div class="container offset-2 mt-4 middlearea">
     <div class="row">
       <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
 
         <div class="card">
           <div class="card-header">
-            <img src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" class="mr-2" style="width: 35px; height: 35px; border-radius: 50%" />
-            <span class="postuserfont"><b>Post</b></span>
+            <img src="" class="mr-2" style="width: 35px; height: 35px; border-radius: 50%" />
+            <span class="postuserfont"><b>{{$post->user_handle}}</b></span>
             <span class="float-right mt-2">
               <b><i class="fas fa-ellipsis-h"></i></b></span>
           </div>
 
-          <img src="https://www.etondigital.com/wp-content/uploads/2019/05/laravel-blog.png" class="card-img-top" alt="..." />
+          <img src="#" class="card-img-top" alt="..." />
           <ul class="list-group list-group-horizontal mt-1" style="list-style-type: none; border: 0">
             <li class="nav-item">
               <a class="nav-link" href="#"><i class="far fa-heart fa-lg" style="color: black; position: relative; font-size: 23px"></i></a>
+
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#"><i class="far fa-comment fa-lg" style="color: black; position: relative; font-size: 23px; margin-left: -11px;"></i></a>
             </li>
 
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="far fa-paper-plane fa-lg" style="color: black; position: relative; font-size: 23px; margin-left: -11px;""></i></a>
+              <a class="nav-link" href="#"><i class="far fa-paper-plane fa-lg" style="color: black; position: relative; font-size: 23px; margin-left: -11px;"></i></a>
             </li>
             <span class=" offset-7">
             <li class="nav-item ml-4">
@@ -110,8 +111,8 @@
 
             <div class="card-body" style="margin-top: -15px">
               <p class="card-text postuserfont">
-                <b style="margin-left: -4px; margin-right: 5px">rotana
-                </b> very good!
+                <b style="margin-left: -4px; margin-right: 5px">{{$post->user_handle}}
+                </b> {{$post->latest_comment}}
 
               </p>
               <a href="#" style="text-decoration: none">
@@ -120,7 +121,7 @@
                     margin-top: -14px;
                     color: rgb(139, 133, 133);
                   ">
-                  15 hours
+                   {{$post->updated_at}}
                 </p>
 
             </div>
@@ -135,7 +136,7 @@
               <button class="float-right" style="border:none; outline:none; color: #0095f6; opacity: 50%"><strong>post</strong></button>
             </div>
         </div>
-          {{-- @endforeach --}}
+          @endforeach
 
         <!-- ==================post2======================== -->
 

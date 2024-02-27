@@ -29,8 +29,9 @@ class PostController extends Controller
             'profile_photo_url' => $post->user->profile_photo_url,
         ];
     });
-       return response()->json($filteredPosts);
-    }
+    //    return response()->json($filteredPosts);
+    return view('users.home',compact('filteredPosts'));
+}
 
     /**
      * Show the form for creating a new resource.
