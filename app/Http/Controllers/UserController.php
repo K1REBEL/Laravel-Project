@@ -16,6 +16,7 @@ class UserController extends Controller
     public function index()
     {
         if (auth()->id()) {
+            Log::info(auth()->id());
             $user = User::where('id',auth()->id())->get()->first();
 //            return User::where('id',auth()->id())->get();
             return view('userProfile.myprofile',compact('user'));
