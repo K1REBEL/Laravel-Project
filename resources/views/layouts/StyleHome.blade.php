@@ -1,200 +1,35 @@
-<style>
+<nav class="navbar navbar-expand-md navbar-light">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" alt="Instagram">
+            </a>
 
-::placeholder {
-    text-align: center;
-    font-size: 14px;
-    color: gray;
-    background-image: url(/assets/search-solid.svg);
-    background-repeat: no-repeat;
-    background-position: 40%;
-    background-size: 6%;
-}
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-input.empty {
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-    background-color: #fafafa;
-}
-
-body {
-    background-color: #fafafa;
-    padding-top: 65px;
-    overflow-x: hidden;
-}
-
-#sticky-sidebar {
-    position: fixed;
-}
-
-.middlearea {
-    height: 200px !important;
-}
-
-.postuserfont {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 15px;
-    color: black;
-}
-
-.card-header {
-    background-color: white;
-}
-
-.card-footer {
-    background-color: white;
-}
-
-.storyphoto {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 2px solid rgb(238, 39, 82);
-    margin-right: 7px;
-}
-
-.storytext {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 12px;
-    color: black;
-}
-
-.rightpanel {
-    border: 0;
-    background-color: #fafafa;
-}
-
-.rightpanellinks {
-    text-decoration: none;
-    color: lightgrey;
-}
-
-.rightpanellinks:hover {
-    text-decoration: none;
-    color: lightgrey;
-}
-::placeholder {
-    text-align: center;
-    font-size: 14px;
-    color: gray;
-    background-image: url(/assets/search-solid.svg);
-    background-repeat: no-repeat;
-    background-position: 40%;
-    background-size: 6%;
-}
-
-input.empty {
-    font-family: FontAwesome;
-    font-style: normal;
-    font-weight: normal;
-    text-decoration: inherit;
-    background-color: #fafafa;
-}
-
-body {
-    background-color: #fafafa;
-    padding-top: 65px;
-    overflow-x: hidden;
-}
-
-#sticky-sidebar {
-    position: fixed;
-}
-
-.middlearea {
-    height: 200px !important;
-}
-
-.postuserfont {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 15px;
-    color: black;
-}
-
-.card-header {
-    background-color: white;
-}
-
-.card-footer {
-    background-color: white;
-}
-
-.storyphoto {
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 2px solid rgb(238, 39, 82);
-    margin-right: 7px;
-}
-
-.storytext {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
-        Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
-    font-size: 12px;
-    color: black;
-}
-
-.rightpanel {
-    border: 0;
-    background-color: #fafafa;
-}
-
-.rightpanellinks {
-    text-decoration: none;
-    color: lightgrey;
-}
-
-.rightpanellinks:hover {
-    text-decoration: none;
-    color: lightgrey;
-}
-
-i {
-    color: black;
-    position: relative;
-    font-size: 23px;
-    margin-left: -11px;
-}
-
-span{
-  font-style:bold;
-}
-
-
-a {
-  color: inherit;
-  text-decoration: inherit;
-}
-
-
-
-
-button,
-select {
-  text-transform: none;
-}
-
-button,
-[type='button'],
-[type='reset'],
-[type='submit'] {
-  -webkit-appearance: button;
-
-  background-color: transparent;
-
-  background-image: none;
-
-}
-
-*{
-  color:black;
-                font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-                  Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans',
-                  'Helvetica Neue', sans-serif;
-                font-size: 14px;
-}
-</style>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fas fa-home"></i> Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="far fa-compass"></i> Explore</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="far fa-heart"></i> Notifications</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="far fa-user"></i> Profile
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#"> view Profile</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" href="#">Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
