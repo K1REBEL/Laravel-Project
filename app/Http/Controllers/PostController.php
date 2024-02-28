@@ -30,9 +30,14 @@ class PostController extends Controller
         ];
     });
     //    return response()->json($filteredPosts);
-    return view('users.home',compact('filteredPosts'));
+   //  $jsonData = $filteredPosts->toJson();
+    // $view = view('users.home')->with('data', $filteredPosts);
+   //  return view('users.home',compact('jsonData'));
+    // return $view;
+    // log::info($Posts);
+    $jsonData = $filteredPosts->toJson();
+    return view('users.home', compact('jsonData'));
 }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -90,5 +95,17 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->route('posts.index');
+    }
+
+    public function like(Post $post)
+    {
+        $post->likes()->create(['user_id' => auth()->id()]);
+        return response()->json(['message' => 'Post liked successfully']);
+    }
+
+    public function unlike(Post $post)
+    {
+        $post->likes()->where('user_id', auth()->id())->delete();
+        return response()->json(['message' => 'Post unliked successfully']);
     }
 }

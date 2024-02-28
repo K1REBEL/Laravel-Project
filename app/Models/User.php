@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Follower;
+
  use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -84,14 +86,24 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Post::class);
 
     }
+    // public function followers()
+    // {
+    //     return $this->hasMany(Follower::class,'followed_id');
+
+    // }
+    // public function following()
+    // {
+    //     return $this->hasMany(Follower::class,'follower_id');
+
+    // }
     public function followers()
     {
-        return $this->hasMany(Follower::class,'followed_id');
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followed_id');
 
     }
     public function following()
     {
-        return $this->hasMany(Follower::class,'follower_id');
+        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id');
 
     }
     public function blocks()
@@ -109,4 +121,28 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Like::class);
     }
+
+    public function isFollowing(User $user)
+    {
+        // dd($user);
+        if(auth()->id() == $user->id){
+            return false;
+        }
+        else{
+            $followerEntry = Follower::where('followed_id', auth()->id())
+                ->where('follower_id', $user->id)
+                ->first();
+
+                // dd($followerEntry);
+            if($followerEntry){
+                return true;
+            }else{ return false; }
+        }
+        // return !!$this->following()->where('followed_id', $user->id)->exists();
+    }
+    // public function isFollowing(User $user)
+    // {
+    //     return $this->following()->where('followed_id', $user->id)->exists();
+    // }
+
 }
