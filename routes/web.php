@@ -31,37 +31,40 @@ Route::get('/welcome', function () {
 //     'verified',
 // ])->resource('users', UserController::class);
 
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified',
-// ])->group(function () {
-//     Route::get('/dashboard', function () {
-//         return view('dashboard');
-//     })->name('dashboard');
-// });
-
-
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
 ])->group(function () {
-    Route::redirect('/dashboard', '/users');
+    Route::get('/dashboard', function () {
+        return view('dashboard');
+    })->name('dashboard');
 });
 
+
+// Route::middleware([
+//     'auth:sanctum',
+//     config('jetstream.auth_session'),
+//     'verified',
+// ])->group(function () {
+//     Route::redirect('/dashboard', '/users');
+// });
+
 Route::middleware('auth')->group(function (){
-    Route::resource('users',UserController::class);
-    Route::resource('posts',PostController::class);
+//    Route::resource('users',UserController::class);
+//    Route::resource('posts',PostController::class);
     storage::disk('public');
 });
 
+Route::resource('users',UserController::class);
+Route::resource('posts',PostController::class);
 
 
 
 Route::get('/users/home', function(){
     return view('users.home');
 });
+Route::get('/posts/{id}', [PostController::class, 'show']);
 
 
 // Route::get('/users/follower', function(){
@@ -113,9 +116,9 @@ Route::get('/user/following', function(){
     return view('user.following');
 });
 
-Route::get('/user/blocked', function(){
-    return view('user.blocked');
-});
+Route::post('/users/{user}/block', [UserController::class, 'block'])->name('users.block');
+Route::post('/users/{user}/unblock', [UserController::class, 'unblock'])->name('users.unblock');
+
 
 
 // hello

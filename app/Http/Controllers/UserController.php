@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -18,6 +19,7 @@ class UserController extends Controller
         if (auth()->id()) {
             // Log::info(auth()->user());
             $user = User::where('id',auth()->id())->get()->first();
+            
 //            return User::where('id',auth()->id())->get();
             return view('userProfile.myprofile',compact('user'));
         }
@@ -44,15 +46,20 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
+
         $user = User::where('id', $id)->get()->first();
+        log::info($user);
+        $follower_count = $user->followers()->count();
+        $following_count = $user->following()->count();
+        $post_count = $user->post()->count();
         if ($user->id === auth()->id()) {
-            return view('userProfile.myprofile',compact('user'));
+            return view('userProfile.myprofile',compact('user','post_count','follower_count','following_count'));
         }
             // Log::info(auth()->user());
-            
+
 //            return User::where('id',auth()->id())->get();
-              return view('userProfile.otherprofile',compact('user'));
-    }
+return view('userProfile.otherprofile',compact('user','post_count','follower_count','following_count'));
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -71,8 +78,8 @@ class UserController extends Controller
     public function update(Request $request, string $id)
     {
         if (auth()->id()){
-        $users = User::findorfail($id);
-        $users->update([
+        $user = User::findorfail($id);
+        $user->update([
             'email'=> $request->email,
             'name'=> $request->name,
             'phone'=> $request->phone,
@@ -80,6 +87,13 @@ class UserController extends Controller
             'bio'=> $request->bio,
             'website'=>$request->website
         ]);
+            if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $path = $image->store('users', 'public');
+                    $user->profile_photo_path = $path;
+                    $user->save();
+//                    $user->update();
+            }
         return redirect()->route('users.index');
     }}
 
@@ -129,4 +143,15 @@ class UserController extends Controller
     //  {
     //     return !!$this->following()->where('followed_id', $user->id)->count();
     //  }
+    public function block(User $user)
+{
+    auth()->user()->blocks()->attach($user->id);
+    return redirect()->back();
+}
+
+public function unblock(User $user)
+{
+    auth()->user()->blocks()->detach($user->id);
+    return redirect()->back();
+}
 }

@@ -28,32 +28,42 @@
                 <div class="profile">
 
                     <div class="profile-image">
-
-                        <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-                        alt="">
-
+                        @if($user->profile_photo_path==null)
+                            <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                        @else
+                            <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                        @endif
                     </div>
 
                     <div class="profile-user-settings">
 
-                        <h1 class="profile-user-name"></h1>
-                        <a href="" class="btn profile-edit-btn">Edit Profile</a>
+                    <h1 class="profile-user-name">{{$user->user_handle}}</h1>
+                    <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
 
                     </div>
 
                     <div class="profile-stats">
 
                         <ul>
-                            <li><span class="profile-stat-count">164</span> posts</li>
-                            <li><span class="profile-stat-count">188</span> followers</li>
-                            <li><span class="profile-stat-count">206</span> following</li>
+                            @if(isset($post_count))
+    <li><span class="profile-stat-count">{{$post_count}}</span> posts</li>
+@endif
+                            @if(isset($follower_count))
+    <li><span class="profile-stat-count">{{$follower_count}}</span> followers</li>
+@endif
+                            @if(isset($following_count))
+    <li><span class="profile-stat-count">{{$following_count}}</span> followings</li>
+@endif
+                            {{-- <li><span class="profile-stat-count">{{$post_count}}</span> posts</li> --}}
+                            {{-- <li><span class="profile-stat-count"></span> followers</li>
+                            <li><span class="profile-stat-count"></span> following</li> --}}
                         </ul>
 
                     </div>
 
                     <div class="profile-bio">
 
-                        <p><span class="profile-real-name"></span></p>
+                    <p><span class="profile-real-name">{{$user->name}}</span> {{$user->bio}}</p>
 
                     </div>
 
@@ -73,7 +83,8 @@
                 <!-- start of gallery section -->
                 <div class="gallery">
 
-                    <div class="gallery-item" tabindex="0">
+                    @foreach(json_decode($jsonData) as $post)
+                    <div style="background-color: red;" class="gallery-item" tabindex="0">
 
                         <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
                         class="gallery-image" alt="">
@@ -96,6 +107,7 @@
                         </div>
 
                     </div>
+                    @endforeach
                 </div>
                 <!-- end of gallery section -->
             </div>
@@ -115,7 +127,7 @@
                     <img class="popup-image" src="" alt="Popup Image">
 
                     <div class="popup-icons">
-                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
                     </div>

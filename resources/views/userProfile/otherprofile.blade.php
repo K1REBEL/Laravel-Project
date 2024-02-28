@@ -514,9 +514,15 @@
             </div>
             <div class="profile-stats">
                 <ul>
-                    <li><span class="profile-stat-count">164</span> posts</li>
-                    <li><span class="profile-stat-count">188</span> followers</li>
-                    <li><span class="profile-stat-count">206</span> following</li>
+                    @if(isset($post_count))
+                    <li><span class="profile-stat-count">{{$post_count}}</span> posts</li>
+                @endif
+                                            @if(isset($follower_count))
+                    <li><span class="profile-stat-count">{{$follower_count}}</span> followers</li>
+                @endif
+                                            @if(isset($following_count))
+                    <li><span class="profile-stat-count">{{$following_count}}</span> followings</li>
+                @endif
                 </ul>
             </div>
             <div class="profile-name">
@@ -547,8 +553,21 @@
                     </form>
                 @endif
             @endif
-            <button class="block-btn">Block</button>
-        </div>
+            <div class="button-container">
+                @if (Auth::user()->id != $user->id)
+                    @if (!Auth::user()->blocks->contains($user))
+                        <form action="{{ route('users.block', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="block-btn">Block</button>
+                        </form>
+                    @else
+                        <form action="{{ route('users.unblock', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="block-btn">Unblock</button>
+                        </form>
+                    @endif
+                @endif
+            </div>        </div>
     </div>
 </header>
 
@@ -565,26 +584,51 @@
                             <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
                         </ul>
                     </div>
+
                 </div>
+
+                <div class="gallery-item" tabindex="0">
+                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
+                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
+                        </ul>
+                    </div>
             </div>
         </div>
     </main>
 
-    <div class="container">
-        <div class="popup-container">
-            <div class="popup-content">
-                <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
-                <img class="popup-image" src="" alt="Popup Image">
-                <div class="popup-icons">
-                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+    <!-----------------------------------------popup------------------------------------------------->
+
+        <!-- start of container -->
+        <div class="container">
+            <!-- start of popup container -->
+            <div class="popup-container">
+
+                <div class="popup-content">
+
+                    <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
+                    <img class="popup-image" src="" alt="Popup Image">
+
+                    <div class="popup-icons">
+                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                        <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
+                        <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+                    </div>
+
+                    <div class="popup-caption"></div>
+                    <div class="popup-comments"></div>
+
                 </div>
-                <div class="popup-caption"></div>
-                <div class="popup-comments"></div>
+
             </div>
+            <!-- end of popup container -->
         </div>
-    </div>
-@extends('layouts.PopupJS')
+        <!-- end of container -->
+
+    <!-- ---------------------------------------------popupJS--------------------------------------->
+    @extends('layouts.PopupJS')
 </body>
 </html>
