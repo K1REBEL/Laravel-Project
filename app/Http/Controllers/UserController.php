@@ -135,4 +135,15 @@ return view('userProfile.otherprofile',compact('user','post_count','follower_cou
     //  {
     //     return !!$this->following()->where('followed_id', $user->id)->count();
     //  }
+    public function block(User $user)
+{
+    auth()->user()->blocks()->attach($user->id);
+    return redirect()->back();
+}
+
+public function unblock(User $user)
+{
+    auth()->user()->blocks()->detach($user->id);
+    return redirect()->back();
+}
 }

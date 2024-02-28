@@ -113,9 +113,9 @@ Route::get('/user/following', function(){
     return view('user.following');
 });
 
-Route::get('/user/blocked', function(){
-    return view('user.blocked');
-});
+Route::post('/users/{user}/block', [UserController::class, 'block'])->name('users.block');
+Route::post('/users/{user}/unblock', [UserController::class, 'unblock'])->name('users.unblock');
+
 
 
 // hello
