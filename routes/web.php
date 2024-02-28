@@ -51,11 +51,13 @@ Route::middleware([
 // });
 
 Route::middleware('auth')->group(function (){
-    Route::resource('users',UserController::class);
-    Route::resource('posts',PostController::class);
+//    Route::resource('users',UserController::class);
+//    Route::resource('posts',PostController::class);
     storage::disk('public');
 });
 
+Route::resource('users',UserController::class);
+Route::resource('posts',PostController::class);
 
 
 

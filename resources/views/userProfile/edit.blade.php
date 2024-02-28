@@ -22,36 +22,46 @@
         <h1 class="text-primary">Edit Profile</h1>
         <hr>
          <div class="row justify-content-center">
-            <div class="col-md-3 mb-3"> 
+            <div class="col-md-3 mb-3">
                 <div class="text-center">
-                    
-                    <div class="image-container">
-                        <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" class="avatar rounded-circle img-thumbnail" alt="avatar">
-                        <span class="add-new-image">change profile picture...</span> 
+                    <form class="form-horizontal" role="form" action="{{route("users.update",$user->id)}}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
+                        <div class="image-container">
+                        @if($user->profile_photo_path==null)
+                        <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                                <span class="add-new-image">change profile picture...</span>
+                                <label for="fileInput">
+                                    <i class="bi bi-plus-circle-fill"></i>
+                                </label>
+                                <input type="file" class="form-control d-none" id="fileInput" name="image" >
+                        @else
+                            <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                            <span class="add-new-image">change profile picture...</span>
                         <label for="fileInput">
                           <i class="bi bi-plus-circle-fill"></i>
                         </label>
-                        <input type="file" class="form-control d-none" id="fileInput">
+                        <input type="file" class="form-control d-none" id="image" name="image" >
+                            @endif
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="row justify-content-center"> 
-            
+        <div class="row justify-content-center">
+
             <div class="col-md-9 personal-info">
                 <h3>Personal info</h3>
-                <form class="form-horizontal" role="form">
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                            <input type="text" class="form-control" placeholder="Full name" aria-label="Full name">
+                            <input type="text" class="form-control" placeholder="Full name" aria-label="Full name" name="name" value="{{$user->name}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email" aria-label="Email">
+                                <input type="email" class="form-control" placeholder="Email" aria-label="Email" name="email" value="{{$user->email}}">
                             </div>
                         </div>
                     </div>
@@ -59,35 +69,41 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-group">
-                            <input type="tel" class="form-control" placeholder="Phone" aria-label="Phone">
+                            <input type="tel" class="form-control" placeholder="Phone" aria-label="Phone" name="phone" value="{{$user->phone}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                            <input type="text" class="form-control" placeholder="bio" aria-label="bio">
+                            <input type="text" class="form-control" placeholder="bio" aria-label="bio" name="bio" value="{{$user->bio}}">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                            <select class="form-select">
-                                    <option selected>Choose gender</option>
-                                    <option value="male">Male</option>
+                                <label for="">Choose gender</label>
+                            <select class="form-select" name="gender">
+                                @if($user->gender=='male')
+{{--                                    <option selected>Choose gender</option>--}}
+                                    <option value="male" selected>Male</option>
                                     <option value="female">Female</option>
+                                @elseif($user->gender=='female')
+                                    <option value="male">Male</option>
+                                    <option value="female" selected>Female</option>
+                                @endif
                                 </select>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                            <input type="text" class="form-control" placeholder="website" aria-label="website">
+                            <input type="text" class="form-control" placeholder="website" aria-label="website" name="website" value="{{$user->website}}">
                             </div>
                         </div>
                     </div>
                     <!-- Button -->
                     <div class="form-group mt-3">
                         <div class="col-lg-offset-3 col-lg-8">
-                            <button type="button" class="btn btn-primary">Save Changes</button>
+                            <button type="submit" class="btn btn-primary">Save Changes</button>
                         </div>
                     </div>
                 </form>
