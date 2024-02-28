@@ -85,24 +85,25 @@ Route::middleware([
 
 
 
-Route::get('/users/home', function(){
-    return view('users.home');
+Route::get('/user/home-page', function(){
+    return view('user.home-page');
 });
 
 
-Route::get('/users/followers', function(){
-    return view('users.followers');
+Route::get('/user/followers', function(){
+    return view('user.followers');
 });
 
 
 
-Route::get('/users/following', function(){
-    return view('users.following');
+Route::get('/user/following', function(){
+    return view('user.following');
 });
 
-Route::get('/users/blocked', function(){
-    return view('users.blocked');
+Route::get('/user/blocked', function(){
+    return view('user.blocked');
 });
+
 
 // hello
 

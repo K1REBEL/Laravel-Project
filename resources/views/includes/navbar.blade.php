@@ -1,53 +1,51 @@
 @section('title')
-Blocked
+instagram
 @stop
 
 @extends('layouts.main')
+@extends('layouts.StyleHome')
 
-    <nav class="navbar navbar-expand-sm navbar-light border fixed-top" style="background-color: #ffffff; height: 54px">
-        <div class="container">
-            <a class="navbar-brand ml-lg-5 mt-1 mr-5" href="#">
-                <img src="https://www.instagram.com/static/images/web/mobile_nav_type_logo.png/735145cfe0a4.png" />
-            </a>
+<!-- Header -->
 
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon mr-5"></span>
-            </button>
+<header class="shadow-sm border-b sticky top-0 bg-white z-30">
+    <div class="flex h-24 items-center justify-between xl:max-w-6xl mx-4 xl:mx-auto">
 
-            <div class="collapse navbar-collapse ml-5 d-flex justify-content-center" id="navbarSupportedContent">
-                <form class="form-inline my-2 my-lg-0 ml-5 d-none d-sm-block">
-                    <input class="form-control mr-sm-2 empty" type="search" style="font-family: Arial, FontAwesome; height: 28px; width: 216px" aria-label="Search" placeholder="search....." />
-                </form>
-            </div>
-
-            <div class="collapse navbar-collapse ml-5 mt-2" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">
-                            <i class="fas fa-home fa-lg mr-2 d-none d-sm-block mt-1"></i>
-                            <span class="sr-only"></span>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="far fa-bookmark fa-lg mr-2 d-none d-sm-block mt-1" style="color: black"></i>
-                        </a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="fa fa-plus-square fa-lg mr-2 d-none d-sm-block mt-1" style="color: black" aria-hidden="true"></i>
-                        </a>
-                    </li>
-                </ul>
-            </div>
+        <div class="cursor-pointer w-24 relative hidden lg:inline-grid">
+            <img src="http://www.jennexplores.com/wp-content/uploads/2015/09/Instagram_logo_black.png" />
         </div>
-    </nav>
+        <div class="cursor-pointer w-10 relative lg:hidden">
+            <img src="https://logos-world.net/wp-content/uploads/2020/04/Instagram-icon-Logo-2016-present.png" />
+        </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
 
-</html>
+        <div class="relative mt-1">
+            <div class="absolute top-2 left-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+            <input type="text" placeholder="Search"
+                class="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md" />
+        </div>
+
+        <div class="flex space-x-4 items-center">
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-tranform duration-200 ease-out"
+                viewBox="0 0 20 20" fill="currentColor">
+                <path
+                    d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg"
+                class="h-6 cursor-pointer hover:scale-125 transition-tranform duration-200 ease-out" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round"
+                    d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+
+            <img src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image"
+                class="h-10 rounded-full cursor-pointer" />
+        </div>
+    </div>
+</header>
