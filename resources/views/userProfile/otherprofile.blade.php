@@ -514,9 +514,15 @@
             </div>
             <div class="profile-stats">
                 <ul>
-                    <li><span class="profile-stat-count">164</span> posts</li>
-                    <li><span class="profile-stat-count">188</span> followers</li>
-                    <li><span class="profile-stat-count">206</span> following</li>
+                    @if(isset($post_count))
+                    <li><span class="profile-stat-count">{{$post_count}}</span> posts</li>
+                @endif
+                                            @if(isset($follower_count))
+                    <li><span class="profile-stat-count">{{$follower_count}}</span> followers</li>
+                @endif
+                                            @if(isset($following_count))
+                    <li><span class="profile-stat-count">{{$following_count}}</span> followings</li>
+                @endif
                 </ul>
             </div>
             <div class="profile-name">

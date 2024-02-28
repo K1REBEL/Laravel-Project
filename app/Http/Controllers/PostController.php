@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -85,7 +86,26 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $posts = Post::with('comments', 'likes', 'hashtag', 'media', 'user')
+            ->where('user_id', $id) // Add the WHERE condition
+            ->get();
+        $filteredPosts = collect($posts)->map(function ($post) {
+         return [
+             'id' => $post->id,
+             'caption' => $post->caption,
+             'updated_at' => $post->updated_at,
+             'latest_comment' => $post->comments->sortByDesc('updated_at')->first(),
+             'comment_count' => $post->comments->count(),
+             'like_count' => $post->likes->count(),
+             'hashtag_names' => $post->hashtag->pluck('name'),
+             'media_urls' => $post->media->pluck('url'),
+             'user_id' => $post->user->id,
+             'user_handle' => $post->user->user_handle,
+             'profile_photo_url' => $post->user->profile_photo_url,
+         ];
+     });
+     $jsonData = $filteredPosts->toJson();
+     return view('userProfile.myprofile', compact('jsonData'));
     }
 
     /**
