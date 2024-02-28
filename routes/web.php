@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 use Laravel\Fortify\Features;
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +50,12 @@ Route::middleware([
     Route::redirect('/dashboard', '/users');
 });
 
+Route::middleware('auth')->group(function (){
+    Route::resource('users',UserController::class);
+    Route::resource('posts',PostController::class);
+    storage::disk('public');
+});
+
 
 
 
@@ -62,8 +69,8 @@ Route::get('/users/home', function(){
 // });
 
 
-Route::resource('/posts', PostController::class);
-Route::resource('/users', UserController::class);
+//Route::resource('/posts', PostController::class);
+//Route::resource('/users', UserController::class);
 
 Route::post('posts/{post}/like',[PostController::class,'like'] )->name('posts.like');
 Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('posts.unlike');
