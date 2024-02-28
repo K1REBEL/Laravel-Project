@@ -1194,4 +1194,23 @@ select {
         max-width: 72rem;
     }
 }
+
+
+span.hashtag {
+    display: inline-block;
+    font-weight: bold;
+    color: #007bff;
+}
+
+div.hashtag-container {
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin-top: 3px;
+}
+
+.hashtags {
+
+    margin-left: 500px;
+}
+
 </style>

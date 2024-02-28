@@ -19,10 +19,9 @@
         <section class="md:col-span-2">
 
 
-            <!-- Posts  -->
+            <!-- ========Posts=====  -->
             @foreach(json_decode($jsonData) as $post)
             <div class="bg-white my-7 border rounded-md">
-                <!-- Post Header } -->
                 <div class="flex items-center p-5">
                     <img class="h-12 rounded-full object-cover border p-1 mr-3"
                          src="#" />
@@ -92,6 +91,7 @@
                     </div>
     
                 </div>
+
     
                 <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
 
@@ -156,11 +156,7 @@
                         </svg>
 
                     </div>
-                    <svg xmlns="http://www.w3.org/2000/svg " width="20" height="20" class="btn fill=" none"
-                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                          d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                    </svg>
+                    
                     <span flex justify-between px-4 pt-4>
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-bookmark" viewBox="0 0 16 16">
@@ -171,13 +167,13 @@
 
                 </div>
 
-            <p class="truncate" style="text-align: left; padding-left: 25px;">
+                <p class="truncate" style="text-align: left; padding-left: 25px;">
                 <span class="font-bold">2 likes.. </span>
                 <br />
                 <span class="font-bold mr-2">omarAly</span>nice view
             </p>
-            <div class=" hap-2">
-                <div class="hashtag-container ">
+            <div class=" hap-2"style="text-align: left; padding-left: 520px;">
+                <div class="hashtag-container" >
                     <span class="hashtag ">#summer</span>
                 </div>
 
@@ -189,6 +185,7 @@
                 </div>
 
             </div>
+
 
 
             <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
