@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
+
 
 class PostController extends Controller
 {
@@ -43,8 +45,10 @@ class PostController extends Controller
      */
     public function create()
     {
-        $users = User::all();
-        return view('posts.create',compact('users'));
+        // return view('userProfile.createpost');
+        
+        $users = auth()->id();
+        return view('userProfile.createpost',compact('users'));
     }
 
     /**
@@ -52,12 +56,13 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        // Log::info('hello');
         $userId = auth()->id();
-        $post = Post::create([
-
-            'caption' =>$request->caption,
-            'user_id' => $userId,
+        Post::create([
+            'caption' => $request->caption,
+            'user_id' => $userId, 
         ]);
+        return redirect()->route('posts.index');
     }
 
     /**
