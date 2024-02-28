@@ -62,6 +62,7 @@ Route::middleware('auth')->group(function (){
 Route::get('/users/home', function(){
     return view('users.home');
 });
+Route::get('/posts/{id}', [PostController::class, 'show']);
 
 
 // Route::get('/users/follower', function(){

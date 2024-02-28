@@ -82,7 +82,8 @@
                 <!-- start of gallery section -->
                 <div class="gallery">
 
-                    <div class="gallery-item" tabindex="0">
+                    @foreach(json_decode($jsonData) as $post)
+                    <div style="background-color: red;" class="gallery-item" tabindex="0">
 
                         <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
                         class="gallery-image" alt="">
@@ -104,9 +105,8 @@
 
                         </div>
 
-                        
-
                     </div>
+                    @endforeach
                 </div>
                 <!-- end of gallery section -->
             </div>

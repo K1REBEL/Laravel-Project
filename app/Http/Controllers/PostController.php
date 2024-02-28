@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Media;
+
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
@@ -86,6 +86,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
+        $user = User::findorfail($id);
         $posts = Post::with('comments', 'likes', 'hashtag', 'media', 'user')
             ->where('user_id', $id) // Add the WHERE condition
             ->get();
@@ -105,7 +106,7 @@ class PostController extends Controller
          ];
      });
      $jsonData = $filteredPosts->toJson();
-     return view('userProfile.myprofile', compact('jsonData'));
+     return view('userProfile.myprofile', compact('jsonData', 'user'));
     }
 
     /**

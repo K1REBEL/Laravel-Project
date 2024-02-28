@@ -38,8 +38,8 @@
 
 
 
-                <img className="object-cover w-full"
-                     src="{{$post->media_urls}}"  />
+                <img className="object-cover w-full" src="##"/>
+                {{-- <img className="object-cover w-full" src="{{$post->media_urls}}"/> --}}
 
                 <div class="flex justify-between px-4 pt-4">
                     <div class="flex space-x-4">
