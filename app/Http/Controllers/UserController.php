@@ -16,7 +16,7 @@ class UserController extends Controller
     public function index()
     {
         if (auth()->id()) {
-            Log::info(auth()->id());
+            // Log::info(auth()->user());
             $user = User::where('id',auth()->id())->get()->first();
 //            return User::where('id',auth()->id())->get();
             return view('userProfile.myprofile',compact('user'));
@@ -44,7 +44,14 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $user = User::where('id', $id)->get()->first();
+        if ($user->id === auth()->id()) {
+            return view('userProfile.myprofile',compact('user'));
+        }
+            // Log::info(auth()->user());
+            
+//            return User::where('id',auth()->id())->get();
+              return view('userProfile.otherprofile',compact('user'));
     }
 
     /**
@@ -84,23 +91,42 @@ class UserController extends Controller
         //
     }
 
-    //  public function follow(User $user)
-    //  {
-    //      if ($user->id === auth()->id()) {
-    //          throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
-    //      }
-    //      auth()->user()->following()->attach($user->id);
-    //      return redirect()->back();
-    //  }
+     public function follow(User $user)
+     {
+        if ($user->id === auth()->id()) {
+            throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
+        }
+        Log::info('Follow request for user ' . auth()->user()->id . ' to follow user ' . $user->id);
+         auth()->user()->following()->attach($user->id);
+         return redirect()->back();
+     }
 
-    //  public function unfollow(User $user)
-    //  {
-    //      auth()->user()->following()->detach($user->id);
-    //      return redirect()->back();
-    //  }
+     public function unfollow(User $user)
+     {
+        Log::info('Unfollow request for user ' . auth()->user()->id . ' to unfollow user ' . $user->id);
+        // if ($user->id === auth()->id()) {
+        //     throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
+        // }
+         auth()->user()->following()->detach($user->id);
+         return redirect()->back();
+     }
+
+    // public function isFollowing(User $user)
+    // {
+    //     log::info('this is invoked');
+
+    //     log::info($user);
+    //     return !!$this->following()->where('followed_id', $user->id)->count();
+    // }
 
     //  public function isFollowing(User $user)
     //  {
-    //      return $this->following()->where('followed_id', $user->id)->exists();
+    //     log::info($user);
+    //     Log::info('Checking if user ' . auth()->id() . ' follows user ' . $user->id);
+    //     return $this->following()->where('followed_id', $user->id)->exists();
+    //  }
+    //  public function isFollowing(User $user)
+    //  {
+    //     return !!$this->following()->where('followed_id', $user->id)->count();
     //  }
 }

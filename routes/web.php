@@ -65,6 +65,12 @@ Route::get('/users/home', function(){
 Route::resource('/posts', PostController::class);
 Route::resource('/users', UserController::class);
 
+Route::post('posts/{post}/like',[PostController::class,'like'] )->name('posts.like');
+Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('posts.unlike');
+
+
+Route::post('users/{user}/follow',[UserController::class,'follow'])->name('users.follow');
+Route::post('users/{user}/unfollow',[UserController::class,'unfollow'])->name('users.unfollow');
 
 Route::get('/', function () {
     return view('welcome');
@@ -73,36 +79,37 @@ Route::get('/welcome', function () {
     return view('welcome');
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+//Route::middleware([
+//    'auth:sanctum',
+//    config('jetstream.auth_session'),
+//    'verified',
+//])->group(function () {
+//    Route::get('/dashboard', function () {
+//        return view('dashboard');
+//    })->name('dashboard');
+//});
+
+
+
+Route::get('/user/home-page', function(){
+    return view('user.home-page');
+});
+
+
+Route::get('/user/followers', function(){
+    return view('user.followers');
 });
 
 
 
-Route::get('/users/home', function(){
-    return view('users.home');
+Route::get('/user/following', function(){
+    return view('user.following');
 });
 
-
-Route::get('/users/followers', function(){
-    return view('users.followers');
+Route::get('/user/blocked', function(){
+    return view('user.blocked');
 });
 
-
-
-Route::get('/users/following', function(){
-    return view('users.following');
-});
-
-Route::get('/users/blocked', function(){
-    return view('users.blocked');
-});
 
 // hello
 

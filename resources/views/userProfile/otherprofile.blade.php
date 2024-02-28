@@ -90,9 +90,15 @@
 .profile-website {
     float: left;
     width: calc(66.666% - 2rem);
-    margin-top: 2rem; 
+    margin-top: 2rem;
 }
 
+<<<<<<< HEAD
+=======
+.profile-user-settings {
+    margin-top: 7rem;
+}
+>>>>>>> 07b856bd0fcd001c59dec709bee7ac4ebff31dac
 
 .profile-user-name {
     display: inline-block;
@@ -113,7 +119,7 @@
 }
 
 .profile-name {
-    margin-top: 4rem; 
+    margin-top: 4rem;
     font-size: 1.6rem;
     font-weight: 200;
     line-height: 1.5;
@@ -123,7 +129,7 @@
     font-size: 1.6rem;
     font-weight: 400;
     line-height: 1.5;
-    margin-top: 2rem; 
+    margin-top: 2rem;
 }
 
 .profile-website {
@@ -246,11 +252,11 @@
             border-top-left-radius: 12px;
             border-top-right-radius: 12px;
         }
- 
+
         .popup-caption h1,
 .popup-caption p {
     display: inline;
-    margin-right: 10px; 
+    margin-right: 10px;
 }
         .popup-caption h1 {
     font-size: 24px;
@@ -270,11 +276,11 @@
 .popup-icons {
     display: flex;
     justify-content: flex-start;
-    align-items: center; 
+    align-items: center;
 }
 
 .popup-icons i {
-    margin-right: 15px; 
+    margin-right: 15px;
 }
 
         .popup-comments {
@@ -456,7 +462,7 @@
         }
 
         .btn.profile-edit-btn {
-            text-decoration: none; 
+            text-decoration: none;
         }
 
         /* //////////////////buttons/////////////// */
@@ -481,8 +487,8 @@
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease;
-            margin-bottom: 10px; 
-            margin-right: 20px; 
+            margin-bottom: 10px;
+            margin-right: 20px;
         }
 
         .follow-btn:hover {
@@ -507,7 +513,7 @@
                 <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="Profile Image">
             </div>
             <div class="profile-user-settings">
-                <h1 class="profile-user-name">@janedoe_</h1>
+                <h1 class="profile-user-name">{{ $user->user_handle }}</h1>
             </div>
             <div class="profile-stats">
                 <ul>
@@ -517,19 +523,33 @@
                 </ul>
             </div>
             <div class="profile-name">
-                <p class="profile-real-name">Jane Doe</p>
+                <p class="profile-real-name">{{$user->name}}</p>
             </div>
             <div class="profile-bio">
-                <p class="bio">Lorem ipsum dolor sit, amet consectetur adipisicing elit</p>
+                <p class="bio">{{$user->bio}}</p>
             </div>
             <div class="profile-website">
-                <p class="website">example.com</p>
+                <p class="website">{{$user->website}}</p>
             </div>
 
 
         </div>
         <div class="button-container">
-            <button class="follow-btn">Follow</button>
+            @if (Auth::user()->id != $user->id)
+{{--                {{ info($user) }}--}}
+                @if (!Auth::user()->isFollowing($user))
+{{--                    {{ info($user->isFollowing($user)) }}--}}
+                    <form action="{{ route('users.follow', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="follow-btn">Follow</button>
+                    </form>
+                @else
+                    <form action="{{ route('users.unfollow', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="follow-btn">Unfollow</button>
+                    </form>
+                @endif
+            @endif
             <button class="block-btn">Block</button>
         </div>
     </div>
@@ -559,7 +579,7 @@
                 <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
                 <img class="popup-image" src="" alt="Popup Image">
                 <div class="popup-icons">
-                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
                     <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
                     <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
                 </div>
@@ -568,6 +588,77 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 @extends('layouts.PopupJS')
+=======
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const galleryItems = document.querySelectorAll(".gallery-item");
+
+            galleryItems.forEach(function (item) {
+                item.addEventListener("click", function () {
+                    displayPopup(item);
+                });
+            });
+
+            function displayPopup(item) {
+                const popupContainer = document.querySelector(".popup-container");
+                const imageUrl = item.querySelector(".gallery-image").src;
+                const popupImage = document.querySelector(".popup-image");
+                const popupIcons = document.querySelector(".popup-icons");
+                const popupCaption = document.querySelector(".popup-caption");
+                const popupComments = document.querySelector(".popup-comments");
+                const profileUserName = document.querySelector(".profile-user-name").textContent;
+
+
+                popupImage.src = imageUrl;
+
+                popupIcons.innerHTML = `
+                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
+                    <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
+                    <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+                `;
+
+                popupCaption.innerHTML = `<h1>${profileUserName}</h1><p>hiiiiii</p>`;
+
+                popupComments.innerHTML = '';
+                const dummyComments = [
+                    { profilePic: 'path_to_profile_picture_1.jpg', username: 'User1', comment: 'Comment 1' },
+                    { profilePic: 'path_to_profile_picture_2.jpg', username: 'User2', comment: 'Comment 2' },
+                ];
+                dummyComments.forEach(comment => {
+                    const userComment = document.createElement('div');
+                    userComment.classList.add('user-comment');
+                    userComment.innerHTML = `
+                        <img class="user-profile-picture" src="${comment.profilePic}" alt="User Profile Picture">
+                        <div class="user-details">
+                            <span class="user-name">${comment.username}</span>
+                            <p class="user-comment-text">${comment.comment}</p>
+                        </div>
+                    `;
+                    popupComments.appendChild(userComment);
+                });
+
+                popupContainer.style.display = "block";
+            }
+        });
+
+        function hidePopup() {
+            const popupContainer = document.querySelector(".popup-container");
+            popupContainer.style.display = "none";
+        }
+
+        function toggleIconFill(icon) {
+    if (icon.classList.contains('far')) {
+        icon.classList.remove('far');
+        icon.classList.add('fas');
+    } else {
+        icon.classList.remove('fas');
+        icon.classList.add('far');
+    }
+}
+    </script>
+>>>>>>> 07b856bd0fcd001c59dec709bee7ac4ebff31dac
 </body>
 </html>
