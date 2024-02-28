@@ -28,10 +28,11 @@
                 <div class="profile">
 
                     <div class="profile-image">
-
-                        <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces"
-                        alt="">
-
+                        @if($user->profile_photo_path==null)
+                            <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                        @else
+                            <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                        @endif
                     </div>
 
                     <div class="profile-user-settings">
@@ -126,7 +127,7 @@
                     <img class="popup-image" src="" alt="Popup Image">
 
                     <div class="popup-icons">
-                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
                     </div>

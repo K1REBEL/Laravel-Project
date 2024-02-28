@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -55,7 +56,7 @@ class UserController extends Controller
             return view('userProfile.myprofile',compact('user','post_count','follower_count','following_count'));
         }
             // Log::info(auth()->user());
-            
+
 //            return User::where('id',auth()->id())->get();
 return view('userProfile.otherprofile',compact('user','post_count','follower_count','following_count'));
 }
@@ -77,8 +78,8 @@ return view('userProfile.otherprofile',compact('user','post_count','follower_cou
     public function update(Request $request, string $id)
     {
         if (auth()->id()){
-        $users = User::findorfail($id);
-        $users->update([
+        $user = User::findorfail($id);
+        $user->update([
             'email'=> $request->email,
             'name'=> $request->name,
             'phone'=> $request->phone,
@@ -86,6 +87,13 @@ return view('userProfile.otherprofile',compact('user','post_count','follower_cou
             'bio'=> $request->bio,
             'website'=>$request->website
         ]);
+            if ($request->hasFile('image')) {
+                    $image = $request->file('image');
+                    $path = $image->store('users', 'public');
+                    $user->profile_photo_path = $path;
+                    $user->save();
+//                    $user->update();
+            }
         return redirect()->route('users.index');
     }}
 
@@ -135,4 +143,15 @@ return view('userProfile.otherprofile',compact('user','post_count','follower_cou
     //  {
     //     return !!$this->following()->where('followed_id', $user->id)->count();
     //  }
+    public function block(User $user)
+{
+    auth()->user()->blocks()->attach($user->id);
+    return redirect()->back();
+}
+
+public function unblock(User $user)
+{
+    auth()->user()->blocks()->detach($user->id);
+    return redirect()->back();
+}
 }

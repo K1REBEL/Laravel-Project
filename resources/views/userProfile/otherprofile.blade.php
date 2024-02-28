@@ -553,8 +553,21 @@
                     </form>
                 @endif
             @endif
-            <button class="block-btn">Block</button>
-        </div>
+            <div class="button-container">
+                @if (Auth::user()->id != $user->id)
+                    @if (!Auth::user()->blocks->contains($user))
+                        <form action="{{ route('users.block', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="block-btn">Block</button>
+                        </form>
+                    @else
+                        <form action="{{ route('users.unblock', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="block-btn">Unblock</button>
+                        </form>
+                    @endif
+                @endif
+            </div>        </div>
     </div>
 </header>
 
