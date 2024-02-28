@@ -48,16 +48,17 @@ class UserController extends Controller
 
         $user = User::where('id', $id)->get()->first();
         log::info($user);
-
+        $follower_count = $user->followers()->count();
+        $following_count = $user->following()->count();
         $post_count = $user->post()->count();
         if ($user->id === auth()->id()) {
-            return view('userProfile.myprofile',compact('user','post_count'));
+            return view('userProfile.myprofile',compact('user','post_count','follower_count','following_count'));
         }
             // Log::info(auth()->user());
             
 //            return User::where('id',auth()->id())->get();
-              return view('userProfile.otherprofile',compact('user','post_count'));
-    }
+return view('userProfile.otherprofile',compact('user','post_count','follower_count','following_count'));
+}
 
     /**
      * Show the form for editing the specified resource.
