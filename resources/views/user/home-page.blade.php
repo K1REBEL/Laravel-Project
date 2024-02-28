@@ -11,7 +11,7 @@
 <!-- =====================post1==================== -->
 
 @section('content')
-@foreach(json_decode($jsonData) as $post)
+
 
     <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
 
@@ -155,41 +155,53 @@
 
                 </div>
 
-                <p class="p-5 truncate">
-                    <span class="font-bold">2 likes.. </span>
-                    <br />
-                    <span class="font-bold mr-2">omarAly</span>nice view!
-
+            <p class="truncate" style="text-align: left; padding-left: 25px;">
+                <span class="font-bold">2 likes.. </span>
+                <br />
+                <span class="font-bold mr-2">omarAly</span>nice view
             </p>
-            <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
-
-
-                    <div class="flex items-center space-x-2 mb-2">
-                        <img class="h-7 rounded-full object-cover"
-                             src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
-                        <p class="font-semibold">aly</p>
-                        <p class="flex-1 truncate">vow!</p>
-                        <p>2 days ago</p>
-                    </div>
-                    <div class="flex items-center space-x-2 mb-2">
-                        <img class="h-7 rounded-full object-cover"
-                             src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
-                        <p class="font-semibold">omar</p>
-                        <p class="flex-1 truncate">great!</p>
-                        <p>1 month ago</p>
-                    </div>
+            <div class=" hap-2">
+                <div class="hashtag-container ">
+                    <span class="hashtag ">#summer</span>
                 </div>
-                <form class="flex items-center p-4">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
-                         stroke="currentColor" stroke-width="2">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <input class="border-none flex-1 focus:ring-0" type="text" placeholder="Enter your comment..." />
-                    <button class="text-blue-400 font-bold">Post</button>
-                </form>
+
+                <div class="hashtag-container">
+                    <span class="hashtag">#beachlife</span>
+                </div>
+                <div class="hashtag-container">
+                    <span class="hashtag">#sunset</span>
+                </div>
+
             </div>
+
+
+            <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
+                <div class="flex items-center space-x-2 mb-2">
+                    <img class="h-7 rounded-full object-cover"
+                        src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
+                    <p class="font-semibold">aly</p>
+                    <p class="flex-1 truncate">vow!</p>
+                    <p>2 days ago</p>
+                </div>
+                <div class="flex items-center space-x-2 mb-2">
+                    <img class="h-7 rounded-full object-cover"
+                        src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
+                    <p class="font-semibold">omar</p>
+                    <p class="flex-1 truncate">great!</p>
+                    <p>1 month ago</p>
+                </div>
             </div>
+            <form class="flex items-center p-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <input class="border-none flex-1 focus:ring-0" type="text" placeholder="Enter your comment..." />
+                <button class="text-blue-400 font-bold">Post</button>
+            </form>
+        </div>
+        </div>
 
             <!-- {/* Post input box */} -->
 
