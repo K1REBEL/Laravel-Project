@@ -106,3 +106,18 @@ Route::get('/users/blocked', function(){
 
 // hello
 
+Route::get('/profile', function () {
+    return view('userProfile.myprofile');
+});
+
+Route::get('/edit', function () {
+    return view('userProfile.edit');
+});
+
+Route::get('/profile/user', function () {
+    return view('userProfile.otherprofile');
+});
+
+Route::get('/create', function () {
+    return view('userProfile.createpost');
+});
