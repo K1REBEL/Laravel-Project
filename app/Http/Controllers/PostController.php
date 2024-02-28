@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
@@ -39,7 +40,7 @@ class PostController extends Controller
     // return $view;
     // log::info($Posts);
     $jsonData = $filteredPosts->toJson();
-    return view('users.home', compact('jsonData'));
+    return view('user.home-page', compact('jsonData'));
 }
     /**
      * Show the form for creating a new resource.
@@ -47,7 +48,7 @@ class PostController extends Controller
     public function create()
     {
         // return view('userProfile.createpost');
-        
+
         $users = auth()->id();
         return view('userProfile.createpost',compact('users'));
     }
@@ -55,15 +56,28 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request,Media $media)
     {
         // Log::info('hello');
         $userId = auth()->id();
         $post = Post::create([
             'caption' => $request->caption,
-            'user_id' => $userId, 
+            'user_id' => $userId,
         ]);
-        $post->save();
+//        $path = $request->file('images');
+//        $url = $request->file('images')->storeAs('posts',$path,'public');
+//        $media->image=$url;
+//        $media->save();
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            foreach ($images as $image) {
+                $path = $image->store('posts', 'public');
+                $media = new Media();
+                $media->url = $path;
+                $media->post_id = $post->id;
+                $media->save();
+            }
+        }
         return redirect()->route('posts.index');
     }
 

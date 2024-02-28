@@ -93,12 +93,9 @@
     margin-top: 2rem;
 }
 
-<<<<<<< HEAD
-=======
 .profile-user-settings {
     margin-top: 7rem;
 }
->>>>>>> 07b856bd0fcd001c59dec709bee7ac4ebff31dac
 
 .profile-user-name {
     display: inline-block;
@@ -568,97 +565,51 @@
                             <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
                         </ul>
                     </div>
+
                 </div>
+
+                <div class="gallery-item" tabindex="0">
+                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
+                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
+                        </ul>
+                    </div>
             </div>
         </div>
     </main>
 
-    <div class="container">
-        <div class="popup-container">
-            <div class="popup-content">
-                <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
-                <img class="popup-image" src="" alt="Popup Image">
-                <div class="popup-icons">
-                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+    <!-----------------------------------------popup------------------------------------------------->
+
+        <!-- start of container -->
+        <div class="container">
+            <!-- start of popup container -->
+            <div class="popup-container">
+
+                <div class="popup-content">
+
+                    <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
+                    <img class="popup-image" src="" alt="Popup Image">
+
+                    <div class="popup-icons">
+                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                        <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
+                        <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+                    </div>
+
+                    <div class="popup-caption"></div>
+                    <div class="popup-comments"></div>
+
                 </div>
-                <div class="popup-caption"></div>
-                <div class="popup-comments"></div>
+
             </div>
+            <!-- end of popup container -->
         </div>
-    </div>
-<<<<<<< HEAD
-@extends('layouts.PopupJS')
-=======
+        <!-- end of container -->
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const galleryItems = document.querySelectorAll(".gallery-item");
-
-            galleryItems.forEach(function (item) {
-                item.addEventListener("click", function () {
-                    displayPopup(item);
-                });
-            });
-
-            function displayPopup(item) {
-                const popupContainer = document.querySelector(".popup-container");
-                const imageUrl = item.querySelector(".gallery-image").src;
-                const popupImage = document.querySelector(".popup-image");
-                const popupIcons = document.querySelector(".popup-icons");
-                const popupCaption = document.querySelector(".popup-caption");
-                const popupComments = document.querySelector(".popup-comments");
-                const profileUserName = document.querySelector(".profile-user-name").textContent;
-
-
-                popupImage.src = imageUrl;
-
-                popupIcons.innerHTML = `
-                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
-                `;
-
-                popupCaption.innerHTML = `<h1>${profileUserName}</h1><p>hiiiiii</p>`;
-
-                popupComments.innerHTML = '';
-                const dummyComments = [
-                    { profilePic: 'path_to_profile_picture_1.jpg', username: 'User1', comment: 'Comment 1' },
-                    { profilePic: 'path_to_profile_picture_2.jpg', username: 'User2', comment: 'Comment 2' },
-                ];
-                dummyComments.forEach(comment => {
-                    const userComment = document.createElement('div');
-                    userComment.classList.add('user-comment');
-                    userComment.innerHTML = `
-                        <img class="user-profile-picture" src="${comment.profilePic}" alt="User Profile Picture">
-                        <div class="user-details">
-                            <span class="user-name">${comment.username}</span>
-                            <p class="user-comment-text">${comment.comment}</p>
-                        </div>
-                    `;
-                    popupComments.appendChild(userComment);
-                });
-
-                popupContainer.style.display = "block";
-            }
-        });
-
-        function hidePopup() {
-            const popupContainer = document.querySelector(".popup-container");
-            popupContainer.style.display = "none";
-        }
-
-        function toggleIconFill(icon) {
-    if (icon.classList.contains('far')) {
-        icon.classList.remove('far');
-        icon.classList.add('fas');
-    } else {
-        icon.classList.remove('fas');
-        icon.classList.add('far');
-    }
-}
-    </script>
->>>>>>> 07b856bd0fcd001c59dec709bee7ac4ebff31dac
+    <!-- ---------------------------------------------popupJS--------------------------------------->
+    @extends('layouts.PopupJS')
 </body>
 </html>

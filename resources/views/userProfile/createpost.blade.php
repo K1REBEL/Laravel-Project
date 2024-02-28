@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-vp86vTRFVJgpjF9jiIGPEEqYqlDwgyBgEF109VFjmqGmIY/Y4HV4d3Gp2irVfcrp" crossorigin="anonymous" />
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-
-  <style>
+</head>
+<style>
     body {
     font-family: "Roboto", sans-serif;
     margin: 0;
@@ -64,7 +64,6 @@
     background-color: #90caf9;
     }
  </style>
- </head>
 <body>
   <div class="container">
     <div class="card">
@@ -76,7 +75,7 @@
         
         <div id="imagePreviews" class="slider"></div>
 
-        <button type="button" id="addImageButton"><i class="bi bi-images"></i> Add Image</button>
+        <button type="button" id="addImageButton"><i class="fas fa-images"></i> Add Image</button>
 
         <label for="caption">caption</label>
         <textarea id="caption" name="caption" rows="4"></textarea>
@@ -88,6 +87,9 @@
       </form>
     </div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
   <script>
     const imagesInput = document.getElementById('images');
     const imagePreviewsContainer = document.getElementById('imagePreviews');
