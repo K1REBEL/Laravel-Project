@@ -13,19 +13,22 @@
 @section('content')
 
 
+
     <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
 
         <section class="md:col-span-2">
 
 
             <!-- Posts  -->
-
+            @foreach(json_decode($jsonData) as $post)
             <div class="bg-white my-7 border rounded-md">
                 <!-- Post Header } -->
                 <div class="flex items-center p-5">
                     <img class="h-12 rounded-full object-cover border p-1 mr-3"
-                         src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" />
-                    <p class="font-bold flex-1">{{$post->user_handle}}</p>
+                         src="#" />
+                    <p class="font-bold flex-1">{{$post->user_handle}}
+
+                    </p>
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -36,7 +39,7 @@
 
 
                 <img className="object-cover w-full"
-                     src="https://www.etondigital.com/wp-content/uploads/2019/05/laravel-blog.png" />
+                     src="#" />
 
                 <div class="flex justify-between px-4 pt-4">
                     <div class="flex space-x-4">
@@ -71,29 +74,42 @@
 
                 <!-- {/* Post comments */} -->
                 <p class="p-5 truncate">
-                    <span class="font-bold">2 likes.. </span>
+                    <span class="font-bold">{{$post->like_count}} likes.. </span>
                     <br />
-                    <span class="font-bold mr-2">omarAly</span>nice view!
-
+                    <span class="font-bold mr-2">{{$post->user_handle}}</span> {{$post->caption}}
+                    
                 </p>
-
+                <div class=" hap-2">
+                    <div class="hashtag-container ">
+                        <span class="hashtag ">#sea</span>
+                    </div>
+    
+                    <div class="hashtag-container">
+                        <span class="hashtag">#beachlife</span>
+                    </div>
+                    <div class="hashtag-container">
+                        <span class="hashtag">#sunset</span>
+                    </div>
+    
+                </div>
+    
                 <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
 
 
                     <div class="flex items-center space-x-2 mb-2">
                         <img class="h-7 rounded-full object-cover"
-                             src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
-                        <p class="font-semibold">aly</p>
-                        <p class="flex-1 truncate">vow!</p>
+                             src="#" alt="user-image" />
+                        <p class="font-semibold">{{$post->user_handle}}</p>
+                        <p class="flex-1 truncate">{{$post->latest_comment}}</p>
                         <p>2 days ago</p>
                     </div>
                     <div class="flex items-center space-x-2 mb-2">
                         <img class="h-7 rounded-full object-cover"
-                             src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
+                             src="#" alt="user-image" />
                         <p class="font-semibold">omar</p>
                         <p class="flex-1 truncate">great!</p>
-                        <p>1 month ago</p>
                     </div>
+                    <p>{{$post->updated_at}}</p>
 
                 </div>
 
@@ -108,7 +124,7 @@
                     <button class="text-blue-400 font-bold">Post</button>
                 </form>
             </div>
-
+             @endforeach
             <!-- =================post2================ -->
 
             <div class="bg-white my-7 border rounded-md">
