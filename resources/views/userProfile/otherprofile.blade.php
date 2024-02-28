@@ -565,26 +565,51 @@
                             <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
                         </ul>
                     </div>
+
                 </div>
+
+                <div class="gallery-item" tabindex="0">
+                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
+                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
+                        </ul>
+                    </div>
             </div>
         </div>
     </main>
 
-    <div class="container">
-        <div class="popup-container">
-            <div class="popup-content">
-                <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
-                <img class="popup-image" src="" alt="Popup Image">
-                <div class="popup-icons">
-                    <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
-                    <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+    <!-----------------------------------------popup------------------------------------------------->
+
+        <!-- start of container -->
+        <div class="container">
+            <!-- start of popup container -->
+            <div class="popup-container">
+
+                <div class="popup-content">
+
+                    <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
+                    <img class="popup-image" src="" alt="Popup Image">
+
+                    <div class="popup-icons">
+                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                        <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
+                        <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
+                    </div>
+
+                    <div class="popup-caption"></div>
+                    <div class="popup-comments"></div>
+
                 </div>
-                <div class="popup-caption"></div>
-                <div class="popup-comments"></div>
+
             </div>
+            <!-- end of popup container -->
         </div>
-    </div>
-@extends('layouts.PopupJS')
+        <!-- end of container -->
+
+    <!-- ---------------------------------------------popupJS--------------------------------------->
+    @extends('layouts.PopupJS')
 </body>
 </html>
