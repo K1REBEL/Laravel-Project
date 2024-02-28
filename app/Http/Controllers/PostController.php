@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Media;
+//use App\Models\Media;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -31,6 +31,7 @@ class PostController extends Controller
             'user_id' => $post->user->id,
             'user_handle' => $post->user->user_handle,
             'profile_photo_url' => $post->user->profile_photo_url,
+            'profile_photo_path' =>$post->user->profile_photo_path
         ];
     });
     //    return response()->json($filteredPosts);

@@ -24,8 +24,13 @@
             <div class="bg-white my-7 border rounded-md">
                 <!-- Post Header } -->
                 <div class="flex items-center p-5">
+                    @if($post->profile_photo_path==null)
                     <img class="h-12 rounded-full object-cover border p-1 mr-3"
                          src="{{$post->profile_photo_url}}" />
+                        @else
+                            <img class="h-12 rounded-full object-cover border p-1 mr-3"
+                                 src="{{asset('storage/'.$post->profile_photo_path)}}" />
+                        @endif
                     <p class="font-bold flex-1">{{$post->user_handle}}
 
                     </p>
@@ -39,7 +44,7 @@
 
 
                 <img className="object-cover w-full"
-                     src="{{$post->media_urls}}"  />
+                     src="#"  />
 
                 <div class="flex justify-between px-4 pt-4">
                     <div class="flex space-x-4">
@@ -77,28 +82,28 @@
                     <span class="font-bold">{{$post->like_count}} likes.. </span>
                     <br />
                     <span class="font-bold mr-2">{{$post->user_handle}}</span> {{$post->caption}}
-                    
+
                 </p>
                 <div class=" hap-2">
                     <div class="hashtag-container ">
                         <span class="hashtag ">#sea</span>
                     </div>
-    
+
                     <div class="hashtag-container">
                         <span class="hashtag">#beachlife</span>
                     </div>
                     <div class="hashtag-container">
                         <span class="hashtag">#sunset</span>
                     </div>
-    
+
                 </div>
-    
+
                 <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
 
 
                     <div class="flex items-center space-x-2 mb-2">
                         <img class="h-7 rounded-full object-cover"
-                        src="{{$post->profile_photo_url}}" 
+                        src="{{$post->profile_photo_url}}"
                         alt="user-image" />
                         <p class="font-semibold">{{$post->user_handle}}</p>
                         <p class="flex-1 truncate">{{$post->latest_comment}}</p>
