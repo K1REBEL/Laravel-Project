@@ -11,7 +11,7 @@
 <!-- =====================post1==================== -->
 
 @section('content')
-@foreach(json_decode($jsonData) as $post)
+
 
 <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
 
@@ -25,7 +25,7 @@
             <div class="flex items-center p-5">
                 <img class="h-12 rounded-full object-cover border p-1 mr-3"
                     src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" />
-                <p class="font-bold flex-1">{{$post->user_handle}}</p>
+                <p class="font-bold flex-1">shahenda</p>
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
                     stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round"
@@ -155,15 +155,27 @@
 
             </div>
 
-            <p class="p-5 truncate">
+            <p class="truncate" style="text-align: left; padding-left: 25px;">
                 <span class="font-bold">2 likes.. </span>
                 <br />
-                <span class="font-bold mr-2">omarAly</span>nice view!
-
+                <span class="font-bold mr-2">omarAly</span>nice view
             </p>
+            <div class=" hap-2">
+                <div class="hashtag-container ">
+                    <span class="hashtag ">#summer</span>
+                </div>
+
+                <div class="hashtag-container">
+                    <span class="hashtag">#beachlife</span>
+                </div>
+                <div class="hashtag-container">
+                    <span class="hashtag">#sunset</span>
+                </div>
+
+            </div>
+
+
             <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
-
-
                 <div class="flex items-center space-x-2 mb-2">
                     <img class="h-7 rounded-full object-cover"
                         src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
