@@ -25,7 +25,7 @@
                 <!-- Post Header } -->
                 <div class="flex items-center p-5">
                     <img class="h-12 rounded-full object-cover border p-1 mr-3"
-                         src="#" />
+                         src="{{$post->profile_photo_url}}" />
                     <p class="font-bold flex-1">{{$post->user_handle}}
 
                     </p>
@@ -39,7 +39,7 @@
 
 
                 <img className="object-cover w-full"
-                     src="#" />
+                     src="{{$post->media_urls}}"  />
 
                 <div class="flex justify-between px-4 pt-4">
                     <div class="flex space-x-4">
@@ -98,7 +98,8 @@
 
                     <div class="flex items-center space-x-2 mb-2">
                         <img class="h-7 rounded-full object-cover"
-                             src="#" alt="user-image" />
+                        src="{{$post->profile_photo_url}}" 
+                        alt="user-image" />
                         <p class="font-semibold">{{$post->user_handle}}</p>
                         <p class="flex-1 truncate">{{$post->latest_comment}}</p>
                         <p>2 days ago</p>
@@ -124,7 +125,7 @@
                     <button class="text-blue-400 font-bold">Post</button>
                 </form>
             </div>
-             @endforeach
+            @endforeach
             <!-- =================post2================ -->
 
             <div class="bg-white my-7 border rounded-md">

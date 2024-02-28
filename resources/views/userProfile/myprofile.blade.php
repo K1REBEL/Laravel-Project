@@ -44,9 +44,12 @@
                     <div class="profile-stats">
 
                         <ul>
-                            <li><span class="profile-stat-count">164</span> posts</li>
-                            <li><span class="profile-stat-count">188</span> followers</li>
-                            <li><span class="profile-stat-count">206</span> following</li>
+                            @if(isset($post_count))
+    <li><span class="profile-stat-count">{{$post_count}}</span> posts</li>
+@endif
+                            {{-- <li><span class="profile-stat-count">{{$post_count}}</span> posts</li> --}}
+                            <li><span class="profile-stat-count"></span> followers</li>
+                            <li><span class="profile-stat-count"></span> following</li>
                         </ul>
 
                     </div>
