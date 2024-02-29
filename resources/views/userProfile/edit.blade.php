@@ -30,19 +30,14 @@
                         <div class="image-container">
                         @if($user->profile_photo_path==null)
                         <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
-                                <span class="add-new-image">change profile picture...</span>
-                                <label for="fileInput">
-                                    <i class="bi bi-plus-circle-fill"></i>
-                                </label>
-                                <input type="file" class="form-control d-none" id="fileInput" name="image" >
-                        @else
-                            <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                            @else
+                                <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                            @endif
                             <span class="add-new-image">change profile picture...</span>
                         <label for="fileInput">
                           <i class="bi bi-plus-circle-fill"></i>
                         </label>
                         <input type="file" class="form-control d-none" id="image" name="image" >
-                            @endif
                     </div>
                 </div>
             </div>
@@ -81,7 +76,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Choose gender</label>
+{{--                                <label for="">Choose gender</label>--}}
                             <select class="form-select" name="gender">
                                 @if($user->gender=='male')
 {{--                                    <option selected>Choose gender</option>--}}

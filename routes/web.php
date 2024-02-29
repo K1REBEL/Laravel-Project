@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -59,7 +60,7 @@ Route::middleware('auth')->group(function (){
 Route::resource('users',UserController::class);
 Route::resource('posts',PostController::class);
 
-
+Route::get('/users/search', [UserController::class,'search'])->name('users.search');
 
 Route::get('/users/home', function(){
     return view('users.home');

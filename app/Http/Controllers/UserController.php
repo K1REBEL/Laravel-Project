@@ -169,9 +169,20 @@ class UserController extends Controller
     return redirect()->back();
 }
 
-public function unblock(User $user)
-{
-    auth()->user()->blocks()->detach($user->id);
-    return redirect()->back();
-}
+    public function unblock(User $user)
+    {
+        auth()->user()->blocks()->detach($user->id);
+        return redirect()->back();
+    }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+
+        $results = User::where('email', 'like', "%$query%")
+            ->orWhere('username', 'like', "%$query%")
+            ->get();
+
+        return view('', compact('results'));
+    }
 }
