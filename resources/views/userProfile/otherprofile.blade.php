@@ -395,9 +395,9 @@
 
             <div class="profile-image">
                 @if($user->profile_photo_path==null)
-                    <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                    <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">
                 @else
-                    <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                    <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">
                 @endif
             </div>
 

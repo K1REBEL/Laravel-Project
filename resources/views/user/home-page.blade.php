@@ -245,7 +245,6 @@
                     @else
                         <img class="h-16 rounded-full border p-[2px]"
                              src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
-                             src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
                     @endif
                     <div class="flex-1 ml-4">
                         <h2 class="font-mute">{{json_decode($jsonData)[0]->user_handle}}</h2>
