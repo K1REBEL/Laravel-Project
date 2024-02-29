@@ -108,9 +108,9 @@ class User extends Authenticatable implements MustVerifyEmail
     }
     public function blocks()
     {
-        return $this->hasMany(Block::class);
-
+        return $this->belongsToMany(User::class, 'blocking', 'user_id', 'blocked_user_id');
     }
+    
 
     public function comments()
     {

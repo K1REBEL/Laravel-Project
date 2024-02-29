@@ -394,10 +394,11 @@
         <div class="profile">
 
             <div class="profile-image">
-
-                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" 
-                alt="Profile Image">
-
+                @if($user->profile_photo_path==null)
+                    <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                @else
+                    <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                @endif
             </div>
 
             <div class="profile-user-settings">
@@ -407,9 +408,15 @@
             <div class="profile-stats">
 
                 <ul>
-                    <li><span class="profile-stat-count">164</span> posts</li>
-                    <li><span class="profile-stat-count">188</span> followers</li>
-                    <li><span class="profile-stat-count">206</span> following</li>
+                    @if(isset($post_count))
+                    <li><span class="profile-stat-count">{{$post_count}}</span> posts</li>
+                @endif
+                                            @if(isset($follower_count))
+                    <li><span class="profile-stat-count">{{$follower_count}}</span> followers</li>
+                @endif
+                                            @if(isset($following_count))
+                    <li><span class="profile-stat-count">{{$following_count}}</span> followings</li>
+                @endif
                 </ul>
 
             </div>
@@ -449,10 +456,21 @@
                     </form>
                 @endif
             @endif
-            <button class="block-btn">Block</button>
-
-        </div>
-        
+            <div class="button-container">
+                @if (Auth::user()->id != $user->id)
+                    @if (!Auth::user()->blocks->contains($user))
+                        <form action="{{ route('users.block', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="block-btn">Block</button>
+                        </form>
+                    @else
+                        <form action="{{ route('users.unblock', $user->id) }}" method="POST">
+                            @csrf
+                            <button type="submit" class="block-btn">Unblock</button>
+                        </form>
+                    @endif
+                @endif
+            </div>        </div>
     </div>
     <!-- End of profile container -->
 
@@ -464,7 +482,7 @@
         <div class="container">
             <!-- start of gallery section -->
             <div class="gallery">
-
+                @foreach(json_decode($jsonData) as $post)
                 <div class="gallery-item" tabindex="0">
 
                     <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" 
@@ -486,7 +504,19 @@
                         </ul>
 
                     </div>
+
                 </div>
+                @endforeach
+
+                <div class="gallery-item" tabindex="0">
+                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
+                    <div class="gallery-item-info">
+                        <ul>
+                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
+                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
+                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
+                        </ul>
+                    </div>
             </div>
             <!-- end of gallery section -->
         </div>
@@ -506,7 +536,7 @@
                     <img class="popup-image" src="" alt="Popup Image">
 
                     <div class="popup-icons">
-                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+                        <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
                     </div>

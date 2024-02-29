@@ -24,7 +24,19 @@ class Post extends Model
     public function likes()
     {
         return $this->hasMany(Like::class);
+    }
+    public function isliked(User $user)
+    {
+        // dd($user);
+            $followerEntry = Follower::where('followed_id', auth()->id())
+                ->where('follower_id', $user->id)
+                ->first();
 
+                // dd($followerEntry);
+            if($followerEntry){
+                return true;
+            }else{ return false; }
+        
     }
     public function hashtag()
     {
