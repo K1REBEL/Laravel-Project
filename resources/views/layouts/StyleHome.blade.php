@@ -397,7 +397,7 @@ object {
     display: block;
     /* 1 */
     vertical-align: middle;
-    /* 2 */
+    2
 }
 
 /*
@@ -1212,5 +1212,18 @@ div.hashtag-container {
 
     margin-left: 500px;
 }
+.profile-image {
+        float: left;
+        width: calc(33.333% - 1rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5rem;
+        margin-top:50px ;
+    }
+
+    .profile-image img {
+        border-radius: 60%;
+    }
 
 </style>

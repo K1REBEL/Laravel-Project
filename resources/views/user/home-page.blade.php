@@ -11,6 +11,11 @@
 <!-- =====================post1==================== -->
 
 @section('content')
+ <head>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+ </head>
 
 
 
@@ -241,7 +246,7 @@
 
         <section class="hidden md:inline-grid md:col-span-1">
             <div class="w-[380px] fixed">
-                <div class="flex items-center justify-between mt-14 ml-10">
+                <div class="profile-image">
                     @if($post->profile_photo_path==null)
                     <img class="h-16 rounded-full border p-[2px]"
                          src="{{$post->profile_photo_url}}" alt="user-image" />
