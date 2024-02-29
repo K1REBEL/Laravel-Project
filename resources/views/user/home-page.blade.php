@@ -15,9 +15,7 @@
 
 
     <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
-    <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
 
-        <section class="md:col-span-2">
         <section class="md:col-span-2">
 
 
@@ -247,7 +245,6 @@
                          src="{{json_decode($jsonData)[0]->profile_photo_url}}" alt="user-image" />
                     @else
                         <img class="h-16 rounded-full border p-[2px]"
-                             src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
                              src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
                     @endif
                     <div class="flex-1 ml-4">
