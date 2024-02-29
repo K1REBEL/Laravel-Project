@@ -15,7 +15,9 @@
 
 
     <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
+    <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
 
+        <section class="md:col-span-2">
         <section class="md:col-span-2">
 
 
@@ -98,30 +100,30 @@
                 </div>
 
 
-                <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
+                    <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
 
 
-                    <div class="flex items-center space-x-2 mb-2">
-                        @if($post->profile_photo_path==null)
-                        <img class="h-7 rounded-full object-cover"
-                        src="{{$post->profile_photo_url}}"
-                        alt="user-image" />
-                        @else
+                        <div class="flex items-center space-x-2 mb-2">
+                            @if($post->profile_photo_path==null)
+                                <img class="h-7 rounded-full object-cover"
+                                     src="{{$post->profile_photo_url}}"
+                                     alt="user-image" />
+                            @else
+                                <img class="h-7 rounded-full object-cover"
+                                     src="{{asset('storage/'.$post->profile_photo_path)}}"
+                                     alt="user-image" />
+                            @endif
+                            <p class="font-semibold">{{$post->user_handle}}</p>
+                            <p class="flex-1 truncate">{{$post->latest_comment}}</p>
+                            <p>2 days ago</p>
+                        </div>
+                        <div class="flex items-center space-x-2 mb-2">
                             <img class="h-7 rounded-full object-cover"
-                                 src="{{asset('storage/'.$post->profile_photo_path)}}"
-                                 alt="user-image" />
-                        @endif
-                        <p class="font-semibold">{{$post->user_handle}}</p>
-                        <p class="flex-1 truncate">{{$post->latest_comment}}</p>
-                        <p>2 days ago</p>
-                    </div>
-                    <div class="flex items-center space-x-2 mb-2">
-                        <img class="h-7 rounded-full object-cover"
-                             src="#" alt="user-image" />
-                        <p class="font-semibold">omar</p>
-                        <p class="flex-1 truncate">great!</p>
-                    </div>
-                    <p>{{$post->updated_at}}</p>
+                                 src="#" alt="user-image" />
+                            <p class="font-semibold">omar</p>
+                            <p class="flex-1 truncate">great!</p>
+                        </div>
+                        <p>{{$post->updated_at}}</p>
 
                 </div>
 
@@ -230,7 +232,10 @@
 {{--        </div>--}}
 
             <!-- {/* Post input box */} -->
+            <!-- {/* Post input box */} -->
 
+
+        </section>
 
         </section>
 
@@ -242,6 +247,7 @@
                          src="{{json_decode($jsonData)[0]->profile_photo_url}}" alt="user-image" />
                     @else
                         <img class="h-16 rounded-full border p-[2px]"
+                             src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
                              src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
                     @endif
                     <div class="flex-1 ml-4">
