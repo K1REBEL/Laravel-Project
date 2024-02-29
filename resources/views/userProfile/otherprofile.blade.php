@@ -575,6 +575,7 @@
     <main>
         <div class="container">
             <div class="gallery">
+                @foreach(json_decode($jsonData) as $post)
                 <div class="gallery-item" tabindex="0">
                     <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
                     <div class="gallery-item-info">
@@ -586,6 +587,7 @@
                     </div>
 
                 </div>
+                @endforeach
 
                 <div class="gallery-item" tabindex="0">
                     <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
