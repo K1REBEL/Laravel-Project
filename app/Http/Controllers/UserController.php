@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
+use App\Models\Follower;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -145,24 +146,18 @@ class UserController extends Controller
          return redirect()->back();
      }
 
-    // public function isFollowing(User $user)
-    // {
-    //     log::info('this is invoked');
+     public function social($id)
+     {
+            $user = User::findOrFail($id);
+    
+            $followers = $user->followers()->get();
+            $following = $user->following()->get();
+            $blocked = $user->blocks()->get();
+    
+            return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200); 
+            // For Alaa, Replace this return statement with the view/blade that you're developing
+        }
 
-    //     log::info($user);
-    //     return !!$this->following()->where('followed_id', $user->id)->count();
-    // }
-
-    //  public function isFollowing(User $user)
-    //  {
-    //     log::info($user);
-    //     Log::info('Checking if user ' . auth()->id() . ' follows user ' . $user->id);
-    //     return $this->following()->where('followed_id', $user->id)->exists();
-    //  }
-    //  public function isFollowing(User $user)
-    //  {
-    //     return !!$this->following()->where('followed_id', $user->id)->count();
-    //  }
     public function block(User $user)
 {
     auth()->user()->blocks()->attach($user->id);
