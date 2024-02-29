@@ -47,7 +47,7 @@ class PostController extends Controller
     // return $view;
     // log::info($Posts);
     $jsonData = $filteredPosts->toJson();
-    return view('user.home-page', compact('jsonData'));
+    return view('user.home-page', compact('jsonData','user'));
 }
     /**
      * Show the form for creating a new resource.
