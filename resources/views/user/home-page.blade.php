@@ -11,6 +11,11 @@
 <!-- =====================post1==================== -->
 
 @section('content')
+ <head>
+ <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+ </head>
 
 
 
@@ -41,7 +46,7 @@
                 </div>
 
                 @foreach($post->media_urls as $media_url)
-                <img className="object-cover w-full" src="{{$media_url}}"/>
+                <img className="object-cover w-full" src="{{asset('storage/'.$media_url)}}"/>
                 @endforeach
                 {{-- <img className="object-cover w-full" src="{{$post->media_urls}}"/> --}}
 
@@ -102,6 +107,8 @@
 
 
                         <div class="flex items-center space-x-2 mb-2">
+                            @foreach($post->comments as $comment)
+                                <div>
                             @if($post->profile_photo_path==null)
                                 <img class="h-7 rounded-full object-cover"
                                      src="{{$post->profile_photo_url}}"
@@ -112,7 +119,10 @@
                                      alt="user-image" />
                             @endif
                             <p class="font-semibold">{{$post->user_handle}}</p>
-                            <p class="flex-1 truncate">{{$post->latest_comment}}</p>
+
+                            <p class="flex-1 truncate">{{$comment->comment}}</p>
+                                </div>
+                                @endforeach
                             <p>2 days ago</p>
                         </div>
                         <div class="flex items-center space-x-2 mb-2">
@@ -125,19 +135,21 @@
 
                 </div>
 
-                <!-- {/* Post input box */} -->
-                <form class="flex items-center p-4">
+                <!-- {/* comment input box */} -->
+                <form class="flex items-center p-4" action="{{route('posts.comment',$post->id)}}" method="post">
+                    @csrf
                     <input type="hidden" name="post_id" value="{{$post->id}}">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" fill="none" viewBox="0 0 24 24"
                          stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round"
                               d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
-                    <input class="border-none flex-1 focus:ring-0" type="text" placeholder="Enter your comment..." />
-                    <button class="text-blue-400 font-bold">Post</button>
+                    <input class="border-none flex-1 focus:ring-0" type="text" placeholder="Enter your comment..." name="comment"/>
+                    <button class="text-blue-400 font-bold" type="submit">Post</button>
                 </form>
             </div>
             @endforeach
+
             <!-- =================post2================ -->
 
 {{--            <div class="bg-white my-7 border rounded-md">--}}
@@ -234,25 +246,27 @@
 
         </section>
 
-     
+
 
         <section class="hidden md:inline-grid md:col-span-1">
             <div class="w-[380px] fixed">
-                <div class="flex items-center justify-between mt-14 ml-10">
-                    @if($post->profile_photo_path==null)
+                <div class="profile-image">
+                    @if($user->profile_photo_path==null)
                     <img class="h-16 rounded-full border p-[2px]"
-                         src="{{json_decode($jsonData)[0]->profile_photo_url}}" alt="user-image" />
+                         src="{{$user->profile_photo_url}}" alt="user-image" />
                     @else
                         <img class="h-16 rounded-full border p-[2px]"
-                             src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
+                             src="{{asset('storage/'.$user->profile_photo_path)}}" alt="user-image" />
                     @endif
                     <div class="flex-1 ml-4">
-                        <h2 class="font-mute">{{json_decode($jsonData)[0]->user_handle}}</h2>
+                        <h2 class="font-mute">{{$user->user_handle}}</h2>
                         <h3 class="text-sm text-gray-400">Welcome to instagram</h3>
                     </div>
 
                 </div>
-                </section>
+
+        </section>
+
     </main>
 
 @stop

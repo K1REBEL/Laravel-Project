@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
@@ -28,7 +29,7 @@ class PostController extends Controller
             'id' => $post->id,
             'caption' => $post->caption,
             'updated_at' => $post->updated_at,
-            'latest_comment' => $post->comments->sortByDesc('updated_at')->first(),
+            'comments' => $post->comments->sortByDesc('updated_at'),
             'comment_count' => $post->comments->count(),
             'like_count' => $post->likes->count(),
             'hashtag_names' => $post->hashtag->pluck('name'),
@@ -46,7 +47,7 @@ class PostController extends Controller
     // return $view;
     // log::info($Posts);
     $jsonData = $filteredPosts->toJson();
-    return view('user.home-page', compact('jsonData'));
+    return view('user.home-page', compact('jsonData','user'));
 }
     /**
      * Show the form for creating a new resource.
@@ -101,7 +102,7 @@ class PostController extends Controller
              'id' => $post->id,
              'caption' => $post->caption,
              'updated_at' => $post->updated_at,
-             'latest_comment' => $post->comments->sortByDesc('updated_at')->first(),
+             'comments' => $post->comments->sortByDesc('updated_at'),
              'comment_count' => $post->comments->count(),
              'like_count' => $post->likes->count(),
              'hashtag_names' => $post->hashtag->pluck('name'),
@@ -155,5 +156,20 @@ class PostController extends Controller
     {
         $post->likes()->where('user_id', auth()->id())->delete();
         return response()->json(['message' => 'Post unliked successfully']);
+    }
+
+    public function comments(Request $request ,  Post $post , User $user)
+    {
+        $userId = auth()->id();
+        $postId = $post->id;
+        $path = $user->profile_photo_path;
+        $url = $user->profile_photo_url;
+        Comment::create([
+            'comment' => $request->comment,
+            'post_id' => $postId,
+            'user_id' => $userId,
+        ]);
+        return redirect()->route('posts.index');
+
     }
 }

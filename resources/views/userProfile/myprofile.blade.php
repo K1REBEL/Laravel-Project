@@ -14,6 +14,18 @@
                 font-size: 2rem;
                 margin-left: 1rem;
             }
+            .photo-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+            }
+
+            .photo-container img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
         </style>
     </head>
 
@@ -87,23 +99,25 @@
             <!-- start of gallery container -->
             <div class="container">
                 <!-- start of gallery section -->
-                <div class="gallery">
+                <div class="gallery" class="photo-container">
 
                     @foreach(json_decode($jsonData) as $post)
                     <div style="background-color: red;" class="gallery-item" tabindex="0">
-
-                        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
+                        @foreach($post->media_urls as $media_url)
+                            {{info($post->media_urls)}}
+                        <img src="{{asset('storage/'.$media_url)}}"
                         class="gallery-image" alt="">
+                        @endforeach
 
                         <div class="gallery-item-info">
 
                             <ul>
 
                                 <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                                aria-hidden="true"></i> 56</li>
+                                aria-hidden="true"></i> {{$post->like_count}}</li>
 
                                 <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                                class="far fa-comment" aria-hidden="true"></i> 2</li>
+                                class="far fa-comment" aria-hidden="true"></i> {{$post->comment_count}}</li>
 
                                 <li class="gallery-item-save"><span class="visually-hidden"></span><i
                                 class="far fa-bookmark" aria-hidden="true"></i></li>
