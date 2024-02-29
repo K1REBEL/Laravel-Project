@@ -61,7 +61,7 @@ class UserController extends Controller
                 'id' => $post->id,
                 'caption' => $post->caption,
                 'updated_at' => $post->updated_at,
-                'latest_comment' => $post->comments->sortByDesc('updated_at')->first(),
+                'comments' => $post->comments->sortByDesc('updated_at'),
                 'comment_count' => $post->comments->count(),
                 'like_count' => $post->likes->count(),
                 'hashtag_names' => $post->hashtag->pluck('name'),
