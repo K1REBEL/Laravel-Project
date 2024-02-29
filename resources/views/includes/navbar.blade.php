@@ -30,6 +30,7 @@
         class="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md" />
 </div>
 
+
         <div class="flex space-x-4 items-center">
             <a href="{{route('posts.index')}}">
                 <svg xmlns="http://www.w3.org/2000/svg"

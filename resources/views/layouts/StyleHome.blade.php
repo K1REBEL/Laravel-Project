@@ -184,20 +184,12 @@ textarea {
     /* 1 */
     color: inherit;
     /* 1 */
-    margin: 0;
-    /* 2 */
-    padding: 0;
-    /* 3 */
+   
 }
 
 /*
 Remove the inheritance of text transform in Edge and Firefox.
 */
-
-button,
-select {
-    text-transform: none;
-}
 
 /*
 1. Correct the inability to style clickable types in iOS and Safari.
@@ -205,7 +197,7 @@ select {
 */
 
 button,
-[type='button'],
+
 [type='reset'],
 [type='submit'] {
     -webkit-appearance: button;
@@ -694,7 +686,7 @@ select {
 }
 
 .btn {
-    height: 1.75rem;
+   
     cursor: pointer;
     transition-property: transform;
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
@@ -1213,17 +1205,25 @@ div.hashtag-container {
     margin-left: 500px;
 }
 .profile-image {
-        float: left;
-        width: calc(33.333% - 1rem);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 5rem;
-        margin-top:50px ;
-    }
+    
+    float: left;
+    width: calc(33.333% - 1rem);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 5rem;
+    margin-top:50px ;
+}
 
-    .profile-image img {
-        border-radius: 60%;
-    }
+.profile-image img {
+    border-radius: 60%;
+}
+.tab-content {
 
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-top: none;
+   
+
+}
 </style>

@@ -55,7 +55,6 @@
         <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
         <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
     </div>
-
     <span class="cursor-pointer flex space-x-4">
         <i class="far fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
     </span>
@@ -221,13 +220,10 @@
 {{--        </div>--}}
 {{--        </div>--}}
 
-            <!-- {/* Post input box */} -->
-
-
         </section>
 
 
-
+ <!-- {/* Post input box */} -->
         <section class="hidden md:inline-grid md:col-span-1">
             <div class="w-[380px] fixed">
                 <div class="profile-image">
@@ -235,8 +231,8 @@
                     <img class="h-16 rounded-full border p-[2px]"
                          src="{{$user->profile_photo_url}}" alt="user-image" />
                     @else
-                        <img class="h-16 rounded-full border p-[2px]"
-                             src="{{asset('storage/'.$user->profile_photo_path)}}" alt="user-image" />
+                     <img class="h-16 rounded-full border p-[2px]"
+                    src="{{asset('storage/'.$user->profile_photo_path)}}" alt="user-image" />
                     @endif
                     <div class="flex-1 ml-4">
                     <h2 class="font-mute">{{$user->user_handle}}</h2>
@@ -248,6 +244,7 @@
         </section>
 
     </main>
+
 
     <script>
         function toggleIconFill(icon) {
