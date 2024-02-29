@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\ValidationException;
-
+use App\Models\Follower;
 class UserController extends Controller
 {
     /**
@@ -145,6 +145,7 @@ return view('userProfile.otherprofile',compact('user','post_count','follower_cou
     //  }
     public function block(User $user)
 {
+    auth()->user()->following()->detach($user->id);
     auth()->user()->blocks()->attach($user->id);
     return redirect()->back();
 }
