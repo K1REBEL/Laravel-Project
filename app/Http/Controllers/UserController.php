@@ -154,7 +154,8 @@ class UserController extends Controller
             $following = $user->following()->get();
             $blocked = $user->blocks()->get();
     
-            return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200); 
+            // return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200); 
+            return view('userProfile.social', compact('followers', 'following', 'blocked'));
             // For Alaa, Replace this return statement with the view/blade that you're developing
         }
 
