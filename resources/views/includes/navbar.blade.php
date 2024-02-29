@@ -91,6 +91,19 @@ instagram
                 </div>
             </div>
         </div>
+<div class="dropdown">
+<img src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="Cinque Terre" width="25" height="25">
+  <div class="dropdown-content">
+ <a href="{{route('users.show',auth()->id())}}"><div class="desc" >view profile</div></a>
+ <hr>
+ <a href="{{ route('logout') }}"
+    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><div class="desc">log out</div></a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          @csrf
+      </form>
+  </div>
+</div>
+</div>
 
     </div>
     </div>

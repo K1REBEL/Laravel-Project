@@ -37,8 +37,8 @@
 
                     <div class="profile-user-settings">
 
-                    <h1 class="profile-user-name">{{$user->user_handle}}</h1>
-                    <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
+                        <h1 class="profile-user-name">{{$user->user_handle}}</h1>
+                        <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
 
                     </div>
 
@@ -61,10 +61,16 @@
 
                     </div>
 
+                    <div class="profile-name">
+                        <p class="profile-real-name">{{$user->name}}</p>
+                    </div>
+
                     <div class="profile-bio">
+                        <p class="bio">{{$user->bio}}</p>
+                    </div>
 
-                    <p><span class="profile-real-name">{{$user->name}}</span> {{$user->bio}}</p>
-
+                    <div class="profile-website">
+                        <p class="website">{{$user->website}}</p>
                     </div>
 
                 </div>
