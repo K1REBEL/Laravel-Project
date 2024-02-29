@@ -136,7 +136,6 @@
                     <button class="text-blue-400 font-bold">Post</button>
                 </form>
             </div>
-            @endforeach
             <!-- =================post2================ -->
 
 {{--            <div class="bg-white my-7 border rounded-md">--}}
@@ -238,10 +237,10 @@
                 <div class="flex items-center justify-between mt-14 ml-10">
                     @if($post->profile_photo_path==null)
                     <img class="h-16 rounded-full border p-[2px]"
-                         src="{{json_decode($jsonData)[0]->profile_photo_url}}" alt="user-image" />
+                         src="{{$post->profile_photo_url}}" alt="user-image" />
                     @else
                         <img class="h-16 rounded-full border p-[2px]"
-                             src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
+                             src="{{asset('storage/'.$post->profile_photo_path)}}" alt="user-image" />
                     @endif
                     <div class="flex-1 ml-4">
                         <h2 class="font-mute">{{json_decode($jsonData)[0]->user_handle}}</h2>
@@ -249,6 +248,8 @@
                     </div>
 
                 </div>
+                @endforeach
+
     </main>
 
 @stop
