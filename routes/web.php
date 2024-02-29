@@ -108,10 +108,7 @@ Route::get('/user/home-page', function(){
 });
 
 
-Route::get('/user/followers', function(){
-    return view('user.followers');
-});
-
+Route::get('/users/{id}/social', [UserController::class, 'social'])->name('users.social'); //For Alaa, Use this route to access the page you're developing
 
 
 Route::get('/user/following', function(){

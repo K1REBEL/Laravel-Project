@@ -22,8 +22,16 @@ class PostController extends Controller
         $user = auth()->user();
         $followingIds = $user->following()->pluck('users.id');
         $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
-            ->with('comments','likes','hashtag','media','user')
+            ->with(['comments' => function ($query) {
+                $query->with(['user' => function ($query) {
+                    $query->select('id', 'user_handle', 'profile_photo_path'); // Select only the avatar URL
+                }]); // Eager load user's profile (including avatar)
+            },'likes','hashtag','media','user'])
             ->get();
+        // $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
+        //     ->with('comments','likes','hashtag','media','user')
+        //     ->get();
+        log::info($posts);
        $filteredPosts = collect($posts)->map(function ($post) {
         return [
             'id' => $post->id,

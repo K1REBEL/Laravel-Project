@@ -89,16 +89,16 @@
                         <div class="flex items-center space-x-2 mb-2">
                             @foreach($post->comments as $comment)
                                 <div>
-                            @if($post->profile_photo_path==null)
+                            @if($comment->user->profile_photo_path==null)
                                 <img class="h-7 rounded-full object-cover"
-                                     src="{{$post->profile_photo_url}}"
+                                     src="{{$comment->user->profile_photo_url}}"
                                      alt="user-image" />
                             @else
                                 <img class="h-7 rounded-full object-cover"
-                                     src="{{asset('storage/'.$post->profile_photo_path)}}"
+                                     src="{{asset('storage/'.$comment->user->profile_photo_path)}}"
                                      alt="user-image" />
                             @endif
-                            <p class="font-semibold">{{$post->user_handle}}</p>
+                            <p class="font-semibold">{{$comment->user->user_handle}}</p>
 
                             <p class="flex-1 truncate">{{$comment->comment}}</p>
                                 </div>
