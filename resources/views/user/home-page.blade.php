@@ -240,7 +240,7 @@
                     @endif
                     <div class="flex-1 ml-4">
                     <h2 class="font-mute">{{$user->user_handle}}</h2>
-                    <h3 class="text-sm text-gray-400">Welcome to instagram</h3> 
+                    <span class="inline-block"><h3 class="text-sm text-gray-400" style="margin-top:10px; white-space: nowrap;">Welcome to instagram</h3></span> 
 </div>
 
                 </div>
