@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\SearchController;
 use App\Http\Controllers\UserController;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -31,24 +32,24 @@ Route::get('/welcome', function () {
 //     'verified',
 // ])->resource('users', UserController::class);
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-});
+//Route::middleware([
+//    'auth:sanctum',
+//    config('jetstream.auth_session'),
+//    'verified',
+//])->group(function () {
+//    Route::get('/dashboard', function () {
+//        return view('dashboard');
+//    })->name('dashboard');
+//});
 
 
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified',
-// ])->group(function () {
-//     Route::redirect('/dashboard', '/users');
-// });
+ Route::middleware([
+     'auth:sanctum',
+     config('jetstream.auth_session'),
+     'verified',
+ ])->group(function () {
+     Route::redirect('/dashboard', '/posts');
+ });
 
 Route::middleware('auth')->group(function (){
 //    Route::resource('users',UserController::class);
@@ -59,11 +60,13 @@ Route::middleware('auth')->group(function (){
 Route::resource('users',UserController::class);
 Route::resource('posts',PostController::class);
 
-
+Route::get('/users/search', [UserController::class,'search'])->name('users.search');
+Route::post('/posts/{post}/comment',[PostController::class , 'comments'])->name('posts.comment');
 
 Route::get('/users/home', function(){
     return view('users.home');
 });
+Route::get('/posts/{id}', [PostController::class, 'show']);
 
 
 // Route::get('/users/follower', function(){
@@ -105,10 +108,7 @@ Route::get('/user/home-page', function(){
 });
 
 
-Route::get('/user/followers', function(){
-    return view('user.followers');
-});
-
+Route::get('/users/{id}/social', [UserController::class, 'social'])->name('users.social'); //For Alaa, Use this route to access the page you're developing
 
 
 Route::get('/user/following', function(){

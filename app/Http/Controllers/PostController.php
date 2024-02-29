@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Media;
+
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
@@ -17,13 +18,26 @@ class PostController extends Controller
      */
     public function index()
     {
-       $posts = Post::with('comments','likes','hashtag','media','user')->get();
+//       $posts = Post::with('comments','likes','hashtag','media','user')->get();
+        $user = auth()->user();
+        $followingIds = $user->following()->pluck('users.id');
+        $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
+            ->with(['comments' => function ($query) {
+                $query->with(['user' => function ($query) {
+                    $query->select('id', 'user_handle', 'profile_photo_path'); // Select only the avatar URL
+                }]); // Eager load user's profile (including avatar)
+            },'likes','hashtag','media','user'])
+            ->get();
+        // $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
+        //     ->with('comments','likes','hashtag','media','user')
+        //     ->get();
+        log::info($posts);
        $filteredPosts = collect($posts)->map(function ($post) {
         return [
             'id' => $post->id,
             'caption' => $post->caption,
             'updated_at' => $post->updated_at,
-            'latest_comment' => $post->comments->sortByDesc('updated_at')->first(),
+            'comments' => $post->comments->sortByDesc('updated_at'),
             'comment_count' => $post->comments->count(),
             'like_count' => $post->likes->count(),
             'hashtag_names' => $post->hashtag->pluck('name'),
@@ -31,6 +45,7 @@ class PostController extends Controller
             'user_id' => $post->user->id,
             'user_handle' => $post->user->user_handle,
             'profile_photo_url' => $post->user->profile_photo_url,
+            'profile_photo_path' =>$post->user->profile_photo_path
         ];
     });
     //    return response()->json($filteredPosts);
@@ -40,7 +55,7 @@ class PostController extends Controller
     // return $view;
     // log::info($Posts);
     $jsonData = $filteredPosts->toJson();
-    return view('user.home-page', compact('jsonData'));
+    return view('user.home-page', compact('jsonData','user'));
 }
     /**
      * Show the form for creating a new resource.
@@ -86,6 +101,7 @@ class PostController extends Controller
      */
     public function show(string $id)
     {
+        $user = User::findorfail($id);
         $posts = Post::with('comments', 'likes', 'hashtag', 'media', 'user')
             ->where('user_id', $id) // Add the WHERE condition
             ->get();
@@ -94,7 +110,7 @@ class PostController extends Controller
              'id' => $post->id,
              'caption' => $post->caption,
              'updated_at' => $post->updated_at,
-             'latest_comment' => $post->comments->sortByDesc('updated_at')->first(),
+             'comments' => $post->comments->sortByDesc('updated_at'),
              'comment_count' => $post->comments->count(),
              'like_count' => $post->likes->count(),
              'hashtag_names' => $post->hashtag->pluck('name'),
@@ -102,10 +118,11 @@ class PostController extends Controller
              'user_id' => $post->user->id,
              'user_handle' => $post->user->user_handle,
              'profile_photo_url' => $post->user->profile_photo_url,
+             'profile_photo_path' =>$post->user->profile_photo_path
          ];
      });
      $jsonData = $filteredPosts->toJson();
-     return view('userProfile.myprofile', compact('jsonData'));
+     return view('userProfile.myprofile', compact('jsonData', 'user'));
     }
 
     /**
@@ -147,5 +164,20 @@ class PostController extends Controller
     {
         $post->likes()->where('user_id', auth()->id())->delete();
         return response()->json(['message' => 'Post unliked successfully']);
+    }
+
+    public function comments(Request $request ,  Post $post , User $user)
+    {
+        $userId = auth()->id();
+        $postId = $post->id;
+        $path = $user->profile_photo_path;
+        $url = $user->profile_photo_url;
+        Comment::create([
+            'comment' => $request->comment,
+            'post_id' => $postId,
+            'user_id' => $userId,
+        ]);
+        return redirect()->route('posts.index');
+
     }
 }

@@ -14,6 +14,18 @@
                 font-size: 2rem;
                 margin-left: 1rem;
             }
+            .photo-container {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+                gap: 10px;
+            }
+
+            .photo-container img {
+                width: 100%;
+                height: auto;
+                border-radius: 8px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
         </style>
     </head>
 
@@ -29,16 +41,16 @@
 
                     <div class="profile-image">
                         @if($user->profile_photo_path==null)
-                            <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                            <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">
                         @else
-                            <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                            <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">
                         @endif
                     </div>
 
                     <div class="profile-user-settings">
 
-                    <h1 class="profile-user-name">{{$user->user_handle}}</h1>
-                    <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
+                        <h1 class="profile-user-name">{{$user->user_handle}}</h1>
+                        <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
 
                     </div>
 
@@ -61,10 +73,16 @@
 
                     </div>
 
+                    <div class="profile-name">
+                        <p class="profile-real-name">{{$user->name}}</p>
+                    </div>
+
                     <div class="profile-bio">
+                        <p class="bio">{{$user->bio}}</p>
+                    </div>
 
-                    <p><span class="profile-real-name">{{$user->name}}</span> {{$user->bio}}</p>
-
+                    <div class="profile-website">
+                        <p class="website">{{$user->website}}</p>
                     </div>
 
                 </div>
@@ -81,22 +99,25 @@
             <!-- start of gallery container -->
             <div class="container">
                 <!-- start of gallery section -->
-                <div class="gallery">
+                <div class="gallery" class="photo-container">
 
-                    <div class="gallery-item" tabindex="0">
-
-                        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
+                    @foreach(json_decode($jsonData) as $post)
+                    <div style="background-color: red;" class="gallery-item" tabindex="0">
+                        @foreach($post->media_urls as $media_url)
+                            {{info($post->media_urls)}}
+                        <img src="{{asset('storage/'.$media_url)}}"
                         class="gallery-image" alt="">
+                        @endforeach
 
                         <div class="gallery-item-info">
 
                             <ul>
 
                                 <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                                aria-hidden="true"></i> 56</li>
+                                aria-hidden="true"></i> {{$post->like_count}}</li>
 
                                 <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                                class="far fa-comment" aria-hidden="true"></i> 2</li>
+                                class="far fa-comment" aria-hidden="true"></i> {{$post->comment_count}}</li>
 
                                 <li class="gallery-item-save"><span class="visually-hidden"></span><i
                                 class="far fa-bookmark" aria-hidden="true"></i></li>
@@ -105,9 +126,8 @@
 
                         </div>
 
-
-
                     </div>
+                    @endforeach
                 </div>
                 <!-- end of gallery section -->
             </div>

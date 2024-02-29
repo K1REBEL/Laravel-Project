@@ -29,25 +29,19 @@
                         @method('PUT')
                         <div class="image-container">
                         @if($user->profile_photo_path==null)
-                        <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
-                                <span class="add-new-image">change profile picture...</span>
-                                <label for="fileInput">
-                                    <i class="bi bi-plus-circle-fill"></i>
-                                </label>
-                                <input type="file" class="form-control d-none" id="fileInput" name="image" >
-                        @else
-                            <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
+                        <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar" id="imagePreview"  style="width: 150px; height: 150px;">
+                            @else
+                                <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar" id="imagePreview" style="width: 150px; height: 150px;">
+                            @endif
                             <span class="add-new-image">change profile picture...</span>
                         <label for="fileInput">
-                          <i class="bi bi-plus-circle-fill"></i>
+                          <i class="bi bi-plus-circle-fill" id="addImageIcon"></i>
                         </label>
-                        <input type="file" class="form-control d-none" id="image" name="image" >
-                            @endif
+                        <input type="file" class="form-control d-none" id="image" name="image" accept="image/*" onchange="previewImage(event)">
                     </div>
                 </div>
             </div>
         </div>
-
 
         <div class="row justify-content-center">
 
@@ -81,7 +75,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Choose gender</label>
+{{--                                <label for="">Choose gender</label>--}}
                             <select class="form-select" name="gender">
                                 @if($user->gender=='male')
 {{--                                    <option selected>Choose gender</option>--}}
@@ -112,4 +106,15 @@
     </div>
 </body>
 </html>
+<script>
+   // Function to open gallery when the + icon is clicked
+   document.getElementById('addImageIcon').addEventListener('click', function() {
+        document.getElementById('image').click();
+    });
 
+    // Function to preview the selected image
+    function previewImage(event) {
+        var image = document.getElementById('imagePreview');
+        image.src = URL.createObjectURL(event.target.files[0]);
+    }
+</script>

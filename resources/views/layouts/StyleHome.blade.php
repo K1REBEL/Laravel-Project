@@ -397,7 +397,7 @@ object {
     display: block;
     /* 1 */
     vertical-align: middle;
-    /* 2 */
+    2
 }
 
 /*
@@ -1194,4 +1194,36 @@ select {
         max-width: 72rem;
     }
 }
+
+
+span.hashtag {
+    display: inline-block;
+    font-weight: bold;
+    color: #007bff;
+}
+
+div.hashtag-container {
+    border: 1px solid #ccc;
+    display: inline-block;
+    margin-top: 3px;
+}
+
+.hashtags {
+
+    margin-left: 500px;
+}
+.profile-image {
+        float: left;
+        width: calc(33.333% - 1rem);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 5rem;
+        margin-top:50px ;
+    }
+
+    .profile-image img {
+        border-radius: 60%;
+    }
+
 </style>
