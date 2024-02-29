@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
 use App\Models\Follower;
+use Carbon\Carbon;
+
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -49,19 +51,25 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::where('id', $id)->get()->first();
-        log::info($user);
+        // log::info($user);
         $follower_count = $user->followers()->count();
         $following_count = $user->following()->count();
         $post_count = $user->post()->count();
 
-        $posts = Post::with('comments', 'likes', 'hashtag', 'media', 'user')
-            ->where('user_id', $id) // Add the WHERE condition
-            ->get();
+        $posts = Post::where('user_id', $id)
+        ->with(['comments' => function ($query) {
+            $query->with(['user' => function ($query) {
+                $query->select('id', 'user_handle', 'profile_photo_path');
+            }]);
+        },'likes','hashtag','media','user'])
+        ->get();
         $filteredPosts = collect($posts)->map(function ($post) {
+            $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
             return [
                 'id' => $post->id,
                 'caption' => $post->caption,
                 'updated_at' => $post->updated_at,
+                'time_since_update' => $timeSinceUpdate,
                 'comments' => $post->comments->sortByDesc('updated_at'),
                 'comment_count' => $post->comments->count(),
                 'like_count' => $post->likes->count(),
@@ -76,9 +84,9 @@ class UserController extends Controller
         $jsonData = $filteredPosts->toJson();
 
         if ($user->id === auth()->id()) {
-            return view('userProfile.myprofile',compact('user','post_count','follower_count','following_count', 'jsonData'));
+            return view('userProfile.myprofile', compact('user','post_count','follower_count','following_count', 'jsonData'));
         }else{
-            return view('userProfile.otherprofile',compact('user','post_count','follower_count','following_count', 'jsonData'));
+            return view('userProfile.otherprofile', compact('user','post_count','follower_count','following_count', 'jsonData'));
         }
        }
 
@@ -161,6 +169,7 @@ class UserController extends Controller
 
     public function block(User $user)
 {
+    auth()->user()->following()->detach($user->id);
     auth()->user()->blocks()->attach($user->id);
     return redirect()->back();
 }

@@ -7,6 +7,8 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
+use Carbon\Carbon;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -24,30 +26,32 @@ class PostController extends Controller
         $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
             ->with(['comments' => function ($query) {
                 $query->with(['user' => function ($query) {
-                    $query->select('id', 'user_handle', 'profile_photo_path'); // Select only the avatar URL
-                }]); // Eager load user's profile (including avatar)
+                    $query->select('id', 'user_handle', 'profile_photo_path');
+                }]);
             },'likes','hashtag','media','user'])
             ->get();
         // $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
         //     ->with('comments','likes','hashtag','media','user')
         //     ->get();
-        log::info($posts);
-       $filteredPosts = collect($posts)->map(function ($post) {
-        return [
-            'id' => $post->id,
-            'caption' => $post->caption,
-            'updated_at' => $post->updated_at,
-            'comments' => $post->comments->sortByDesc('updated_at'),
-            'comment_count' => $post->comments->count(),
-            'like_count' => $post->likes->count(),
-            'hashtag_names' => $post->hashtag->pluck('name'),
-            'media_urls' => $post->media->pluck('url'),
-            'user_id' => $post->user->id,
-            'user_handle' => $post->user->user_handle,
-            'profile_photo_url' => $post->user->profile_photo_url,
-            'profile_photo_path' =>$post->user->profile_photo_path
-        ];
-    });
+        // log::info($posts);
+        $filteredPosts = collect($posts)->map(function ($post) {
+            $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
+            return [
+                'id' => $post->id,
+                'caption' => $post->caption,
+                'updated_at' => $post->updated_at,
+                'time_since_update' => $timeSinceUpdate,
+                'comments' => $post->comments->sortByDesc('updated_at'),
+                'comment_count' => $post->comments->count(),
+                'like_count' => $post->likes->count(),
+                'hashtag_names' => $post->hashtag->pluck('name'),
+                'media_urls' => $post->media->pluck('url'),
+                'user_id' => $post->user->id,
+                'user_handle' => $post->user->user_handle,
+                'profile_photo_url' => $post->user->profile_photo_url,
+                'profile_photo_path' =>$post->user->profile_photo_path
+            ];
+        });
     //    return response()->json($filteredPosts);
    //  $jsonData = $filteredPosts->toJson();
     // $view = view('users.home')->with('data', $filteredPosts);
@@ -103,7 +107,7 @@ class PostController extends Controller
     {
         $user = User::findorfail($id);
         $posts = Post::with('comments', 'likes', 'hashtag', 'media', 'user')
-            ->where('user_id', $id) // Add the WHERE condition
+            ->where('user_id', $id)
             ->get();
         $filteredPosts = collect($posts)->map(function ($post) {
          return [

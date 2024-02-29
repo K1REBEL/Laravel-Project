@@ -102,7 +102,7 @@
                             <p class="flex-1 truncate">{{$comment->comment}}</p>
                                 </div>
                                 @endforeach
-                            <p>2 days ago</p>
+                            <p>{{$post->time_since_update}}</p>
                         </div>
                         <div class="flex items-center space-x-2 mb-2">
                             <img class="h-7 rounded-full object-cover"
@@ -110,7 +110,7 @@
                             <p class="font-semibold">omar</p>
                             <p class="flex-1 truncate">great!</p>
                         </div>
-                        <p>{{$post->updated_at}}</p>
+                        {{-- <p>{{$post->updated_at}}</p> --}}
 
                 </div>
 
