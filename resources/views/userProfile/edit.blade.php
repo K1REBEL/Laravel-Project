@@ -27,18 +27,23 @@
                     <form class="form-horizontal" role="form" action="{{route("users.update",$user->id)}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-                        <div class="image-container">
-                        @if($user->profile_photo_path==null)
-                        <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
-                            @else
-                                <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar">
-                            @endif
-                            <span class="add-new-image">change profile picture...</span>
-                        <label for="fileInput">
-                          <i class="bi bi-plus-circle-fill"></i>
-                        </label>
-                        <input type="file" class="form-control d-none" id="image" name="image" >
-                    </div>
+                        <div class="text-center">
+                            <form class="form-horizontal" role="form" action="{{route("users.update",$user->id)}}" method="POST" enctype="multipart/form-data">
+                                @csrf
+                                @method('PUT')
+                                <div class="image-container">
+                                    @if($user->profile_photo_path==null)
+                                        <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar" id="imagePreview"  style="width: 150px; height: 150px;">
+                                    @else
+                                        <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar" id="imagePreview" style="width: 150px; height: 150px;">
+                                    @endif
+                                    <span class="add-new-image">change profile picture...</span>
+                                    <label for="fileInput">
+                                        <i class="bi bi-plus-circle-fill" id="addImageIcon"></i>
+                                    </label>
+                                    <input type="file" class="form-control d-none" id="image" name="image" accept="image/*" onchange="previewImage(event)">
+                                </div>
+                        </div>
                 </div>
             </div>
         </div>
@@ -105,6 +110,18 @@
             </div>
         </div>
     </div>
+    <script>
+        // Function to open gallery when the + icon is clicked
+        document.getElementById('addImageIcon').addEventListener('click', function() {
+            document.getElementById('image').click();
+        });
+
+        // Function to preview the selected image
+        function previewImage(event) {
+            var image = document.getElementById('imagePreview');
+            image.src = URL.createObjectURL(event.target.files[0]);
+        }
+    </script>
 </body>
 </html>
 

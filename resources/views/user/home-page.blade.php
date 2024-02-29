@@ -236,7 +236,7 @@
         <section class="hidden md:inline-grid md:col-span-1">
             <div class="w-[380px] fixed">
                 <div class="flex items-center justify-between mt-14 ml-10">
-                    @if($post->profile_photo_path==null)
+                    @if(json_decode($jsonData)[0]->profile_photo_path==null)
                     <img class="h-16 rounded-full border p-[2px]"
                          src="{{json_decode($jsonData)[0]->profile_photo_url}}" alt="user-image" />
                     @else

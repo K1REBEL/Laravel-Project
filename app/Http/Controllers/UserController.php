@@ -48,7 +48,7 @@ class UserController extends Controller
     public function show(string $id)
     {
         $user = User::where('id', $id)->get()->first();
-        log::info($user);        
+        log::info($user);
         $follower_count = $user->followers()->count();
         $following_count = $user->following()->count();
         $post_count = $user->post()->count();
@@ -114,7 +114,7 @@ class UserController extends Controller
                     $user->save();
 //                    $user->update();
             }
-        return redirect()->route('users.index');
+        return redirect()->route('users.show',auth()->id());
     }}
 
     /**
