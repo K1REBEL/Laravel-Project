@@ -31,18 +31,22 @@ instagram
 </div>
 
 <div class="flex space-x-4 items-center">
+    <a href="{{route('posts.index')}}">
     <svg xmlns="http://www.w3.org/2000/svg"
         class="hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
         viewBox="0 0 20 20" fill="currentColor">
         <path
             d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
     </svg>
+    </a>
+    <a href="{{route('posts.create')}}">
     <svg xmlns="http://www.w3.org/2000/svg"
         class="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" fill="none"
         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
         <path stroke-linecap="round" stroke-linejoin="round"
             d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
     </svg>
+    </a>
     <!-- ------------------- style drop down------------------------ -->
     <style>
 .dropdown {
@@ -74,9 +78,13 @@ instagram
 <div class="dropdown">
 <img src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="Cinque Terre" width="25" height="25">
   <div class="dropdown-content">
- <a href="#"><div class="desc" >view profile</div></a>
+ <a href="{{route('users.show',auth()->id())}}"><div class="desc" >view profile</div></a>
  <hr>
- <a href=""><div class="desc">log out</div></a> 
+ <a href="{{ route('logout') }}"
+    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><div class="desc">log out</div></a>
+      <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+          @csrf
+      </form>
   </div>
 </div>
 </div>

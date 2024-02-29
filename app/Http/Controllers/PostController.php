@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 
+use App\Models\Media;
 use App\Models\Post;
 use App\Models\User;
 //use App\Models\Media;
@@ -17,7 +18,12 @@ class PostController extends Controller
      */
     public function index()
     {
-       $posts = Post::with('comments','likes','hashtag','media','user')->get();
+//       $posts = Post::with('comments','likes','hashtag','media','user')->get();
+        $user = auth()->user();
+        $followingIds = $user->following()->pluck('users.id');
+        $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
+            ->with('comments','likes','hashtag','media','user')
+            ->get();
        $filteredPosts = collect($posts)->map(function ($post) {
         return [
             'id' => $post->id,
@@ -104,6 +110,7 @@ class PostController extends Controller
              'user_id' => $post->user->id,
              'user_handle' => $post->user->user_handle,
              'profile_photo_url' => $post->user->profile_photo_url,
+             'profile_photo_path' =>$post->user->profile_photo_path
          ];
      });
      $jsonData = $filteredPosts->toJson();
