@@ -76,7 +76,7 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label for="">Choose gender</label>
+{{--                                <label for="">Choose gender</label>--}}
                             <select class="form-select" name="gender">
                                 @if($user->gender=='male')
 {{--                                    <option selected>Choose gender</option>--}}
