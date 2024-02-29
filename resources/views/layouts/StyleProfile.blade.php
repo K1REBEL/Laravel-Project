@@ -89,9 +89,12 @@
 
     .profile-user-settings,
     .profile-stats,
-    .profile-bio {
+    .profile-bio,
+    .profile-name,
+    .profile-website  {
         float: left;
         width: calc(66.666% - 2rem);
+        margin-top: 2rem;
     }
 
     .profile-user-name {
@@ -117,6 +120,13 @@
         font-weight: 400;
         line-height: 1.5;
         margin-top: 2.3rem;
+    }
+    
+    .profile-website {
+    margin-top: 2rem;
+    font-size: 1.3rem;
+    font-weight: 200;
+    line-height: 1.5;
     }
 
     .profile-real-name,

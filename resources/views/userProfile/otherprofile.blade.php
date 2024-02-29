@@ -8,139 +8,22 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+    @extends('layouts.StyleProfile')
     <style>
-        :root {
-            font-size: 10px;
-        }
-
-        *,
-        *::before,
-        *::after {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Open Sans", Arial, sans-serif;
-            min-height: 100vh;
-            background-color: #fafafa;
-            color: #262626;
-            padding-bottom: 3rem;
-        }
-
-        img {
-            display: block;
-        }
-
-        .container {
-            max-width: 93.5rem;
-            margin: 0 auto;
-            padding: 0 2rem;
-        }
-
-        .btn {
-            display: inline-block;
-            font: inherit;
-            background: none;
-            border: none;
-            color: inherit;
-            padding: 0;
-            cursor: pointer;
-        }
-
-        .btn:focus {
-            outline: 0.5rem auto #4d90fe;
-        }
-
-        .visually-hidden {
-            position: absolute !important;
-            height: 1px;
-            width: 1px;
-            overflow: hidden;
-            clip: rect(1px, 1px, 1px, 1px);
-        }
 
 /* Profile Section */
-.profile {
-    padding: 3rem 0;
-}
 
-.profile::after {
-    content: "";
-    display: block;
-    clear: both;
-}
 
-.profile-image {
-    float: left;
-    width: calc(33.333% - 1rem);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-right: 3rem;
-}
-
-.profile-image img {
-    border-radius: 50%;
-}
-
-.profile-user-settings,
-.profile-stats,
-.profile-bio,
-.profile-name,
-.profile-website {
-    float: left;
-    width: calc(66.666% - 2rem);
-    margin-top: 2rem;
-}
-
-.profile-user-settings {
-    margin-top: 7rem;
-}
-
-.profile-user-name {
-    display: inline-block;
-    font-size: 3.2rem;
-    font-weight: 300;
-}
-
-.profile-stats li {
-    display: inline-block;
-    font-size: 1.6rem;
-    line-height: 2;
-    margin-right: 4rem;
-    cursor: pointer;
-}
-
-.profile-stats li:last-of-type {
-    margin-right: 0;
-}
-
+/* ----^----  */
 .profile-name {
     margin-top: 4rem;
     font-size: 1.6rem;
     font-weight: 200;
     line-height: 1.5;
 }
+/* -----------^--------- */
 
-.profile-bio {
-    font-size: 1.6rem;
-    font-weight: 400;
-    line-height: 1.5;
-    margin-top: 2rem;
-}
-
-.profile-website {
-    margin-top: 2rem;
-    font-size: 1.3rem;
-    font-weight: 200;
-    line-height: 1.5;
-}
-
-.profile-real-name,
-.profile-stat-count {
-    font-weight: 600;
-}
-
+/* ?  */
 .add-new-image {
     margin-top: 10px;
     display: block;
@@ -503,39 +386,58 @@
 </head>
 
 <body>
+<!-- ---------------------------------------------header profile---------------------------------->
 <header>
+    <!-- start of profile container -->
     <div class="container">
+        <!-- start of profile section -->    
         <div class="profile">
+
             <div class="profile-image">
-                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" alt="Profile Image">
+
+                <img src="https://images.unsplash.com/photo-1513721032312-6a18a42c8763?w=152&h=152&fit=crop&crop=faces" 
+                alt="Profile Image">
+
             </div>
+
             <div class="profile-user-settings">
                 <h1 class="profile-user-name">{{ $user->user_handle }}</h1>
             </div>
+
             <div class="profile-stats">
+
                 <ul>
                     <li><span class="profile-stat-count">164</span> posts</li>
                     <li><span class="profile-stat-count">188</span> followers</li>
                     <li><span class="profile-stat-count">206</span> following</li>
                 </ul>
+
             </div>
+
+
             <div class="profile-name">
                 <p class="profile-real-name">{{$user->name}}</p>
             </div>
+
             <div class="profile-bio">
                 <p class="bio">{{$user->bio}}</p>
             </div>
+
             <div class="profile-website">
                 <p class="website">{{$user->website}}</p>
             </div>
 
 
         </div>
+        <!-- End of profile section -->
+
+        <!-- -----------------------follow/block------------------------------------ -->
         <div class="button-container">
+
             @if (Auth::user()->id != $user->id)
-{{--                {{ info($user) }}--}}
+                {{--{{ info($user) }}--}}
                 @if (!Auth::user()->isFollowing($user))
-{{--                    {{ info($user->isFollowing($user)) }}--}}
+                {{--{{ info($user->isFollowing($user)) }}--}}
                     <form action="{{ route('users.follow', $user->id) }}" method="POST">
                         @csrf
                         <button type="submit" class="follow-btn">Follow</button>
@@ -548,37 +450,47 @@
                 @endif
             @endif
             <button class="block-btn">Block</button>
+
         </div>
+        
     </div>
+    <!-- End of profile container -->
+
 </header>
 
-
+    <!-----------------------------------------gallery------------------------------------------------->
     <main>
+        <!-- start of gallery container -->
         <div class="container">
+            <!-- start of gallery section -->
             <div class="gallery">
-                <div class="gallery-item" tabindex="0">
-                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
-                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
-                        </ul>
-                    </div>
 
+                <div class="gallery-item" tabindex="0">
+
+                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" 
+                    class="gallery-image" alt="Gallery Image">
+                    
+                    <div class="gallery-item-info">
+
+                        <ul>
+
+                           <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
+                            aria-hidden="true"></i> 56</li>
+
+                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i
+                            class="far fa-comment" aria-hidden="true"></i> 2</li>
+
+                            <li class="gallery-item-save"><span class="visually-hidden"></span><i
+                            class="far fa-bookmark" aria-hidden="true"></i></li>
+
+                        </ul>
+
+                    </div>
                 </div>
-
-                <div class="gallery-item" tabindex="0">
-                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
-                    <div class="gallery-item-info">
-                        <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
-                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
-                        </ul>
-                    </div>
             </div>
+            <!-- end of gallery section -->
         </div>
+        <!-- end of gallery container -->
     </main>
 
     <!-----------------------------------------popup------------------------------------------------->
@@ -611,5 +523,5 @@
 
     <!-- ---------------------------------------------popupJS--------------------------------------->
     @extends('layouts.PopupJS')
-</body>
+    </body>
 </html>
