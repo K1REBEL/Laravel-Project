@@ -61,6 +61,7 @@ Route::resource('users',UserController::class);
 Route::resource('posts',PostController::class);
 
 Route::get('/users/search', [UserController::class,'search'])->name('users.search');
+Route::post('/posts/{post}/comment',[PostController::class , 'comments'])->name('posts.comment');
 
 Route::get('/users/home', function(){
     return view('users.home');
