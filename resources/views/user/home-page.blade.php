@@ -41,7 +41,7 @@
                 </div>
 
                 @foreach($post->media_urls as $media_url)
-                <img className="object-cover w-full" src="{{$media_url}}"/>
+                <img className="object-cover w-full" src="{{asset('storage/'.$media_url)}}"/>
                 @endforeach
                 {{-- <img className="object-cover w-full" src="{{$post->media_urls}}"/> --}}
 
