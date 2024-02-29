@@ -102,6 +102,7 @@
 
 
                         <div class="flex items-center space-x-2 mb-2">
+                            @foreach($post->comments as $comment)
                             @if($post->profile_photo_path==null)
                                 <img class="h-7 rounded-full object-cover"
                                      src="{{$post->profile_photo_url}}"
@@ -112,7 +113,7 @@
                                      alt="user-image" />
                             @endif
                             <p class="font-semibold">{{$post->user_handle}}</p>
-                                @foreach($post->comments as $comment)
+
                             <p class="flex-1 truncate">{{$comment->comment}}</p>
                                 @endforeach
                             <p>2 days ago</p>
@@ -140,7 +141,6 @@
                     <button class="text-blue-400 font-bold" type="submit">Post</button>
                 </form>
             </div>
-            @endforeach
             <!-- =================post2================ -->
 
 {{--            <div class="bg-white my-7 border rounded-md">--}}
@@ -244,18 +244,21 @@
                 <div class="flex items-center justify-between mt-14 ml-10">
                     @if($post->profile_photo_path==null)
                     <img class="h-16 rounded-full border p-[2px]"
-                         src="{{json_decode($jsonData)[0]->profile_photo_url}}" alt="user-image" />
+                         src="{{$post->profile_photo_url}}" alt="user-image" />
                     @else
                         <img class="h-16 rounded-full border p-[2px]"
-                             src="{{asset('storage/'.json_decode($jsonData)[0]->profile_photo_path)}}" alt="user-image" />
+                             src="{{asset('storage/'.$post->profile_photo_path)}}" alt="user-image" />
                     @endif
                     <div class="flex-1 ml-4">
-                        <h2 class="font-mute">{{json_decode($jsonData)[0]->user_handle}}</h2>
+                        <h2 class="font-mute">{{$post->user_handle}}</h2>
                         <h3 class="text-sm text-gray-400">Welcome to instagram</h3>
                     </div>
 
                 </div>
-                </section>
+            @endforeach
+
+        </section>
+
     </main>
 
 @stop

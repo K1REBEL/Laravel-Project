@@ -158,14 +158,16 @@ class PostController extends Controller
         return response()->json(['message' => 'Post unliked successfully']);
     }
 
-    public function comments(Request $request ,  Post $post)
+    public function comments(Request $request ,  Post $post , User $user)
     {
         $userId = auth()->id();
         $postId = $post->id;
+        $path = $user->profile_photo_path;
+        $url = $user->profile_photo_url;
         Comment::create([
             'comment' => $request->comment,
             'post_id' => $postId,
-            'user_id' => $userId
+            'user_id' => $userId,
         ]);
         return redirect()->route('posts.index');
 
