@@ -204,7 +204,9 @@ Savedpost::create([
 // return response()->json(['message' => 'Post saved successfully']);
 }
 else{
-return response()->json(['message' => 'Post already saved']);
+// return response()->json(['message' => 'Post already saved']);
+return redirect()->route('posts.retreive');
+
 }
 return redirect()->route('posts.index');
 

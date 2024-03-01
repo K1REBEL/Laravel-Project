@@ -140,4 +140,5 @@ Route::get('/create', function () {
 
 // Route::post('/posts/save/{post}', [PostController::class, 'savepost'])->name('posts.save');
 Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('posts.save');
+Route::get('/retreive', [PostController::class, 'retreiveSavedposts'])->name('posts.retreive');
 
