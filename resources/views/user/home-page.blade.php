@@ -55,10 +55,14 @@
             <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
             <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
         </div>
-        <span class="cursor-pointer flex space-x-4">
-            <i class="far fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
-        </span>
-    </div>
+        <form action="{{route('posts.save',$post->id)}}" method="POST">
+            @csrf
+            <span class="cursor-pointer flex space-x-4">
+                <button type="submit"><i class="far fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                </button></span>
+    
+        </form>
+           </div>
 
     <!-- {/* Post comments */} -->
     <div id="imageContainer" class="flex flex-wrap justify-center"></div>

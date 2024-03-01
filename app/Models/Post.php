@@ -48,5 +48,10 @@ class Post extends Model
         return $this->hasMany(Media::class);
 
     }
+    public function savedpost()
+    {
+        return $this->belongsTo(Savedpost::class);
+
+    }
 
 }

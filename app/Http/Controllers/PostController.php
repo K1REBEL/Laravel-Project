@@ -7,6 +7,7 @@ use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
+use App\Models\Savedpost;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -184,4 +185,45 @@ class PostController extends Controller
         return redirect()->route('posts.index');
 
     }
+    public function savepost(Request $request ,  Post $post )
+    {
+        $postId = $post->id;
+        $userId = auth()->id();
+        Log::info($userId);
+
+        $existingSavedPost = Savedpost::where('post_id', $post->id)
+        ->where('user_id', $userId)
+        ->exists();
+
+if (!$existingSavedPost) {
+Savedpost::create([
+'post_id' => $post->id,
+'user_id' => $userId,
+]);
+
+// return response()->json(['message' => 'Post saved successfully']);
 }
+else{
+return response()->json(['message' => 'Post already saved']);
+}
+return redirect()->route('posts.index');
+
+}    
+   public function retreiveSavedposts(){
+
+    $userId = auth()->id();
+    Log::info($userId);
+
+    $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
+    $formattedSavedPosts = $savedPosts->map(function ($savedPost) {       
+        return[
+            'post_id'=>$savedPost->post->id,
+            'caption' => $savedPost->post->caption,
+
+        ];
+
+      
+    });
+    return response()->json($formattedSavedPosts);
+}
+   }
