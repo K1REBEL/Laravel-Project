@@ -48,6 +48,7 @@ class PostController extends Controller
                 'comment_count' => $post->comments->count(),
                 'like_count' => $post->likes->count(),
                 'is_liked' => $post->isliked(),
+                'is_saved' => $post->is_saved(),
                 'hashtag_names' => $post->hashtag->pluck('name'),
                 'media_urls' => $post->media->pluck('url'),
                 'user_id' => $post->user->id,
@@ -206,8 +207,21 @@ class PostController extends Controller
                 'user_id' => $userId,
             ]);
             // return response()->json(['message' => 'Post saved successfully']);
-        } else { return response()->json(['message' => 'Post already saved']); }
+        } else { return redirect()->route('posts.index'); }
+        // } else { return response()->json(['message' => 'Post already saved']); }
 
+        return redirect()->route('posts.index');
+    }    
+
+    public function unsavepost(Post $post)
+    {
+        $postId = $post->id;
+        $userId = auth()->id();
+
+        $existingSavedPost = Savedpost::where('post_id', $postId)
+            ->where('user_id', $userId);
+
+        if($existingSavedPost){ $existingSavedPost->delete(); }
         return redirect()->route('posts.index');
     }    
 

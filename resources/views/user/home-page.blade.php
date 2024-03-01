@@ -71,13 +71,28 @@
             {{-- <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i> --}}
             <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
         </div>
-        <form action="{{route('posts.save',$post->id)}}" method="POST">
+        @if($post->is_saved == true)
+        <form action="{{route('posts.unsave', $post->id)}}" method="POST">
+            @csrf
+            @method('delete')
+            <span class="cursor-pointer flex space-x-4">
+                <button type="submit"><i class="fas fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                </button></span>
+        </form>
+        @elseif($post->is_saved == false)
+        <form action="{{route('posts.save', $post->id)}}" method="POST">
             @csrf
             <span class="cursor-pointer flex space-x-4">
                 <button type="submit"><i class="far fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
                 </button></span>
-    
         </form>
+        @endif
+        {{-- <form action="{{route('posts.save',$post->id)}}" method="POST">
+            @csrf
+            <span class="cursor-pointer flex space-x-4">
+                <button type="submit"><i class="far fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                </button></span>
+        </form> --}}
            </div>
 
     <!-- {/* Post comments */} -->

@@ -25,32 +25,17 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
-    // public function isliked(Post $post)
-    // {
-    //     // dd($user);
-    //         $likeEntry = Like::where('user_id', auth()->id())
-    //             ->where('post_id', $post->id)
-    //             ->first();
 
-    //             // dd($followerEntry);
-    //         if($likeEntry){
-    //             return true;
-    //         }else{ return false; }
-        
-    // }
     public function isliked()
     {
-        // dd($user);
             $likeEntry = Like::where('user_id', auth()->id())
                 ->where('post_id', $this->id)
                 ->first();
 
-                // dd($followerEntry);
-            if($likeEntry){
-                return true;
-            }else{ return false; }
-        
+            if($likeEntry){ return true; }
+            else { return false; }
     }
+
     public function hashtag()
     {
         return $this->hasMany(Hashtag::class);
@@ -61,10 +46,19 @@ class Post extends Model
         return $this->hasMany(Media::class);
 
     }
+
     public function savedpost()
     {
         return $this->belongsTo(Savedpost::class);
-
     }
 
+    public function is_saved()
+    {
+            $saved = Savedpost::where('user_id', auth()->id())
+                ->where('post_id', $this->id)
+                ->first();
+
+            if($saved){ return true; }
+            else { return false; }
+    }
 }
