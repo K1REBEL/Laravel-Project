@@ -80,7 +80,6 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::post('posts/{post}/like',[PostController::class,'like'] )->name('posts.like');
 Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('posts.unlike');
 
-
 Route::post('users/{user}/follow',[UserController::class,'follow'])->name('users.follow');
 Route::post('users/{user}/unfollow',[UserController::class,'unfollow'])->name('users.unfollow');
 
@@ -141,4 +140,5 @@ Route::get('/create', function () {
 // Route::post('/posts/save/{post}', [PostController::class, 'savepost'])->name('posts.save');
 Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('posts.save');
 Route::get('/retreive', [PostController::class, 'retreiveSavedposts'])->name('posts.retreive');
+Route::delete('/posts/{post}/unsave', [PostController::class, 'unsavepost'])->name('posts.unsave');
 
