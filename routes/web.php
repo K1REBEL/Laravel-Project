@@ -137,3 +137,7 @@ Route::get('/profile/user', function () {
 Route::get('/create', function () {
     return view('userProfile.createpost');
 });
+
+// Route::post('/posts/save/{post}', [PostController::class, 'savepost'])->name('posts.save');
+Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('posts.save');
+
