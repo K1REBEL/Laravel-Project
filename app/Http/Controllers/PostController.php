@@ -74,13 +74,13 @@ class PostController extends Controller
         // return view('userProfile.createpost');
 
         $users = auth()->id();
-        return view('userProfile.createpost',compact('users'));
+        return view('userProfile.createpost', compact('users'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,Media $media)
+    public function store(Request $request, Media $media)
     {
         // Log::info('hello');
         $userId = auth()->id();
@@ -88,6 +88,15 @@ class PostController extends Controller
             'caption' => $request->caption,
             'user_id' => $userId,
         ]);
+        $ready_hashtags = [];
+        if($request->hashtag){
+            $pieces = explode(' ', $request->hashtag);
+            foreach ($pieces as $piece) {
+                $ready_hashtags[] = '#' . $piece;
+            }
+            // $post->hashtag()->attach($ready_hashtags);
+            
+        }
 //        $path = $request->file('images');
 //        $url = $request->file('images')->storeAs('posts',$path,'public');
 //        $media->image=$url;
@@ -218,8 +227,7 @@ class PostController extends Controller
         $postId = $post->id;
         $userId = auth()->id();
 
-        $existingSavedPost = Savedpost::where('post_id', $postId)
-            ->where('user_id', $userId);
+        $existingSavedPost = Savedpost::where('post_id', $postId)->where('user_id', $userId);
 
         if($existingSavedPost){ $existingSavedPost->delete(); }
         return redirect()->route('posts.index');
