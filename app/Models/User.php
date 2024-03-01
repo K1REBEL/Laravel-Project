@@ -98,12 +98,12 @@ class User extends Authenticatable implements MustVerifyEmail
     // }
     public function followers()
     {
-        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followed_id');
+        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id');
 
     }
     public function following()
     {
-        return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id');
+        return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followed_id');
 
     }
     public function blocks()
@@ -129,8 +129,8 @@ class User extends Authenticatable implements MustVerifyEmail
             return false;
         }
         else{
-            $followerEntry = Follower::where('followed_id', auth()->id())
-                ->where('follower_id', $user->id)
+            $followerEntry = Follower::where('follower_id', auth()->id())
+                ->where('followed_id', $user->id)
                 ->first();
 
                 // dd($followerEntry);

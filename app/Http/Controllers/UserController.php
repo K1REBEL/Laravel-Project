@@ -160,10 +160,13 @@ class UserController extends Controller
     
             $followers = $user->followers()->get();
             $following = $user->following()->get();
-            $blocked = $user->blocks()->get();
-    
+            if($user->id == auth()->id()){
+                $blocked = $user->blocks()->get();
+                return view('userProfile.social', compact('followers', 'following', 'blocked'));
+            }else{
+                return view('userProfile.social', compact('followers', 'following'));
+            }
             // return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200); 
-            return view('userProfile.social', compact('followers', 'following', 'blocked'));
             // For Alaa, Replace this return statement with the view/blade that you're developing
         }
 
