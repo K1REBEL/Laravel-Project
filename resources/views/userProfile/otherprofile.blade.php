@@ -386,6 +386,11 @@
 </head>
 
 <body>
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 <!-- ---------------------------------------------header profile---------------------------------->
 <header>
     <!-- start of profile container -->
@@ -553,5 +558,6 @@
 
     <!-- ---------------------------------------------popupJS--------------------------------------->
     @extends('layouts.PopupJS')
+
     </body>
 </html>
