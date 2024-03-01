@@ -231,9 +231,25 @@ class PostController extends Controller
 
         if($existingSavedPost){ $existingSavedPost->delete(); }
         return redirect()->route('posts.index');
-    }    
+       
 
-   public function retreiveSavedposts(){
+if (!$existingSavedPost) {
+Savedpost::create([
+'post_id' => $post->id,
+'user_id' => $userId,
+]);
+
+// return response()->json(['message' => 'Post saved successfully']);
+}
+else{
+// return response()->json(['message' => 'Post already saved']);
+return redirect()->route('posts.retreive');
+
+}
+return redirect()->route('posts.index');
+
+}    
+public function retreiveSavedposts(){
 
     $userId = auth()->id();
     Log::info($userId);
@@ -250,4 +266,4 @@ class PostController extends Controller
     });
     return response()->json($formattedSavedPosts);
 }
-   }
+}
