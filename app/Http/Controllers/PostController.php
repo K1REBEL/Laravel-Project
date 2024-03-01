@@ -37,6 +37,8 @@ class PostController extends Controller
         // log::info($posts);
         $filteredPosts = collect($posts)->map(function ($post) {
             $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
+            $isLiked = $post->isliked();
+            log::info($isLiked);
             return [
                 'id' => $post->id,
                 'caption' => $post->caption,
@@ -45,6 +47,7 @@ class PostController extends Controller
                 'comments' => $post->comments->sortByDesc('updated_at'),
                 'comment_count' => $post->comments->count(),
                 'like_count' => $post->likes->count(),
+                'is_liked' => $post->isliked(),
                 'hashtag_names' => $post->hashtag->pluck('name'),
                 'media_urls' => $post->media->pluck('url'),
                 'user_id' => $post->user->id,
@@ -153,7 +156,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,Post $post)
+    public function destroy(string $id, Post $post)
     {
         $post->delete();
         return redirect()->route('posts.index');
@@ -162,13 +165,15 @@ class PostController extends Controller
     public function like(Post $post)
     {
         $post->likes()->create(['user_id' => auth()->id()]);
-        return response()->json(['message' => 'Post liked successfully']);
+        return redirect()->route('posts.index');
+        // return response()->json(['message' => 'Post liked successfully']);
     }
 
     public function unlike(Post $post)
     {
         $post->likes()->where('user_id', auth()->id())->delete();
-        return response()->json(['message' => 'Post unliked successfully']);
+        return redirect()->route('posts.index');
+        // return response()->json(['message' => 'Post unliked successfully']);
     }
 
     public function comments(Request $request ,  Post $post , User $user)
@@ -183,32 +188,29 @@ class PostController extends Controller
             'user_id' => $userId,
         ]);
         return redirect()->route('posts.index');
-
     }
-    public function savepost(Request $request ,  Post $post )
+
+    public function savepost(Post $post)
     {
         $postId = $post->id;
         $userId = auth()->id();
-        Log::info($userId);
+        // Log::info($userId);
 
-        $existingSavedPost = Savedpost::where('post_id', $post->id)
-        ->where('user_id', $userId)
-        ->exists();
+        $existingSavedPost = Savedpost::where('post_id', $postId)
+            ->where('user_id', $userId)
+            ->exists();
 
-if (!$existingSavedPost) {
-Savedpost::create([
-'post_id' => $post->id,
-'user_id' => $userId,
-]);
+        if (!$existingSavedPost) {
+            Savedpost::create([
+                'post_id' => $post->id,
+                'user_id' => $userId,
+            ]);
+            // return response()->json(['message' => 'Post saved successfully']);
+        } else { return response()->json(['message' => 'Post already saved']); }
 
-// return response()->json(['message' => 'Post saved successfully']);
-}
-else{
-return response()->json(['message' => 'Post already saved']);
-}
-return redirect()->route('posts.index');
+        return redirect()->route('posts.index');
+    }    
 
-}    
    public function retreiveSavedposts(){
 
     $userId = auth()->id();

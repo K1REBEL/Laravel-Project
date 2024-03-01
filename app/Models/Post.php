@@ -25,15 +25,28 @@ class Post extends Model
     {
         return $this->hasMany(Like::class);
     }
-    public function isliked(User $user)
+    // public function isliked(Post $post)
+    // {
+    //     // dd($user);
+    //         $likeEntry = Like::where('user_id', auth()->id())
+    //             ->where('post_id', $post->id)
+    //             ->first();
+
+    //             // dd($followerEntry);
+    //         if($likeEntry){
+    //             return true;
+    //         }else{ return false; }
+        
+    // }
+    public function isliked()
     {
         // dd($user);
-            $followerEntry = Follower::where('followed_id', auth()->id())
-                ->where('follower_id', $user->id)
+            $likeEntry = Like::where('user_id', auth()->id())
+                ->where('post_id', $this->id)
                 ->first();
 
                 // dd($followerEntry);
-            if($followerEntry){
+            if($likeEntry){
                 return true;
             }else{ return false; }
         

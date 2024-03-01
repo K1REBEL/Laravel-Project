@@ -52,7 +52,23 @@
 
     <div class="flex justify-between px-4 pt-4">
         <div class="cursor-pointer flex space-x-4">
-            <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+            @if($post->is_liked == true)
+            <form action="{{route('posts.unlike', $post->id)}}" method="POST">
+                @csrf
+                @method('delete')
+                <span class="cursor-pointer flex space-x-4">
+                    <button type="submit"><i class="fas fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                    </button></span>
+            </form>
+            @elseif($post->is_liked == false)
+            <form action="{{route('posts.like', $post->id)}}" method="POST">
+                @csrf
+                <span class="cursor-pointer flex space-x-4">
+                    <button type="submit"><i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                    </button></span>
+            </form>
+            @endif
+            {{-- <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i> --}}
             <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
         </div>
         <form action="{{route('posts.save',$post->id)}}" method="POST">
