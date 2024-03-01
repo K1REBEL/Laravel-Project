@@ -26,6 +26,7 @@
 
 
         <!-- ========Posts=====  -->
+
         @foreach(json_decode($jsonData) as $post)
         <div class="bg-white my-7 border rounded-md">
             <div class="flex items-center p-5">
@@ -61,6 +62,7 @@
             </div>
 
             <!-- {/* Post comments */} -->
+            <div id="imageContainer" class="flex flex-wrap justify-center"></div>
             <p class="p-5 truncate">
                 <span class="font-bold">{{$post->like_count}} likes.. </span>
                 <br />
@@ -68,7 +70,7 @@
 
             </p>
             <div class=" hap-2">
-                <div class="hashtag-container ">
+                <div class="hashtag-container" style="margin-left:600px;">
                     <span class="hashtag ">#sea</span>
                 </div>
 
@@ -80,31 +82,30 @@
                 </div>
 
             </div>
-            <br>
 
             <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
+            @foreach($post->comments as $comment)
                 <div class="flex items-center space-x-2 mb-2">
-                    @foreach($post->comments as $comment)
+                @if($comment->user->profile_photo_path==null)
+                <img class="h-7 rounded-full object-cover" src="{{$comment->user->profile_photo_url}}"
+                alt="user-image" />
+                 
+                @else
+                <img class="h-7 rounded-full object-cover"
+                src="{{asset('storage/'.$comment->user->profile_photo_path)}}" alt="user-image" />
+                 @endif
                     <div>
-                        @if($comment->user->profile_photo_path==null)
-                        <img class="h-7 rounded-full object-cover" src="{{$comment->user->profile_photo_url}}"
-                            alt="user-image" />
-                        @else
-                        <img class="h-7 rounded-full object-cover"
-                            src="{{asset('storage/'.$comment->user->profile_photo_path)}}" alt="user-image" />
-                        @endif
-                        <p class="font-semibold">{{$comment->user->user_handle}}</p>
-
-                        <p class="flex-1 truncate">{{$comment->comment}}</p>
+                    <p class="font-semibold">{{$comment->user->user_handle}}</p>
+                    <p class="flex-1 truncate">{{$comment->comment}}</p> 
                     </div>
-                    @endforeach
+        </div>
+                    @endforeach  
+                     
+                       
+                   
                     <p>{{$post->time_since_update}}</p>
                 </div>
-                <div class="flex items-center space-x-2 mb-2">
-                    <img class="h-7 rounded-full object-cover" src="#" alt="user-image" />
-                    <p class="font-semibold">omar</p>
-                    <p class="flex-1 truncate">great!</p>
-                </div>
+
                 {{-- <p>{{$post->updated_at}}</p> --}}
 
             </div>
@@ -124,6 +125,8 @@
             </form>
         </div>
         @endforeach
+
+
 
         <!-- =================post2================ -->
 
