@@ -52,7 +52,7 @@ class PostController extends Controller
                 'like_count' => $post->likes->count(),
                 'is_liked' => $post->isliked(),
                 'is_saved' => $post->is_saved(),
-                'hashtag_names' => $post->hashtag->pluck('name'),
+                'hashtags' => $post->hashtag->pluck('hashtag'),
                 'media_urls' => $post->media->pluck('url'),
                 'user_id' => $post->user->id,
                 'user_handle' => $post->user->user_handle,
@@ -67,7 +67,7 @@ class PostController extends Controller
     // return $view;
     // log::info($Posts);
     $jsonData = $filteredPosts->toJson();
-    return view('user.home-page', compact('jsonData','user'));
+    return view('user.home-page', compact('jsonData', 'user'));
 }
     /**
      * Show the form for creating a new resource.
@@ -99,8 +99,9 @@ class PostController extends Controller
                 $last = end($ready_hashtags);
                 $hash = new Hashtag();
                 $hash->hashtag = $piece;
+                $hash->hashtag = $piece;
                 $hash->post_id = $post->id;
-                log::info($ready_hashtags);
+                // log::info($ready_hashtags);
                 $hash->save();
             }
             // $post->hashtag()->attach($ready_hashtags);
@@ -310,5 +311,12 @@ public function retreiveSavedposts(){
 
     });
     return response()->json($formattedSavedPosts);
+}
+public function get_tag($tag_name){
+    $posts = Post::whereHas('hashtag', function ($query) use ($tag_name) {
+        $query->where('hashtag', $tag_name);
+    })->get();
+    log::info($posts);
+    return response()->json($posts);
 }
 }

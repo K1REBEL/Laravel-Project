@@ -13,8 +13,9 @@ return new class extends Migration
     {
         Schema::create('likes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('post_id')->constrained();
             $table->unsignedBigInteger('user_id')->constrained();
+            $table->unsignedBigInteger('post_id')->constrained();
+            $table->unsignedBigInteger('comment_id')->constrained('comments')->nullable();
             $table->timestamps();
         });
     }

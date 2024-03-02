@@ -354,7 +354,8 @@
             align-items: center;
             margin-bottom: 0rem;
             margin-left: 30%;
-            margin-right: 20%;
+            /* margin-right: 20%; */
+            margin-right: -35%;
         }
         .follow-btn,
         .block-btn {
@@ -370,10 +371,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-bottom: 10px;
-            margin-right: 20px;
+            margin-right: -32px;
+            width: 120px;
         }
         .follow-btn{
-            margin-left: 20px
+            /* margin-left: 20px */
         }
         .follow-btn:hover {
             background-color: #047049;
@@ -385,6 +387,10 @@
 
         .block-btn:hover {
             background-color: #CD5C5C;
+        }
+        .buttoncontainers{
+            align-self: flex-end;
+            margin-left: 300px;
         }
     </style>
 </head>
@@ -412,7 +418,8 @@
 
             <div class="profile-user-settings namebutooncontainer">
                 <h1 class="profile-user-name">{{ $user->user_handle }}</h1>
-                <div class="button-container">
+                <div class="d-flex buttoncontainers  " >
+                <div class="button-container d-block">
 
                     @if (Auth::user()->id != $user->id)
                         {{--{{ info($user) }}--}}
@@ -429,7 +436,8 @@
                             </form>
                         @endif
                     @endif
-                    <div class="button-container">
+                    </div>
+                    <div class="button-container d-block">
                         @if (Auth::user()->id != $user->id)
                             @if (!Auth::user()->blocks->contains($user))
                                 <form action="{{ route('users.block', $user->id) }}" method="POST">
@@ -439,11 +447,12 @@
                             @else
                                 <form action="{{ route('users.unblock', $user->id) }}" method="POST">
                                     @csrf
-                                    <button type="submit" class="block-btn">Unblock</button>
+                                    <button  type="submit" class="block-btn">Unblock</button>
                                 </form>
                             @endif
                         @endif
-                    </div>        </div>
+                    </div>   
+                     </div>
             </div>
 
             <div class="profile-stats">
@@ -491,25 +500,26 @@
         <!-- start of gallery container -->
         <div class="container">
             <!-- start of gallery section -->
-            <div class="gallery">
+            <div class="gallery" class="photo-container">
                 @foreach(json_decode($jsonData) as $post)
-                <div class="gallery-item" tabindex="0">
-
-                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" 
-                    class="gallery-image" alt="Gallery Image">
-                    
+                    <div style="background-color: red;" class="gallery-item" tabindex="0">
+                        @foreach($post->media_urls as $media_url)
+                            {{info($post->media_urls)}}
+                        <img src="{{asset('storage/'.$media_url)}}"
+                        class="gallery-image" alt="">
+                        @endforeach
                     <div class="gallery-item-info">
 
                         <ul>
 
-                           <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                            aria-hidden="true"></i> 56</li>
+                                <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
+                                aria-hidden="true"></i> {{$post->like_count}}</li>
 
-                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                            class="far fa-comment" aria-hidden="true"></i> 2</li>
+                                <li class="gallery-item-comments"><span class="visually-hidden"></span><i
+                                class="far fa-comment" aria-hidden="true"></i> {{$post->comment_count}}</li>
 
-                            <li class="gallery-item-save"><span class="visually-hidden"></span><i
-                            class="far fa-bookmark" aria-hidden="true"></i></li>
+                                <li class="gallery-item-save"><span class="visually-hidden"></span><i
+                                class="far fa-bookmark" aria-hidden="true"></i></li>
 
                         </ul>
 
@@ -521,14 +531,23 @@
                 <div class="gallery-item" tabindex="0">
                     <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
                     <div class="gallery-item-info">
+
                         <ul>
-                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart" aria-hidden="true"></i> 56</li>
-                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i class="far fa-comment" aria-hidden="true"></i> 2</li>
-                            <li class="gallery-item-save"><span class="visually-hidden"></span><i class="far fa-bookmark" aria-hidden="true"></i></li>
+
+                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
+                            aria-hidden="true"></i> {{$post->like_count}}</li>
+
+                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i
+                            class="far fa-comment" aria-hidden="true"></i> {{$post->comment_count}}</li>
+
+                            <li class="gallery-item-save"><span class="visually-hidden"></span><i
+                            class="far fa-bookmark" aria-hidden="true"></i></li>
+
                         </ul>
                     </div>
             </div>
             <!-- end of gallery section -->
+
         </div>
         <!-- end of gallery container -->
     </main>

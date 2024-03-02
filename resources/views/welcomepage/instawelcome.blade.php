@@ -1,71 +1,40 @@
-  @extends('welcomepage.layoutwelcome')  
-  @section('title')
+@extends('welcomepage.layoutwelcome')
+
+@section('title')
 Welcome to Instagram
 @endsection
+
 @section('content')
+<h1 class="text-center p-4 ">Welcome to Instagram</h1>
 
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
 
-
-
-
-
-
-<h1 class="mx-auto my-5 text-center">Welcome to Instagram</h1>
-
-
-<div class="box ">
-
-<div class=" my-5  container align-items-center  d-flex ">
-
-    <div id="carouselExampleSlidesOnly" class="  slideshow carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-            <img class="d-block w-100 rounded " src="https://securityintelligence.com/wp-content/uploads/2016/08/identity-theft-and-social-media.jpg" alt="First slide">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100 rounded" src="https://www.loopreturns.com/wp-content/uploads/2023/07/AdobeStock_614704568.jpeg" alt="Second slide">
-          </div>
-          <div class="carousel-item">
-            <img class="d-block w-100 rounded" src="https://img.freepik.com/premium-photo/friends-with-phone-funny-meme-social-media-relax-outdoor-during-coffee-break-communication-technology-women-together-city-comedy-with-5g-network-laughing-content-online_590464-156521.jpg" alt="Third slide">
-          </div>
+    <div class="row justify-content-center my-5 position-relative">
+        <div class="col-md-6">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+                <div  style="height: 400px;" class="carousel-inner" >
+                    <div class="carousel-item active">
+                        <img class="d-block w-100 rounded-lg" src="https://securityintelligence.com/wp-content/uploads/2016/08/identity-theft-and-social-media.jpg" alt="First slide">
+                    </div>
+                    <div class="carousel-item">
+                        <img class="d-block w-100 rounded-lg" src="https://www.loopreturns.com/wp-content/uploads/2023/07/AdobeStock_614704568.jpeg" alt="Second slide">
+                    </div>
+                   
+                </div>
+            </div>
         </div>
-      </div>
 
-
-    <div class="logreg  d-flex  flex-column   p-4 border rounded-2   text-center ">
-<a class=" " href="{{url('register')}}"><input class="  w-100 rounded button bg-primary  "  type="submit" value="register"></a>
-<a class=" " href="{{url('login')}}"><input class="rounded w-100 button bg-primary  " type="submit" value="login"></a>
-
-
+        <div class="col-md-6 align-self-center">
+            <div class=" logreg p-4 border rounded text-center">
+                <a href="{{ url('register') }}" class="text-decoration-none">
+                    <input style="border: none;" class="w-100 rounded button bg-primary mb-3" type="submit" value="Register">
+                </a>
+                <a href="{{ url('login') }}" class="text-decoration-none">
+                    <input style="border: none;" class="w-100 rounded button bg-primary" type="submit" value="Login">
+                </a>
+            </div>
+        </div>
     </div>
-
-
 </div>
-
-</div>
-
-
-
-<footer class=" w-100 text-center text-lg-start bg-body-tertiary text-muted">
-    <section class="d-flex justify-content-center   p-4 border-bottom">
-     
-  
-       
-        <a href="" class="me-4 text-reset">
-About
-        </a>
-        <a href="" class="me-4 text-reset">
-Privacy
-        </a>
-        <a href="" class="me-4 text-reset">
- Terms
-        </a>
-       
-    </section>
-</footer>
-
-
-
-
 
 @endsection
