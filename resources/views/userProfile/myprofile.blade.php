@@ -33,11 +33,16 @@
             .nav {
                 margin-bottom:3rem;
            }
-#myposts-tab,
-#saved-tab{
-    font-size:15px;
-}
- 
+
+            #myposts-tab,
+            #saved-tab{
+                font-size:15px;
+            }
+
+            .profile-website{
+                color:blue;
+                margin-left:50px;
+            }
         </style>
         
     </head>
@@ -64,8 +69,10 @@
 
                         <h1 class="profile-user-name">{{$user->user_handle}}</h1>
                         <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
-
+                
+                        <a href="{{route('posts.create')}}"class="btn profile-create-btn">create post</a>
                     </div>
+
 
                     <div class="profile-stats">
 
@@ -89,11 +96,12 @@
                     <div class="profile-name">
                         <p class="profile-real-name">{{$user->name}}</p>
                     </div>
-
+                    
+                    
                     <div class="profile-bio">
                         <p class="bio">{{$user->bio}}</p>
                     </div>
-
+                    
                     <div class="profile-website">
                         <p class="website">{{$user->website}}</p>
                     </div>
@@ -203,8 +211,8 @@
     </div>
 </div>
 <!-----------------------------------------popup------------------------------------------------->
-    <!-- start of container -->
-    <div class="container">
+   <!-- start of container -->
+   <div class="container">
         <!-- start of popup container -->
         <div class="popup-container">
                 <div class="popup-content">
@@ -240,8 +248,8 @@
   
 <!-- end of container -->
     <!-- ---------------------------------------------popupJS--------------------------------------->
-   @extends('layouts.PopupJS')
-   <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    @extends('layouts.PopupJS')
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
