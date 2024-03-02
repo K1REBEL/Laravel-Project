@@ -27,6 +27,14 @@
         <!-- ---------------------------------------------header profile---------------------------------->
 
         <header>
+            <div>
+            
+                <a href="{{route('posts.index')}}">
+                    <button  class="prev-arrow btn btn-primary">
+                        <i class="fas fa-chevron-left"></i> Home
+                    </button>
+                </a>
+            </div>
             <!-- start of profile container -->
             <div class="container">
                 <!-- start of profile section -->
