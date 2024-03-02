@@ -78,52 +78,6 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request, Media $media)
-    // {
-    //     $userId = auth()->id();
-    //     $post = Post::create([
-    //         'caption' => $request->caption,
-    //         'user_id' => $userId,
-    //     ]);
-    //     $ready_hashtags = [];
-    //     if ($request->hashtag) {
-    //         $pieces = explode(' ', $request->hashtag);
-    //         foreach ($pieces as $piece) {
-    //             $ready_hashtags[] = '#' . $piece;
-    //             $last = end($ready_hashtags);
-    //             $hash = new Hashtag();
-    //             // $hash->hashtag = $piece;
-    //             $hash->hashtag = $piece;
-    //             $hash->post_id = $post->id;
-    //             $hash->save();
-    //         }
-    //     }
-    //     if ($request->hasFile('images')) {
-    //         $images = $request->file('images');
-    //         log::info($images);
-    //         foreach ($images as $image) {
-    //             // Validate file type and size
-    //             $allowedMimeTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/mov'];
-    //             $maxFileSize = 10 * 1024; // 10MB in kilobytes
-    //             log::info($image);
-
-    //             if (in_array($image->getMimeType(), $allowedMimeTypes) && $image->getSize() <= $maxFileSize) {
-    //                 $path = $image->store('posts', 'public');
-    //                 log::info($path);
-
-    //                 $media = new Media();
-    //                 $media->url = $path;
-    //                 $media->post_id = $post->id;
-    //                 $media->save();
-    //             } else {
-    //                 // Handle invalid file type or size
-    //                 // You can redirect back with an error message
-    //                 return redirect()->back()->with('error', 'Invalid file type or size.');
-    //             }
-    //         }
-    //     }
-    //     return redirect()->route('posts.index');
-    // }
 
     public function store(Request $request, Media $media)
     {
