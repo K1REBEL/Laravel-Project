@@ -46,7 +46,7 @@ instagram
                 </svg>
             </a>
 
-            <a href="#">
+            <a href="{{route('posts.retreive')}}">
                 <svg class="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
                     xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark"
                     viewBox="0 0 16 16">
