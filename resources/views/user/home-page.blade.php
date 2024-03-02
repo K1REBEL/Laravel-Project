@@ -42,14 +42,24 @@
                 d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
         </svg>
     </div>
+    <div class="post">
+    <div class="slideshow-container">
+        @foreach($post->media_urls as $index => $media_url)
+            <img class="slideshow-image @if($index === 0) active @endif" src="{{ asset('storage/'.$media_url) }}" />
+        @endforeach
+        <div class="navigation-arrows">
+            <button class="prev-arrow" onclick="changeImage(-1)">
+                <i class="fas fa-chevron-left"></i>
+            </button>
 
-    @foreach($post->media_urls as $media_url)
-    
-    <img className="object-cover w-full" src="{{asset('storage/'.$media_url)}}" />
-    @endforeach
-    {{-- <img className="object-cover w-full" src="{{$post->media_urls}}"/> --}}
-
-    <div class="flex justify-between px-4 pt-4">
+            <button class="next-arrow" onclick="changeImage(1)">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+            
+        </div>
+        
+   </div>
+<div class="flex justify-between px-4 pt-4">
         <div class="cursor-pointer flex space-x-4">
             @if($post->is_liked == true)
             <form action="{{route('posts.unlike', $post->id)}}" method="POST">
@@ -291,19 +301,20 @@ function changeImage(direction) {
     if (currentIndex < 0) {
         currentIndex = images.length - 1;
     } else if (currentIndex >= images.length) {
-        currentIndex = 1;
+        currentIndex = 0;
     }
     images[currentIndex].classList.add('active');
 }
 
 document.querySelector('.prev-arrow').addEventListener('click', function() {
-    changeImage(-1);
+    changeImage(-1); // Change image to previous image
 });
 
 document.querySelector('.next-arrow').addEventListener('click', function() {
-    changeImage(1);
+    changeImage(1); // Change image to next image
 });
 </script>
+
 <!-- ========================icons============= -->
 <script>
 function toggleIconFill(icon) {

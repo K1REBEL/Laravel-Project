@@ -1269,5 +1269,5 @@ div.hashtag-container {
         padding: 10px;
         border-radius: 5px;
     }
-</style>
+
 </style>
