@@ -4,7 +4,7 @@ namespace App\Models;
 
 use App\Models\Follower;
 
- use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -63,28 +63,26 @@ class User extends Authenticatable implements MustVerifyEmail
     /**
      * The accessors to append to the model's array form.
      *
-    * @var array<int, string>
+     * @var array<int, string>
      */
     protected $appends = [
         'profile_photo_url',
     ];
-//    public function getNameAttribute()
-//    {
-//        return $this->attributes['name'];
-//    }
+    //    public function getNameAttribute()
+    //    {
+    //        return $this->attributes['name'];
+    //    }
 
-//    protected $appends = [
-//        'name',
-//    ];
+    //    protected $appends = [
+    //        'name',
+    //    ];
     public function profile()
     {
         return $this->hasOne(Profile::class);
-
     }
     public function post()
     {
         return $this->hasMany(Post::class);
-
     }
     // public function followers()
     // {
@@ -99,18 +97,15 @@ class User extends Authenticatable implements MustVerifyEmail
     public function followers()
     {
         return $this->belongsToMany(User::class, 'followers', 'followed_id', 'follower_id');
-
     }
     public function following()
     {
         return $this->belongsToMany(User::class, 'followers', 'follower_id', 'followed_id');
-
     }
     public function blocks()
     {
         return $this->belongsToMany(User::class, 'blocking', 'user_id', 'blocked_user_id');
     }
-    
 
     public function comments()
     {
@@ -125,29 +120,24 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isFollowing(User $user)
     {
         // dd($user);
-        if(auth()->id() == $user->id){
+        if (auth()->id() == $user->id) {
             return false;
-        }
-        else{
+        } else {
             $followerEntry = Follower::where('follower_id', auth()->id())
                 ->where('followed_id', $user->id)
                 ->first();
 
-                // dd($followerEntry);
-            if($followerEntry){
+            // dd($followerEntry);
+            if ($followerEntry) {
                 return true;
-            }else{ return false; }
+            } else {
+                return false;
+            }
         }
-        // return !!$this->following()->where('followed_id', $user->id)->exists();
     }
-    // public function isFollowing(User $user)
-    // {
-    //     return $this->following()->where('followed_id', $user->id)->exists();
-    // }
+
     public function savedpost()
     {
         return $this->hasMany(Savedpost::class);
-
     }
-
 }

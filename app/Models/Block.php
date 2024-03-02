@@ -9,16 +9,15 @@ class Block extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'user_id','blocked_user_id',
+        'user_id', 'blocked_user_id',
     ];
     public function user()
     {
         return $this->belongsTo(User::class);
-
     }
 
     public function blockedUser()
     {
-        return $this->belongsTo(User::class,'blocked_user_id');
+        return $this->belongsTo(User::class, 'blocked_user_id');
     }
 }

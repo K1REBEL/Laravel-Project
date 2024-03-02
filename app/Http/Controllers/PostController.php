@@ -25,20 +25,22 @@ class PostController extends Controller
      */
     public function index()
     {
-//       $posts = Post::with('comments','likes','hashtag','media','user')->get();
         $user = auth()->user();
         $followingIds = $user->following()->pluck('users.id');
         $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
             ->with([
                 'comments' => function ($query) {
-                    $query->with(['user' => function ($query) {
-                        $query->select('id', 'user_handle', 'profile_photo_path');
-                    },
-                    'likes' => function ($query) {
-                        $query->select('id','user_id', 'post_id', 'comment_id');
-                    }])
-                    ->withCount('likes');
-                },'likes', 'hashtag', 'media', 'user'])
+                    $query->with([
+                        'user' => function ($query) {
+                            $query->select('id', 'user_handle', 'profile_photo_path');
+                        },
+                        'likes' => function ($query) {
+                            $query->select('id', 'user_id', 'post_id', 'comment_id');
+                        }
+                    ])
+                        ->withCount('likes');
+                }, 'likes', 'hashtag', 'media', 'user'
+            ])
             ->get();
         $filteredPosts = collect($posts)->map(function ($post) {
             $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
@@ -57,25 +59,17 @@ class PostController extends Controller
                 'user_id' => $post->user->id,
                 'user_handle' => $post->user->user_handle,
                 'profile_photo_url' => $post->user->profile_photo_url,
-                'profile_photo_path' =>$post->user->profile_photo_path
+                'profile_photo_path' => $post->user->profile_photo_path
             ];
         });
-    //    return response()->json($filteredPosts);
-   //  $jsonData = $filteredPosts->toJson();
-    // $view = view('users.home')->with('data', $filteredPosts);
-   //  return view('users.home',compact('jsonData'));
-    // return $view;
-    // log::info($Posts);
-    $jsonData = $filteredPosts->toJson();
-    return view('user.home-page', compact('jsonData', 'user'));
-}
+        $jsonData = $filteredPosts->toJson();
+        return view('user.home-page', compact('jsonData', 'user'));
+    }
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-        // return view('userProfile.createpost');
-
         $users = auth()->id();
         return view('userProfile.createpost', compact('users'));
     }
@@ -139,14 +133,14 @@ class PostController extends Controller
             'user_id' => $userId,
         ]);
         $ready_hashtags = [];
-        if($request->hashtag){
+        if ($request->hashtag) {
             $pieces = explode(' ', $request->hashtag);
             foreach ($pieces as $piece) {
                 $ready_hashtags[] = '#' . $piece;
                 $last = end($ready_hashtags);
                 $hash = new Hashtag();
                 $hash->hashtag = $piece;
-//                $hash->hashtag = $piece;
+                //                $hash->hashtag = $piece;
                 $hash->post_id = $post->id;
                 // log::info($ready_hashtags);
                 $hash->save();
@@ -159,12 +153,15 @@ class PostController extends Controller
             'images.*' => ['required', 'max:40960', 'mimes:jpg,jpeg,png,webp,gif,mp4,mov'], // Ensure each uploaded file is an image and has a maximum size of 2MB
         ]);
 
-        if ($validator->fails()) {  log::info('failed'); return back()->withErrors($validator)->withInput(); }
+        if ($validator->fails()) {
+            log::info('failed');
+            return back()->withErrors($validator)->withInput();
+        }
 
-//        $path = $request->file('images');
-//        $url = $request->file('images')->storeAs('posts',$path,'public');
-//        $media->image=$url;
-//        $media->save();
+        //        $path = $request->file('images');
+        //        $url = $request->file('images')->storeAs('posts',$path,'public');
+        //        $media->image=$url;
+        //        $media->save();
         if ($request->hasFile('images')) {
             $images = $request->file('images');
             // log::info($images);
@@ -189,23 +186,23 @@ class PostController extends Controller
             ->where('user_id', $id)
             ->get();
         $filteredPosts = collect($posts)->map(function ($post) {
-         return [
-             'id' => $post->id,
-             'caption' => $post->caption,
-             'updated_at' => $post->updated_at,
-             'comments' => $post->comments->sortByDesc('updated_at'),
-             'comment_count' => $post->comments->count(),
-             'like_count' => $post->likes->count(),
-             'hashtag_names' => $post->hashtag->pluck('name'),
-             'media_urls' => $post->media->pluck('url'),
-             'user_id' => $post->user->id,
-             'user_handle' => $post->user->user_handle,
-             'profile_photo_url' => $post->user->profile_photo_url,
-             'profile_photo_path' =>$post->user->profile_photo_path
-         ];
-     });
-     $jsonData = $filteredPosts->toJson();
-     return view('userProfile.myprofile', compact('jsonData', 'user'));
+            return [
+                'id' => $post->id,
+                'caption' => $post->caption,
+                'updated_at' => $post->updated_at,
+                'comments' => $post->comments->sortByDesc('updated_at'),
+                'comment_count' => $post->comments->count(),
+                'like_count' => $post->likes->count(),
+                'hashtag_names' => $post->hashtag->pluck('name'),
+                'media_urls' => $post->media->pluck('url'),
+                'user_id' => $post->user->id,
+                'user_handle' => $post->user->user_handle,
+                'profile_photo_url' => $post->user->profile_photo_url,
+                'profile_photo_path' => $post->user->profile_photo_path
+            ];
+        });
+        $jsonData = $filteredPosts->toJson();
+        return view('userProfile.myprofile', compact('jsonData', 'user'));
     }
 
     /**
@@ -236,7 +233,7 @@ class PostController extends Controller
         $posts->save();
         Hashtag::where('post_id', $post->id)->delete();
         $ready_hashtags = [];
-        if($request->hashtag){
+        if ($request->hashtag) {
             $pieces = explode(' ', $request->hashtag);
             foreach ($pieces as $piece) {
                 $ready_hashtags[] = '#' . $piece;
@@ -244,7 +241,7 @@ class PostController extends Controller
                 $hash = new Hashtag();
                 $hash->hashtag = $last;
                 $hash->post_id = $post->id;
-//                log::info($ready_hashtags);
+                //                log::info($ready_hashtags);
                 $hash->save();
             }
         }
@@ -259,7 +256,7 @@ class PostController extends Controller
                 $media->save();
             }
         }
-        return redirect()->route('users.show',auth()->id());
+        return redirect()->route('users.show', auth()->id());
     }
 
 
@@ -290,14 +287,12 @@ class PostController extends Controller
     {
         $comment->likes()->create(['user_id' => auth()->id(), 'post_id' => $post->id]);
         return redirect()->route('posts.index');
-        // return response()->json(['message' => 'Post liked successfully']);
     }
 
     public function unlike_comment(Comment $comment)
     {
         $comment->likes()->where('user_id', auth()->id())->delete();
         return redirect()->route('posts.index');
-        // return response()->json(['message' => 'Post unliked successfully']);
     }
 
     public function comments(Request $request,  Post $post, User $user)
@@ -329,7 +324,9 @@ class PostController extends Controller
                 'post_id' => $post->id,
                 'user_id' => $userId,
             ]);
-        } else { return redirect()->route('posts.index'); }
+        } else {
+            return redirect()->route('posts.index');
+        }
         return redirect()->route('posts.index');
     }
 
@@ -340,24 +337,26 @@ class PostController extends Controller
 
         $existingSavedPost = Savedpost::where('post_id', $postId)->where('user_id', $userId);
 
-        if($existingSavedPost){ $existingSavedPost->delete(); }
+        if ($existingSavedPost) {
+            $existingSavedPost->delete();
+        }
         return redirect()->route('posts.index');
     }
-    public function retreiveSavedposts(){
+    public function retreiveSavedposts()
+    {
 
         $userId = auth()->id();
-        // Log::info($userId);
-
         $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
         $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
-            return[
-                'post_id'=>$savedPost->post->id,
+            return [
+                'post_id' => $savedPost->post->id,
                 'caption' => $savedPost->post->caption,
             ];
         });
         return response()->json($formattedSavedPosts);
     }
-    public function get_tag($tag_name){
+    public function get_tag($tag_name)
+    {
         $posts = Post::whereHas('hashtag', function ($query) use ($tag_name) {
             $query->where('hashtag', $tag_name);
         })->get();

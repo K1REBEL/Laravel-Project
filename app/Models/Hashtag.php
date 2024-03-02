@@ -11,7 +11,7 @@ class Hashtag extends Model
     protected $fillable = [
         'hashtag',
     ];
-    public function Post ()
+    public function Post()
     {
         return $this->belongsToMany(Post::class);
     }
