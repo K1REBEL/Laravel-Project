@@ -87,7 +87,7 @@ class UserController extends Controller
         $userId = $user->id;
 
         $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
-        $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
+        $formattedSavedPosts = collect($savedPosts)->map(function ($savedPost) {
             $timeSinceUpdate = Carbon::parse($savedPost->post->updated_at)->diffForHumans();
             return [
                 'id' => $savedPost->post->id,
