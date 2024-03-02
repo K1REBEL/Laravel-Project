@@ -182,6 +182,7 @@
                        
                         @foreach($post->media_urls as $index => $media_url)
                         <img class="popup-img " src="{{ asset('storage/'.$media_url) }}" />
+
                     @endforeach
 
 
@@ -189,14 +190,15 @@
 
                                 <ul>
 
-                                    <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                                    aria-hidden="true"></i></li>
+                                     <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
+                                aria-hidden="true"></i> {{$post->like_count}}</li>
 
-                                    <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                                    class="far fa-comment" aria-hidden="true"></i> </li>
+                                <li class="gallery-item-comments"><span class="visually-hidden"></span><i
+                                class="far fa-comment" aria-hidden="true"></i> {{$post->comment_count}}</li>
 
-                                    <li class="gallery-item-save"><span class="visually-hidden"></span><i
-                                    class="far fa-bookmark" aria-hidden="true"></i></li>
+                                <li class="gallery-item-save"><span class="visually-hidden"></span><i
+                                class="far fa-bookmark" aria-hidden="true"></i></li>
+
 
                                 </ul>
 
