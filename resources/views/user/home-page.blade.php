@@ -145,8 +145,23 @@
                             <p class="font-semibold">{{$comment->user->user_handle}}</p>
                             <p style="margin-left:10px" class="flex-1 truncate">{{$comment->comment}}</p>
                             <div class="d-flex align-items-center">
-                            <button style="margin-left:10px; align-self:flex-end" type="submit"><i class="far fa-heart" style="font-size: 16px;" onclick="toggleIconFill(this)"></i>
-                            </button>                             <span style="font-size: 12px" >16</span>
+                                {{-- {{info(($comment))}} --}}
+                                @if (in_array(auth()->id(), collect($comment->likes)->pluck('user_id')->toArray()))
+                                <form action="{{route('comments.unlike', ['post' => $post->id, 'comment' => $comment->id])}}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button style="margin-left:10px; align-self:flex-end" type="submit"><i class="fas fa-heart" style="font-size: 16px;" onclick="toggleIconFill(this)"></i></button>
+                                </form>
+                                @else
+                                <form action="{{route('comments.like',['post' => $post->id, 'comment' => $comment->id])}}" method="POST">
+                                    @csrf
+                                    <button style="margin-left:10px; align-self:flex-end" type="submit"><i class="far fa-heart" style="font-size: 16px;" onclick="toggleIconFill(this)"></i></button>
+                                </form>
+                                @endif
+                                {{-- <form action="">
+                                    <button style="margin-left:10px; align-self:flex-end" type="submit"><i class="far fa-heart" style="font-size: 16px;" onclick="toggleIconFill(this)"></i></button>
+                                </form> --}}
+                                                         <span style="font-size: 12px" >16</span>
                         </div></span>
                         {{-- </div> --}}
                     </div>

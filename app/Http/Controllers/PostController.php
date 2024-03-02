@@ -13,6 +13,9 @@ use Carbon\Carbon;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rules\File;
+
 
 
 class PostController extends Controller
@@ -26,22 +29,19 @@ class PostController extends Controller
         $user = auth()->user();
         $followingIds = $user->following()->pluck('users.id');
         $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
-            ->with(['comments' => function ($query) {
-                $query->with(['user' => function ($query) {
-                    $query->select('id', 'user_handle', 'profile_photo_path');
-                }]);
-            },'likes',
-            'hashtag',
-            'media','user'])
+            ->with([
+                'comments' => function ($query) {
+                    $query->with(['user' => function ($query) {
+                        $query->select('id', 'user_handle', 'profile_photo_path');
+                    },
+                    'likes' => function ($query) {
+                        $query->select('id','user_id', 'post_id', 'comment_id');
+                    }])
+                    ->withCount('likes');
+                },'likes', 'hashtag', 'media', 'user'])
             ->get();
-        // $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
-        //     ->with('comments','likes','hashtag','media','user')
-        //     ->get();
-        // log::info($posts);
         $filteredPosts = collect($posts)->map(function ($post) {
             $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
-            // $isLiked = $post->isliked();
-            // log::info($isLiked);
             return [
                 'id' => $post->id,
                 'caption' => $post->caption,
@@ -83,6 +83,53 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function store(Request $request, Media $media)
+    // {
+    //     $userId = auth()->id();
+    //     $post = Post::create([
+    //         'caption' => $request->caption,
+    //         'user_id' => $userId,
+    //     ]);
+    //     $ready_hashtags = [];
+    //     if ($request->hashtag) {
+    //         $pieces = explode(' ', $request->hashtag);
+    //         foreach ($pieces as $piece) {
+    //             $ready_hashtags[] = '#' . $piece;
+    //             $last = end($ready_hashtags);
+    //             $hash = new Hashtag();
+    //             // $hash->hashtag = $piece;
+    //             $hash->hashtag = $piece;
+    //             $hash->post_id = $post->id;
+    //             $hash->save();
+    //         }
+    //     }
+    //     if ($request->hasFile('images')) {
+    //         $images = $request->file('images');
+    //         log::info($images);
+    //         foreach ($images as $image) {
+    //             // Validate file type and size
+    //             $allowedMimeTypes = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp', 'image/gif', 'video/mp4', 'video/mov'];
+    //             $maxFileSize = 10 * 1024; // 10MB in kilobytes
+    //             log::info($image);
+
+    //             if (in_array($image->getMimeType(), $allowedMimeTypes) && $image->getSize() <= $maxFileSize) {
+    //                 $path = $image->store('posts', 'public');
+    //                 log::info($path);
+
+    //                 $media = new Media();
+    //                 $media->url = $path;
+    //                 $media->post_id = $post->id;
+    //                 $media->save();
+    //             } else {
+    //                 // Handle invalid file type or size
+    //                 // You can redirect back with an error message
+    //                 return redirect()->back()->with('error', 'Invalid file type or size.');
+    //             }
+    //         }
+    //     }
+    //     return redirect()->route('posts.index');
+    // }
+
     public function store(Request $request, Media $media)
     {
         // Log::info('hello');
@@ -107,13 +154,20 @@ class PostController extends Controller
             // $post->hashtag()->attach($ready_hashtags);
 
         }
+
+        $validator = Validator::make($request->all(), [
+            'images.*' => ['required', 'max:40960', 'mimes:jpg,jpeg,png,webp,gif,mp4,mov'], // Ensure each uploaded file is an image and has a maximum size of 2MB
+        ]);
+
+        if ($validator->fails()) {  log::info('failed'); return back()->withErrors($validator)->withInput(); }
+
 //        $path = $request->file('images');
 //        $url = $request->file('images')->storeAs('posts',$path,'public');
 //        $media->image=$url;
 //        $media->save();
         if ($request->hasFile('images')) {
             $images = $request->file('images');
-            log::info($images);
+            // log::info($images);
             foreach ($images as $image) {
                 $path = $image->store('posts', 'public');
                 $media = new Media();
@@ -232,7 +286,21 @@ class PostController extends Controller
         // return response()->json(['message' => 'Post unliked successfully']);
     }
 
-    public function comments(Request $request ,  Post $post , User $user)
+    public function like_comment(Post $post, Comment $comment)
+    {
+        $comment->likes()->create(['user_id' => auth()->id(), 'post_id' => $post->id]);
+        return redirect()->route('posts.index');
+        // return response()->json(['message' => 'Post liked successfully']);
+    }
+
+    public function unlike_comment(Comment $comment)
+    {
+        $comment->likes()->where('user_id', auth()->id())->delete();
+        return redirect()->route('posts.index');
+        // return response()->json(['message' => 'Post unliked successfully']);
+    }
+
+    public function comments(Request $request,  Post $post, User $user)
     {
         $userId = auth()->id();
         $postId = $post->id;
@@ -261,10 +329,7 @@ class PostController extends Controller
                 'post_id' => $post->id,
                 'user_id' => $userId,
             ]);
-            // return response()->json(['message' => 'Post saved successfully']);
         } else { return redirect()->route('posts.index'); }
-        // } else { return response()->json(['message' => 'Post already saved']); }
-
         return redirect()->route('posts.index');
     }
 
@@ -277,46 +342,26 @@ class PostController extends Controller
 
         if($existingSavedPost){ $existingSavedPost->delete(); }
         return redirect()->route('posts.index');
+    }
+    public function retreiveSavedposts(){
 
+        $userId = auth()->id();
+        // Log::info($userId);
 
-if (!$existingSavedPost) {
-Savedpost::create([
-'post_id' => $post->id,
-'user_id' => $userId,
-]);
-
-// return response()->json(['message' => 'Post saved successfully']);
-}
-else{
-// return response()->json(['message' => 'Post already saved']);
-return redirect()->route('posts.retreive');
-
-}
-return redirect()->route('posts.index');
-
-}
-public function retreiveSavedposts(){
-
-    $userId = auth()->id();
-    Log::info($userId);
-
-    $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
-    $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
-        return[
-            'post_id'=>$savedPost->post->id,
-            'caption' => $savedPost->post->caption,
-
-        ];
-
-
-    });
-    return response()->json($formattedSavedPosts);
-}
-public function get_tag($tag_name){
-    $posts = Post::whereHas('hashtag', function ($query) use ($tag_name) {
-        $query->where('hashtag', $tag_name);
-    })->get();
-    log::info($posts);
-    return response()->json($posts);
-}
+        $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
+        $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
+            return[
+                'post_id'=>$savedPost->post->id,
+                'caption' => $savedPost->post->caption,
+            ];
+        });
+        return response()->json($formattedSavedPosts);
+    }
+    public function get_tag($tag_name){
+        $posts = Post::whereHas('hashtag', function ($query) use ($tag_name) {
+            $query->where('hashtag', $tag_name);
+        })->get();
+        log::info($posts);
+        return response()->json($posts);
+    }
 }

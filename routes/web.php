@@ -80,6 +80,9 @@ Route::get('/posts/{id}', [PostController::class, 'show']);
 Route::post('posts/{post}/like',[PostController::class,'like'] )->name('posts.like');
 Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('posts.unlike');
 
+Route::post('/comments/{post}/{comment}/like',[PostController::class,'like_comment'] )->name('comments.like');
+Route::delete('/comments/{comment}/unlike',[PostController::class,'unlike_comment'] )->name('comments.unlike');
+
 Route::post('users/{user}/follow',[UserController::class,'follow'])->name('users.follow');
 Route::post('users/{user}/unfollow',[UserController::class,'unfollow'])->name('users.unfollow');
 
@@ -117,8 +120,6 @@ Route::get('/user/following', function(){
 Route::post('/users/{user}/block', [UserController::class, 'block'])->name('users.block');
 Route::post('/users/{user}/unblock', [UserController::class, 'unblock'])->name('users.unblock');
 
-
-
 // hello
 
 Route::get('/profile', function () {
@@ -138,12 +139,11 @@ Route::get('/create', function () {
 });
 
 // Route::post('/posts/save/{post}', [PostController::class, 'savepost'])->name('posts.save');
-Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('posts.save');
 Route::get('/retreive', [PostController::class, 'retreiveSavedposts'])->name('posts.retreive');
+Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('posts.save');
 Route::delete('/posts/{post}/unsave', [PostController::class, 'unsavepost'])->name('posts.unsave');
 
 
 Route::get('/posts/tags/{tag}', [PostController::class, 'get_tag'])->name('posts.tag');
-
 
 Route::get("/search",[UserController::class,'search']);
