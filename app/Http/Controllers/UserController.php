@@ -163,7 +163,7 @@ class UserController extends Controller
      public function social($id)
      {
             $user = User::findOrFail($id);
-    
+
             $followers = $user->followers()->get();
             $following = $user->following()->get();
             if($user->id == auth()->id()){
@@ -172,7 +172,7 @@ class UserController extends Controller
             }else{
                 return view('userProfile.social', compact('followers', 'following'));
             }
-            // return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200); 
+            // return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200);
             // For Alaa, Replace this return statement with the view/blade that you're developing
         }
 
@@ -191,14 +191,54 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function search(Request $request)
-    {
-        $query = $request->input('query');
+//    public function search(Request $request)
+//    {
+//        $query = $request->input('query');
+//
+//        $results = User::where('email', 'like', "%$query%")
+//            ->orWhere('username', 'like', "%$query%")
+//            ->get();
+//
+//        return view('', compact('results'));
+//    }
 
-        $results = User::where('email', 'like', "%$query%")
-            ->orWhere('username', 'like', "%$query%")
-            ->get();
+    public function search(Request $request){
 
-        return view('', compact('results'));
+        if($request->ajax()){
+
+            $data=User::where('id','like','%'.$request->search.'%')
+                ->orwhere('name','like','%'.$request->search.'%')
+                ->orwhere('user_handle','like','%'.$request->search.'%')->get();
+
+            $output='';
+            if(count($data)>0){
+                $output ='
+                    <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">User handle</th>
+                    </tr>
+                    </thead>
+                    <tbody>';
+                foreach($data as $row){
+                    $output .='
+                            <tr>
+                            <th scope="row">'.$row->id.'</th>
+                            <td>'.$row->name.'</td>
+                            <td>'.$row->user_handle.'</td>
+                            </tr>
+                            ';
+                }
+                $output .= '
+                    </tbody>
+                    </table>';
+            }
+            else{
+                $output .='No results';
+            }
+            return $output;
+        }
     }
 }
