@@ -420,22 +420,30 @@
                 <h1 class="profile-user-name">{{ $user->user_handle }}</h1>
                 <div class="d-flex buttoncontainers  " >
                 <div class="button-container d-block">
+                    {{ info(Auth::user()) }}
+                    {{ info($user) }}
+                    
 
-                    @if (Auth::user()->id != $user->id)
-                        {{--{{ info($user) }}--}}
-                        @if (!Auth::user()->isFollowing($user))
-                        {{--{{ info($user->isFollowing($user)) }}--}}
-                            <form action="{{ route('users.follow', $user->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="follow-btn">Follow</button>
-                            </form>
-                        @else
-                            <form action="{{ route('users.unfollow', $user->id) }}" method="POST">
-                                @csrf
-                                <button type="submit" class="follow-btn">Unfollow</button>
-                            </form>
-                        @endif
-                    @endif
+
+
+
+                    
+                    @if ($user->isFollowing(Auth::user()) && !Auth::user()->isFollowing($user))
+                    <form action="{{ route('users.follow', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="follow-btn">Follow Back</button>
+                    </form>
+                @elseif (Auth::user()->isFollowing($user))
+                    <form action="{{ route('users.unfollow', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="follow-btn">Unfollow</button>
+                    </form>
+                @else
+                    <form action="{{ route('users.follow', $user->id) }}" method="POST">
+                        @csrf
+                        <button type="submit" class="follow-btn">Follow</button>
+                    </form>
+                @endif
                     </div>
                     <div class="button-container d-block">
                         @if (Auth::user()->id != $user->id)
