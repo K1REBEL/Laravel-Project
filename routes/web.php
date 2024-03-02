@@ -26,6 +26,10 @@ Route::get('/', function () {
 //     return view('welcomepage.instawelcome');
 // });
 
+Route::get('/', function () {
+    return view('welcomepage.instawelcome');
+});
+
 // Route::middleware([
 //     'auth:sanctum',
 //     config('jetstream.auth_session'),

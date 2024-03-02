@@ -18,13 +18,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
     <style>
-   
+
     .slideshow-container {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
-       
+
         overflow: hidden;
     }
 
@@ -32,14 +32,14 @@
         display:none;
     }
 
-   
+
 
     .slideshow-image.active {
         display:block;
     }
-   
 
-   
+
+
     .navigation-arrows {
         position: absolute;
         top: 50%;
@@ -121,9 +121,9 @@
             </form>
             @endif
             {{-- <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i> --}}
-            <div>          
+            <div>
                   <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
-      
+
         </div>
 
         </div>
@@ -151,25 +151,31 @@
         </form> --}}
            </div>
 
-<!-- Post content -->
-<div id="imageContainer" class="flex flex-wrap justify-center"></div>
-<p class="p-5 truncate">
-    <span class="font-bold">{{$post->like_count}} likes.. </span>
-    <br />
-    <span class="font-bold mr-2">{{$post->user_handle}}</span> {{$post->caption}}
-</p>
-<div class="hap-2">
-    <div class="hashtag-container" style="margin-left:600px;">
-        <span class="hashtag">#sea</span>
-    </div>
 
-    <div class="hashtag-container">
-        <span class="hashtag">#beachlife</span>
-    </div>
-    <div class="hashtag-container">
-        <span class="hashtag">#sunset</span>
-    </div>
-</div>
+                <!-- {/* Post comments */} -->
+                <div id="imageContainer" class="flex flex-wrap justify-center"></div>
+                <p class="p-5 truncate">
+                    <span class="font-bold">{{$post->like_count}} likes.. </span>
+                    <br />
+                    <span class="font-bold mr-2">{{$post->user_handle}}</span> {{$post->caption}}
+
+                </p>
+                <div class=" hap-2">
+                    <div class="hashtag-container" style="margin-left:600px;">
+                    @foreach($post->hashtags as $index => $x)
+                        <div style="display: inline; margin: 3px; border: 4px">
+                        <span class="hashtag ">#{{$x}}</span>
+                    </div>
+                    @endforeach
+                    </div>
+                    {{--                    <div class="hashtag-container">--}}
+{{--                        <span class="hashtag">#beachlife</span>--}}
+{{--                    </div>--}}
+{{--                    <div class="hashtag-container">--}}
+{{--                        <span class="hashtag">#sunset</span>--}}
+{{--                    </div>--}}
+
+                </div>
 
 <!-- Display one comment by default -->
 <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">

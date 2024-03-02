@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+//use Illuminate\Contracts\Auth\MustVerifyEmail;
+//use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
@@ -11,6 +13,8 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -106,25 +110,46 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        if (auth()->id()){
-        $user = User::findorfail($id);
-        $user->update([
-            'email'=> $request->email,
-            'name'=> $request->name,
-            'phone'=> $request->phone,
-            'gender'=> $request->gender,
-            'bio'=> $request->bio,
-            'website'=>$request->website
+        $user = auth()->user();
+
+        // Validate the input
+        $validator = Validator::make($request->all(), [
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+            'image' => ['nullable', 'image', 'max:1024'],
         ]);
-            if ($request->hasFile('image')) {
-                    $image = $request->file('image');
-                    $path = $image->store('users', 'public');
-                    $user->profile_photo_path = $path;
-                    $user->save();
-//                    $user->update();
-            }
-        return redirect()->route('users.show',auth()->id());
-    }}
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        // Update the user
+        $user->update([
+            'name' => $request->name,
+            'phone' => $request->phone,
+            'gender' => $request->gender,
+            'bio' => $request->bio,
+            'website' => $request->website,
+        ]);
+
+        if ($request->email !== $user->email){
+            $user->email = $request->email;
+            $user->email_verified_at = null; // Mark email as unverified
+            $user->save();
+            $user->sendEmailVerificationNotification();
+        }
+
+
+        // Handle profile photo upload if provided
+        if ($request->hasFile('images')) {
+            $image = $request->file('images')[0];
+            $path = $image->store('users', 'public');
+            $user->profile_photo_path = $path;
+            $user->save();
+        }
+
+        return redirect()->route('users.show', $user->id);
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -241,4 +266,10 @@ class UserController extends Controller
             return $output;
         }
     }
+//    protected $mustVerifyEmail;
+//
+//    public function __construct(MustVerifyEmail $mustVerifyEmail)
+//    {
+//        $this->mustVerifyEmail = $mustVerifyEmail;
+//    }
 }

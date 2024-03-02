@@ -99,7 +99,7 @@ class PostController extends Controller
                 $last = end($ready_hashtags);
                 $hash = new Hashtag();
                 $hash->hashtag = $piece;
-                $hash->hashtag = $piece;
+//                $hash->hashtag = $piece;
                 $hash->post_id = $post->id;
                 // log::info($ready_hashtags);
                 $hash->save();
