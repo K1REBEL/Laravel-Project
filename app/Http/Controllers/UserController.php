@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-//use Illuminate\Contracts\Auth\MustVerifyEmail;
-//use Illuminate\Auth\MustVerifyEmail;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
@@ -26,10 +24,9 @@ class UserController extends Controller
     {
         if (auth()->id()) {
             // Log::info(auth()->user());
-            $user = User::where('id',auth()->id())->get()->first();
+            $user = User::where('id', auth()->id())->get()->first();
 
-//            return User::where('id',auth()->id())->get();
-            return view('userProfile.myprofile',compact('user'));
+            return view('userProfile.myprofile', compact('user'));
         }
     }
 
@@ -61,12 +58,12 @@ class UserController extends Controller
         $post_count = $user->post()->count();
 
         $posts = Post::where('user_id', $id)
-        ->with(['comments' => function ($query) {
-            $query->with(['user' => function ($query) {
-                $query->select('id', 'user_handle', 'profile_photo_path');
-            }]);
-        },'likes','hashtag','media','user'])
-        ->get();
+            ->with(['comments' => function ($query) {
+                $query->with(['user' => function ($query) {
+                    $query->select('id', 'user_handle', 'profile_photo_path');
+                }]);
+            }, 'likes', 'hashtag', 'media', 'user'])
+            ->get();
         $filteredPosts = collect($posts)->map(function ($post) {
             $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
             return [
@@ -82,20 +79,18 @@ class UserController extends Controller
                 'user_id' => $post->user->id,
                 'user_handle' => $post->user->user_handle,
                 'profile_photo_url' => $post->user->profile_photo_url,
-                'profile_photo_path' =>$post->user->profile_photo_path
+                'profile_photo_path' => $post->user->profile_photo_path
             ];
         });
         $jsonData = $filteredPosts->toJson();
 
         $userId = $user->id;
-        // $userId = auth()->id();
-        // Log::info($userId);
 
         $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
-        $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
+        $formattedSavedPosts = collect($savedPosts)->map(function ($savedPost) {
             $timeSinceUpdate = Carbon::parse($savedPost->post->updated_at)->diffForHumans();
-            return[
-                'id'=>$savedPost->post->id,
+            return [
+                'id' => $savedPost->post->id,
                 'caption' => $savedPost->post->caption,
                 'time_since_update' => $timeSinceUpdate,
                 'comments' => $savedPost->post->comments->sortByDesc('updated_at'),
@@ -106,26 +101,26 @@ class UserController extends Controller
                 'user_id' => $savedPost->post->user->id,
                 'user_handle' => $savedPost->post->user->user_handle,
                 'profile_photo_url' => $savedPost->post->user->profile_photo_url,
-                'profile_photo_path' =>$savedPost->post->user->profile_photo_path
+                'profile_photo_path' => $savedPost->post->user->profile_photo_path
             ];
         });
         // return response()->json($formattedSavedPosts);
 
         if ($user->id === auth()->id()) {
-            return view('userProfile.myprofile', compact('user','post_count','follower_count','following_count', 'jsonData', 'formattedSavedPosts'));
-        }else{
-            return view('userProfile.otherprofile', compact('user','post_count','follower_count','following_count', 'jsonData'));
+            return view('userProfile.myprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData', 'formattedSavedPosts'));
+        } else {
+            return view('userProfile.otherprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData'));
         }
-       }
+    }
 
     /**
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
     {
-        if (auth()->id()){
-         $user = User::findorfail($id);
-        return view('userProfile.edit',compact('user'));
+        if (auth()->id()) {
+            $user = User::findorfail($id);
+            return view('userProfile.edit', compact('user'));
         }
     }
 
@@ -137,17 +132,16 @@ class UserController extends Controller
         $user = auth()->user();
 
         // Validate the input
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'image' => ['nullable', 'image', 'max:1024'],
-        ]);
+//        $validator = Validator::make($request->all(), [
+//            'name' => ['required', 'string', 'max:255'],
+//            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+//            'image' => ['nullable', 'image', 'max:1024'],
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return back()->withErrors($validator)->withInput();
+//        }
 
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-
-        // Update the user
         $user->update([
             'name' => $request->name,
             'phone' => $request->phone,
@@ -156,7 +150,7 @@ class UserController extends Controller
             'website' => $request->website,
         ]);
 
-        if ($request->email !== $user->email){
+        if ($request->email !== $user->email) {
             $user->email = $request->email;
             $user->email_verified_at = null; // Mark email as unverified
             $user->save();
@@ -165,8 +159,8 @@ class UserController extends Controller
 
 
         // Handle profile photo upload if provided
-        if ($request->hasFile('images')) {
-            $image = $request->file('images')[0];
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
             $path = $image->store('users', 'public');
             $user->profile_photo_path = $path;
             $user->save();
@@ -183,8 +177,8 @@ class UserController extends Controller
         //
     }
 
-     public function follow(User $user)
-     {
+    public function follow(User $user)
+    {
         if ($user->id === auth()->id()) {
             throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
         }
@@ -195,44 +189,41 @@ class UserController extends Controller
             return redirect()->back()->with('error', 'You cant follow this account ... it maybe be because it is not found or it blocked you');
         }
         Log::info('Follow request for user ' . auth()->user()->id . ' to follow user ' . $user->id);
-         auth()->user()->following()->attach($user->id);
-         return redirect()->back();
-     }
+        auth()->user()->following()->attach($user->id);
+        return redirect()->back();
+    }
 
-     public function unfollow(User $user)
-     {
-        Log::info('Unfollow request for user ' . auth()->user()->id . ' to unfollow user ' . $user->id);
-        // if ($user->id === auth()->id()) {
-        //     throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
-        // }
-         auth()->user()->following()->detach($user->id);
-         return redirect()->back();
-     }
+    public function unfollow(User $user)
+    {
+        // Log::info('Unfollow request for user ' . auth()->user()->id . ' to unfollow user ' . $user->id);
+        auth()->user()->following()->detach($user->id);
+        return redirect()->back();
+    }
 
-     public function social($id)
-     {
-            $user = User::findOrFail($id);
+    public function social($id)
+    {
+        $user = User::findOrFail($id);
 
-            $followers = $user->followers()->get();
-            $following = $user->following()->get();
-            if($user->id == auth()->id()){
-                $blocked = $user->blocks()->get();
-                return view('userProfile.social', compact('followers', 'following', 'blocked'));
-            }else{
-                return view('userProfile.social', compact('followers', 'following'));
-            }
-            // return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200);
-            // For Alaa, Replace this return statement with the view/blade that you're developing
+        $followers = $user->followers()->get();
+        $following = $user->following()->get();
+        if ($user->id == auth()->id()) {
+            $blocked = $user->blocks()->get();
+            return view('userProfile.social', compact('followers', 'following', 'blocked'));
+        } else {
+            return view('userProfile.social', compact('followers', 'following'));
         }
+        // return response()->json(['followers' => $followers, 'following' => $following, 'blocked_users' => $blocked], 200);
+        // For Alaa, Replace this return statement with the view/blade that you're developing
+    }
 
     public function block(User $user)
-{
-    auth()->user()->following()->detach($user->id);
-    $user->following()->detach(auth()->user()->id);
-    auth()->user()->following()->detach($user->id);
-    auth()->user()->blocks()->attach($user->id);
-    return redirect()->back();
-}
+    {
+        auth()->user()->following()->detach($user->id);
+        $user->following()->detach(auth()->user()->id);
+        auth()->user()->following()->detach($user->id);
+        auth()->user()->blocks()->attach($user->id);
+        return redirect()->back();
+    }
 
     public function unblock(User $user)
     {
@@ -240,28 +231,18 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-//    public function search(Request $request)
-//    {
-//        $query = $request->input('query');
-//
-//        $results = User::where('email', 'like', "%$query%")
-//            ->orWhere('username', 'like', "%$query%")
-//            ->get();
-//
-//        return view('', compact('results'));
-//    }
+    public function search(Request $request)
+    {
 
-    public function search(Request $request){
+        if ($request->ajax()) {
 
-        if($request->ajax()){
+            $data = User::where('id', 'like', '%' . $request->search . '%')
+                ->orwhere('name', 'like', '%' . $request->search . '%')
+                ->orwhere('user_handle', 'like', '%' . $request->search . '%')->get();
 
-            $data=User::where('id','like','%'.$request->search.'%')
-                ->orwhere('name','like','%'.$request->search.'%')
-                ->orwhere('user_handle','like','%'.$request->search.'%')->get();
-
-            $output='';
-            if(count($data)>0){
-                $output ='
+            $output = '';
+            if (count($data) > 0) {
+                $output = '
                     <table class="table">
                     <thead>
                     <tr>
@@ -271,29 +252,22 @@ class UserController extends Controller
                     </tr>
                     </thead>
                     <tbody>';
-                foreach($data as $row){
-                    $output .='
+                foreach ($data as $row) {
+                    $output .= '
                             <tr>
-                            <th scope="row">'.$row->id.'</th>
-                            <td>'.$row->name.'</td>
-                            <td>'.$row->user_handle.'</td>
+                            <th scope="row">' . $row->id . '</th>
+                            <td>' . $row->name . '</td>
+                            <td>' . $row->user_handle . '</td>
                             </tr>
                             ';
                 }
                 $output .= '
                     </tbody>
                     </table>';
-            }
-            else{
-                $output .='No results';
+            } else {
+                $output .= 'No results';
             }
             return $output;
         }
     }
-//    protected $mustVerifyEmail;
-//
-//    public function __construct(MustVerifyEmail $mustVerifyEmail)
-//    {
-//        $this->mustVerifyEmail = $mustVerifyEmail;
-//    }
 }

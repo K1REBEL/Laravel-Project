@@ -9,11 +9,10 @@ class Media extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'post_id','url',
+        'post_id', 'url',
     ];
-    public function Post ()
+    public function Post()
     {
         return $this->belongsTo(Post::class);
-        
     }
 }
