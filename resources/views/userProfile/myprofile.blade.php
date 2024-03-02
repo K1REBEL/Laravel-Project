@@ -175,13 +175,15 @@
                 <div class="container">
                     <!-- start of gallery section -->
                     <div class="gallery" class="photo-container">
-
+                        @php $postat = collect($formattedSavedPosts); @endphp
+                   @foreach($postat as $post)
                    
+                   {{info($post)}}
                     <div  class="gallery-item" tabindex="0">
                        
-                            <img src=""
-                                class="gallery-image" alt="">
-                       
+                        @foreach($post->media_urls as $index => $media_url)
+                        <img class="popup-img " src="{{ asset('storage/'.$media_url) }}" />
+                    @endforeach
 
 
                             <div class="gallery-item-info">
@@ -202,7 +204,8 @@
                             </div>
 
                         </div>
-                        
+                        @endforeach
+
                     </div>
                     <!-- end of gallery section -->
                 </div>

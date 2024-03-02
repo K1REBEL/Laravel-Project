@@ -59,6 +59,7 @@ class PostController extends Controller
                 'profile_photo_url' => $post->user->profile_photo_url,
                 'profile_photo_path' =>$post->user->profile_photo_path
             ];
+            
         });
     //    return response()->json($filteredPosts);
    //  $jsonData = $filteredPosts->toJson();
