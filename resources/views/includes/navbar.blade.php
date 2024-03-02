@@ -5,6 +5,23 @@ instagram
 @extends('layouts.main')
 @extends('layouts.StyleHome')
 
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<style>
+    .btn-light.dropdown-toggle::after {
+        display: none;
+
+    }
+
+    .btn-light.dropdown-toggle {
+        background-color: transparent;
+        border-color: transparent;
+    }
+</style>
+</head>
+
 <!-- ===================navbar================== -->
 <header class="shadow-sm border-b sticky top-0 bg-white z-30">
     <div class="flex h-24 items-center justify-between xl:max-w-6xl mx-4 xl:mx-auto">
@@ -16,18 +33,25 @@ instagram
             <img src="https://logos-world.net/wp-content/uploads/2020/04/Instagram-icon-Logo-2016-present.png" />
         </div>
 
-        <!-- =================search=================== -->
-
-        <div class="search-container relative mt-1">
-            <div class="absolute top-2 left-2">
-                
-            </div>
-            <input type="text" placeholder="Search"
-                class="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md" id="search" name="search"/>
-        </div>
-        <div id="search_list"></div>
-
+        
         <!-- ============================icons========================= -->
+
+       
+        <div class="dropdown m-4">
+    <button class="btn btn-light dropdown-toggle" type="search" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+            aria-expanded="false">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search " viewBox="0 0 16 16">
+            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+        </svg>
+    </button>
+    <ul class="dropdown-menu pt-2" aria-labelledby="dropdownMenuButton1">
+        <input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..."
+               oninput="handleInput()">
+    </ul>
+</div>
+
+
+        
         <div class="flex space-x-4 items-center">
             <a href="{{route('posts.index')}}">
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -46,99 +70,81 @@ instagram
                 </svg>
             </a>
 
-            <a href="{{route('posts.retreive')}}">
-                <svg class="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
-                    xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bookmark"
-                    viewBox="0 0 16 16">
-                    <path
-                        d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
-                </svg>
+
+            <a href="{{route('users.show',auth()->id())}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+         </svg>
             </a>
-
-            <!-- =====================style drop down===============--- -->
-
-            <head>
-                <style>
-                .dropdown {
-                    position: relative;
-                    display: inline-block;
-                }
-
-                .dropdown-content {
-                    display: none;
-                    position: absolute;
-                    background-color: #f9f9f9;
-                    min-width: 160px;
-                    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-                    z-index: 1;
-                }
-
-                .dropdown:hover .dropdown-content {
-                    display: block;
-                }
-
-                .desc {
-                    padding: 15px;
-                    text-align: center;
-                }
-
-                @media screen and (max-width: 950px) {
-                    .dropdown {
-                        display: block;
-                    }
-
-                    .dropdown-content {
-                        position: absolute;
-                        left: -140px;
-                        top: 40px;
-                        display: none;
-                        background-color: #f9f9f9;
-                        box-shadow: none;
-                    }
-
-                    .dropdown:hover .dropdown-content {
-                        display: block;
-                    }
-                }
-                </style>
-            </head>
-
-            <!-- ========================dropdown================= -->
-            <div class="dropdown">
-                <img src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="Cinque Terre"
-                    width="25" height="25">
-                <div class="dropdown-content">
-                    <a href="{{route('users.show',auth()->id())}}">
-                        <div class="desc">View Profile</div>
-                    </a>
-                    <hr>
-                    <a href="{{ route('logout') }}"
-                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                        <div class="desc">Log Out</div>
-                    </a>
-                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                        @csrf
-                    </form>
-                </div>
-            </div>
 
         </div>
     </div>
 </header>
-<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
 <script>
-    $(document).ready(function(){
-        $('#search').on('keyup',function(){
-            var query= $(this).val();
-            $.ajax({
-                url:"search",
-                type:"GET",
-                data:{'search':query},
-                success:function(data){
-                    $('#search_list').html(data);
-                }
-            });
-            //end of ajax call
-        });
-        });
+const handleInput = () => {
+	const inputValue =
+		document
+			.querySelector('.form-control').value;
+	const results =
+		["apple", "banana", "cherry",
+			"date", "elderberry"];
+	const parentElement =
+		document
+			.querySelector(".dropdown-menu");
+	const elementsToRemove =
+		document.querySelectorAll("li");
+	elementsToRemove.forEach(element => {
+		element.remove();
+	});
+	if (inputValue) {
+		const matchingWords =
+			results
+				.filter(word => word
+					.includes(inputValue));
+		matchingWords.sort((a, b) => {
+			const indexA =
+				a.indexOf(inputValue);
+			const indexB =
+				b.indexOf(inputValue);
+			return indexA - indexB;
+		});
+		matchingWords.forEach(word => {
+			const listItem =
+				document.createElement("li");
+			const link =
+				document.createElement("a");
+			link.classList.add("dropdown-item");
+			link.href = "#";
+			link.textContent = word;
+			listItem.appendChild(link);
+			parentElement.appendChild(listItem);
+		});
+		if (matchingWords.length == 0) {
+			const listItem =
+				document.createElement('li');
+			listItem.textContent = "No Item";
+			listItem.classList.add('dropdown-item');
+			parentElement.appendChild(listItem);
+		}
+	} else {
+		results.forEach(word => {
+			const listItem =
+				document.createElement("li");
+			const link =
+				document.createElement("a");
+			link.classList.add("dropdown-item");
+			link.href = "#";
+			link.textContent = word;
+			listItem.appendChild(link);
+			parentElement.appendChild(listItem);
+		});
+	}
+}
+handleInput();
+
 </script>
+
+
+<script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
