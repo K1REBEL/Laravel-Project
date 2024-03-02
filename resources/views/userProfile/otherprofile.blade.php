@@ -81,16 +81,14 @@
             </div>
 
             <div class="profile-user-settings namebutooncontainer">
-                <h1 class="profile-user-name">{{ $user->user_handle }}</h1>
+                <h1 class="profile-user-name"><span>@</span>{{ $user->user_handle }}</h1>
+                <p class="profile-real-name" style="margin-top:10px;">{{$user->name}}</p>
+
+
                 <div class="d-flex buttoncontainers  " >
                 <div class="button-container d-block">
                     {{ info(Auth::user()) }}
                     {{ info($user) }}
-                    
-
-
-
-
                     
                     @if ($user->isFollowing(Auth::user()) && !Auth::user()->isFollowing($user))
                     <form action="{{ route('users.follow', $user->id) }}" method="POST">
@@ -126,13 +124,11 @@
                     </div>   
                      </div>
             </div>
-
             
-
-            <div class="profile-name">
-                <p class="profile-real-name">{{$user->name}}</p>
+            <div class="profile-bio">
+                <p class="bio">{{$user->bio}}kfhfhgf</p>
             </div>
-
+           
             <div class="profile-stats">
 
                 <ul>
@@ -149,15 +145,9 @@
 
             </div>
 
-
-            <div class="profile-bio">
-                <p class="bio">{{$user->bio}}yedrdrtdyf</p>
-            </div>
-
             <div class="profile-website">
                 <p class="website">{{$user->website}}dhrfhdhf</p>
             </div>
-
 
         </div>
         <!-- End of profile section -->

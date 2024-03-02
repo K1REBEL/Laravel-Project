@@ -67,10 +67,11 @@
 
                     <div class="profile-user-settings">
 
-                        <h1 class="profile-user-name">{{$user->user_handle}}</h1>
-                        <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
+                    <h1 class="profile-user-name"><span>@</span>{{ $user->user_handle }}</h1>                        <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
+                
+                        <a href="{{route('posts.create')}}"class="fas fa-camera fa-2x"  style="margin-left: 1.5rem;"></a>
 
-                        <a href="{{route('posts.create')}}"class="btn profile-create-btn">create post</a>
+
                     </div>
 
 
