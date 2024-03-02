@@ -106,8 +106,9 @@ class UserController extends Controller
         });
         // return response()->json($formattedSavedPosts);
 
+        $jsonData2 = $formattedSavedPosts->toJson();
         if ($user->id === auth()->id()) {
-            return view('userProfile.myprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData', 'formattedSavedPosts'));
+            return view('userProfile.myprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData', 'jsonData2'));
         } else {
             return view('userProfile.otherprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData'));
         }

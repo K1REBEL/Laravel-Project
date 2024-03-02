@@ -175,10 +175,9 @@
                 <div class="container">
                     <!-- start of gallery section -->
                     <div class="gallery" class="photo-container">
-                        @php $postat = collect($formattedSavedPosts); @endphp
-                   @foreach($postat as $post)
+                   @foreach(json_decode($jsonData2) as $post)
                    
-                   {{info($post)}}
+                   {{-- {{info($post)}} --}}
                     <div  class="gallery-item" tabindex="0">
                        
                         @foreach($post->media_urls as $index => $media_url)
