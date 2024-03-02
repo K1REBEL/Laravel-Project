@@ -8,7 +8,7 @@ Welcome to Instagram
 @section('content')
 <style>
   body{  background: rgb(240, 238, 238);}
-  
+
     .vertical {
       border-left: 2px solid rgb(240, 238, 238);
       height: 98%;
@@ -17,17 +17,17 @@ Welcome to Instagram
       align-self: flex-end;
       left: 80%
     }
-    .maintitle{      
-      margin-top: 2%; 
-      font-family: "Billabong W00 Regular";      
+    .maintitle{
+      margin-top: 2%;
+      font-family: "Billabong W00 Regular";
               }
-  
+
           .container{
             margin-top: 1%;
     border-radius: 15px;
     height: 525px;
 }
-          
+
           .login{
             border-radius: 1.4rem !important;
           }
@@ -50,24 +50,24 @@ Welcome to Instagram
                     <div class="carousel-item">
                         <img class="d-block w-100 rounded-3 rounded-lg" src="https://img.buzzfeed.com/buzzfeed-static/static/2018-11/28/13/campaign_images/buzzfeed-prod-web-03/teens-say-social-media-isnt-as-bad-for-them-as-yo-2-7828-1543428790-3_dblbig.jpg?resize=1200:*" alt="Second slide">
                     </div>
-                   
+
                 </div>
             </div>
-            
+
           </div>
         </div>
 <div class="position-relative d-flex col-md-1" >
   <h1 class="  vertical"></h1>
 </div>
-        
-   
+
+
 
         <div class="col-md-3 align-self-center ">
             <div class="  p-4  rounded text-center">
-                <a href="{{ url('register') }}" class="text-decoration-none">
+                    <a href="{{ route('register') }}" class="text-decoration-none">
                     <input style="border: none;" class="w-100 register rounded-3 button bg-primary mb-3" type="submit" value="Register">
                 </a>
-                <a href="{{ url('login') }}" class="text-decoration-none">
+                <a href="{{ route('login') }}" class="text-decoration-none">
                     <input style="border: none;" class="w-100 login rounded-3 button bg-primary" type="submit" value="Login">
                 </a>
             </div>
