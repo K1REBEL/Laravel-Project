@@ -33,25 +33,26 @@ instagram
             <img src="https://logos-world.net/wp-content/uploads/2020/04/Instagram-icon-Logo-2016-present.png" />
         </div>
 
-        
+
         <!-- ============================icons========================= -->
 
-       
-        <div class="dropdown m-4">
-    <button class="btn btn-light dropdown-toggle" type="search" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-            aria-expanded="false">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search " viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-        </svg>
-    </button>
-    <ul class="dropdown-menu pt-2" aria-labelledby="dropdownMenuButton1">
-        <input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..."
-               oninput="handleInput()">
-    </ul>
-</div>
+        <div class="container" style="margin-top: 50px;">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-3">
+{{--                    <h3 class="text-center">Laravel Autocomplete Search Box</h3><hr>--}}
+                    <div class="form-group">
+{{--                        <h4>Type by id, name and email!</h4>--}}
+                        <input type="text" name="search" id="search" placeholder="Enter search name" class="form-control" onfocus="this.value=''">
+                    </div>
+                    <div id="search_list"></div>
+                </div>
+                <div class="col-lg-3"></div>
+            </div>
+        </div>
 
 
-        
+
         <div class="flex space-x-4 items-center">
             <a href="{{route('posts.index')}}">
                 <svg xmlns="http://www.w3.org/2000/svg"
@@ -81,70 +82,26 @@ instagram
         </div>
     </div>
 </header>
-<script>
-const handleInput = () => {
-	const inputValue =
-		document
-			.querySelector('.form-control').value;
-	const results =
-		["apple", "banana", "cherry",
-			"date", "elderberry"];
-	const parentElement =
-		document
-			.querySelector(".dropdown-menu");
-	const elementsToRemove =
-		document.querySelectorAll("li");
-	elementsToRemove.forEach(element => {
-		element.remove();
-	});
-	if (inputValue) {
-		const matchingWords =
-			results
-				.filter(word => word
-					.includes(inputValue));
-		matchingWords.sort((a, b) => {
-			const indexA =
-				a.indexOf(inputValue);
-			const indexB =
-				b.indexOf(inputValue);
-			return indexA - indexB;
-		});
-		matchingWords.forEach(word => {
-			const listItem =
-				document.createElement("li");
-			const link =
-				document.createElement("a");
-			link.classList.add("dropdown-item");
-			link.href = "#";
-			link.textContent = word;
-			listItem.appendChild(link);
-			parentElement.appendChild(listItem);
-		});
-		if (matchingWords.length == 0) {
-			const listItem =
-				document.createElement('li');
-			listItem.textContent = "No Item";
-			listItem.classList.add('dropdown-item');
-			parentElement.appendChild(listItem);
-		}
-	} else {
-		results.forEach(word => {
-			const listItem =
-				document.createElement("li");
-			const link =
-				document.createElement("a");
-			link.classList.add("dropdown-item");
-			link.href = "#";
-			link.textContent = word;
-			listItem.appendChild(link);
-			parentElement.appendChild(listItem);
-		});
-	}
-}
-handleInput();
 
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function(){
+        $('#search').on('keyup',function(){
+            var query= $(this).val();
+            $.ajax({
+                url:"search",
+                type:"GET",
+                data:{'search':query},
+                success:function(data){
+                    $('#search_list').html(data);
+                }
+            });
+        });
+    });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-<script src=
-"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
