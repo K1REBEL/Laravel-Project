@@ -177,27 +177,55 @@
 
                 </div>
 
-                <div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
-                    @foreach($post->comments as $comment)
-                    <div class="flex items-center space-x-2 mb-2">
-                        @if($comment->user->profile_photo_path==null)
-                        <img class="h-7 rounded-full object-cover" src="{{$comment->user->profile_photo_url}}"
-                            alt="user-image" />
+<!-- Display one comment by default -->
+<div class="mx-10 max-h-24 overflow-y-scroll scrollbar-none">
+    <div class="flex items-center space-x-2 mb-2">
+        @if(!empty($post->comments))
+        @php
+        $firstComment = collect($post->comments)->first();
+        @endphp
+        @if($firstComment->user->profile_photo_path==null)
+        <img class="h-7 rounded-full object-cover" src="{{$firstComment->user->profile_photo_url}}" alt="user-image" />
+        @else
+        <img class="h-7 rounded-full object-cover" src="{{asset('storage/'.$firstComment->user->profile_photo_path)}}" alt="user-image" />
+        @endif
+        <p class="font-semibold">{{$firstComment->user->user_handle}}</p>
+        <p style="margin-left:10px" class="flex-1 truncate">{{$firstComment->comment}}</p>
+        @endif
+    </div>
+</div>
 
-                        @else
-                        <img class="h-7 rounded-full object-cover"
-                            src="{{asset('storage/'.$comment->user->profile_photo_path)}}" alt="user-image" />
-                        @endif
-                        {{-- <div style="display: flex ; align-items:center" > --}}
-                            <p class="font-semibold">{{$comment->user->user_handle}}</p>
-                            <p style="margin-left:10px" class="flex-1 truncate">{{$comment->comment}}</p>
-                            <div class="d-flex align-items-center">
-                            <button style="margin-left:10px; align-self:flex-end" type="submit"><i class="far fa-heart" style="font-size: 16px;" onclick="toggleIconFill(this)"></i>
-                            </button>                             <span style="font-size: 12px" >16</span>
-                        </div></span>
-                        {{-- </div> --}}
-                    </div>
-                    @endforeach
+<!-- Button to show all comments -->
+<button id="viewAllCommentsBtn" class="mx-10 my-2" onclick="showAllComments()">View all comments</button>
+
+<!-- Hidden div for all comments -->
+<div id="allCommentsContainer" class="mx-10 max-h-24 overflow-y-scroll scrollbar-none hidden">
+    @foreach($post->comments as $comment)
+    @if(!$loop->first)
+    <div class="flex items-center space-x-2 mb-2">
+        @if($comment->user->profile_photo_path==null)
+        <img class="h-7 rounded-full object-cover" src="{{$comment->user->profile_photo_url}}" alt="user-image" />
+        @else
+        <img class="h-7 rounded-full object-cover" src="{{asset('storage/'.$comment->user->profile_photo_path)}}" alt="user-image" />
+        @endif
+        <p class="font-semibold">{{$comment->user->user_handle}}</p>
+        <p style="margin-left:10px" class="flex-1 truncate">{{$comment->comment}}</p>
+        <div class="d-flex align-items-center">
+            <button style="margin-left:10px; align-self:flex-end" type="submit"><i class="far fa-heart" style="font-size: 16px;" onclick="toggleIconFill(this)"></i></button>
+            <span style="font-size: 12px">16</span>
+        </div>
+    </div>
+    @endif
+    @endforeach
+</div>
+
+<script>
+    function showAllComments() {
+        document.getElementById("viewAllCommentsBtn").style.display = "none";
+        document.getElementById("allCommentsContainer").classList.remove("hidden");
+    }
+</script>
+
 
 
 
@@ -322,7 +350,7 @@
 
 
     <!-- {/* Post input box */} -->
-    <section class="hidden md:inline-grid md:col-span-1">
+    <section class="hidden md:inline-grid md:col-span-1" style="margin-left:50px;">
         <div class="w-[380px] fixed">
             <div class="profile-image">
                 @if($user->profile_photo_path==null)
@@ -334,17 +362,28 @@
                 <div class="flex-1 ml-4">
                     <h2 class="font-mute">{{$user->user_handle}}</h2>
                     <span class="inline-block">
-                        <h3 class="text-sm text-gray-400" style="margin-top:10px; white-space: nowrap;">Welcome to
-                            instagram</h3>
+                        <h3 class="text-sm text-gray-400" style="margin-top:10px; white-space: nowrap;">
+                        Welcome to instagram</h3>
                     </span>
-                </div>
+                    </div>
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> 
+    <button class="font-semibold text-blue-400 text-sm cursor-pointer hover:scale-125" style="margin-top:10px; white-space: nowrap; margin-left:50px;">
+        Log Out
+    </button>
+</a>
+<form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+    @csrf
+</form>
 
-            </div>
 
+</div>
+          
+
+            
+          
     </section>
 
 </main>
-
 <script>
     let currentIndex = 0;
 
@@ -364,13 +403,6 @@ function changeImage{{$post->id}}(direction) {
 }
 @endforeach
 
-// document.querySelector('.prev-arrow').addEventListener('click', function() {
-//     changeImage(-1); // Change image to previous image
-// });
-
-// document.querySelector('.next-arrow').addEventListener('click', function() {
-//     changeImage(1); // Change image to next image
-// });
 
 </script>
 
