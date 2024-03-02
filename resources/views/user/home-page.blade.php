@@ -16,6 +16,51 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+    <style>
+   
+    .slideshow-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+       
+        overflow: hidden;
+    }
+
+    .slideshow-container img{
+        display:none;
+    }
+
+   
+
+    .slideshow-image.active {
+        display:block;
+    }
+   
+
+   
+    .navigation-arrows {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        box-sizing: border-box;
+        cursor: pointer;
+    }
+
+    .navigation-arrows button {
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>
 </head>
 
 <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
@@ -45,20 +90,18 @@
     <div class="post">
     <div class="slideshow-container">
         @foreach($post->media_urls as $index => $media_url)
-            <img class="slideshow-image @if($index === 0) active @endif" src="{{ asset('storage/'.$media_url) }}" />
+            <img class="slideshow-image slideshow-image{{$post->id}} @if($index === 0) active @endif" src="{{ asset('storage/'.$media_url) }}" />
         @endforeach
         <div class="navigation-arrows">
-            <button class="prev-arrow" onclick="changeImage(-1)">
+            <button class="prev-arrow" onclick="changeImage{{$post->id}}(-1)">
                 <i class="fas fa-chevron-left"></i>
             </button>
 
-            <button class="next-arrow" onclick="changeImage(1)">
+            <button class="next-arrow" onclick="changeImage{{$post->id}}(1)">
                 <i class="fas fa-chevron-right"></i>
             </button>
-            
         </div>
-        
-   </div>
+    </div>
 <div class="flex justify-between px-4 pt-4">
         <div class="cursor-pointer flex space-x-4">
             @if($post->is_liked == true)
@@ -103,6 +146,7 @@
                 </button></span>
         </form> --}}
            </div>
+
 
                 <!-- {/* Post comments */} -->
                 <div id="imageContainer" class="flex flex-wrap justify-center"></div>
@@ -291,11 +335,13 @@
 </main>
 
 <script>
-// =====================slid-posts======================
-let currentIndex = 0;
-const images = document.querySelectorAll('.slideshow-image');
+    let currentIndex = 0;
 
-function changeImage(direction) {
+
+@foreach(json_decode($jsonData) as $post)
+function changeImage{{$post->id}}(direction) {
+    var images = document.querySelectorAll('.slideshow-image'+{{$post->id}});
+    console.log(images)
     images[currentIndex].classList.remove('active');
     currentIndex += direction;
     if (currentIndex < 0) {
@@ -305,15 +351,18 @@ function changeImage(direction) {
     }
     images[currentIndex].classList.add('active');
 }
+@endforeach
 
-document.querySelector('.prev-arrow').addEventListener('click', function() {
-    changeImage(-1); // Change image to previous image
-});
+// document.querySelector('.prev-arrow').addEventListener('click', function() {
+//     changeImage(-1); // Change image to previous image
+// });
 
-document.querySelector('.next-arrow').addEventListener('click', function() {
-    changeImage(1); // Change image to next image
-});
+// document.querySelector('.next-arrow').addEventListener('click', function() {
+//     changeImage(1); // Change image to next image
+// });
+
 </script>
+
 
 <!-- ========================icons============= -->
 <script>
