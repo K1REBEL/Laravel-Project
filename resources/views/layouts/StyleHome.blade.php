@@ -1228,4 +1228,46 @@ div.hashtag-container {
 
 
 }
+
+.slideshow-container {
+        position: relative;
+        width: 100%;
+        height: 650px; 
+        overflow: hidden; 
+    }
+
+    .slideshow-image {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s; 
+         }
+
+    .slideshow-image.active {
+        opacity: 1;
+    }
+
+    .navigation-arrows {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    .navigation-arrows button {
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 10px;
+        border-radius: 5px;
+    }
+</style>
 </style>
