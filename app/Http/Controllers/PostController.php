@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
 use App\Models\Savedpost;
+use App\Models\Hashtag;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -29,7 +30,9 @@ class PostController extends Controller
                 $query->with(['user' => function ($query) {
                     $query->select('id', 'user_handle', 'profile_photo_path');
                 }]);
-            },'likes','hashtag','media','user'])
+            },'likes',
+            'hashtag',
+            'media','user'])
             ->get();
         // $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
         //     ->with('comments','likes','hashtag','media','user')
@@ -37,8 +40,8 @@ class PostController extends Controller
         // log::info($posts);
         $filteredPosts = collect($posts)->map(function ($post) {
             $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
-            $isLiked = $post->isliked();
-            log::info($isLiked);
+            // $isLiked = $post->isliked();
+            // log::info($isLiked);
             return [
                 'id' => $post->id,
                 'caption' => $post->caption,
@@ -93,6 +96,12 @@ class PostController extends Controller
             $pieces = explode(' ', $request->hashtag);
             foreach ($pieces as $piece) {
                 $ready_hashtags[] = '#' . $piece;
+                $last = end($ready_hashtags);
+                $hash = new Hashtag();
+                $hash->hashtag = $last;
+                $hash->post_id = $post->id;
+                log::info($ready_hashtags);
+                $hash->save();
             }
             // $post->hashtag()->attach($ready_hashtags);
             
