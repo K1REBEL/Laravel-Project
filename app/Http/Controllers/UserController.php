@@ -176,6 +176,8 @@ class UserController extends Controller
     public function block(User $user)
 {
     auth()->user()->following()->detach($user->id);
+    $user->following()->detach(auth()->user()->id);
+    auth()->user()->following()->detach($user->id);
     auth()->user()->blocks()->attach($user->id);
     return redirect()->back();
 }
