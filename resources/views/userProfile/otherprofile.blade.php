@@ -11,342 +11,6 @@
     @extends('layouts.StyleProfile')
     <style>
 
-/* Profile Section */
-
-
-/* ----^----  */
-.profile-name {
-    margin-top: 4rem;
-    font-size: 1.6rem;
-    font-weight: 200;
-    line-height: 1.5;
-}
-/* -----------^--------- */
-
-/* ?  */
-.add-new-image {
-    margin-top: 10px;
-    display: block;
-}
-
-.profile-real-name {
-    margin-bottom: 10px;
-}
-
-.website {
-    color: blue;
-}
-        /* Gallery Section */
-
-        .gallery {
-            display: flex;
-            flex-wrap: wrap;
-            margin: -1rem -1rem;
-            padding-bottom: 3rem;
-        }
-
-        .gallery-item {
-            position: relative;
-            flex: 1 0 22rem;
-            margin: 1rem;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .gallery-item:hover .gallery-item-info,
-        .gallery-item:focus .gallery-item-info {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: absolute;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.3);
-        }
-
-        .gallery-item-info {
-            display: none;
-        }
-
-        .gallery-item-info li {
-            display: inline-block;
-            font-size: 1.7rem;
-            font-weight: 600;
-        }
-
-        .gallery-item-likes {
-            margin-right: 2.2rem;
-        }
-
-        .gallery-item-save {
-            margin-left: 2.2rem;
-        }
-
-
-        .gallery-item-type {
-            position: absolute;
-            top: 1rem;
-            right: 1rem;
-            font-size: 2.5rem;
-            text-shadow: 0.2rem 0.2rem 0.2rem rgba(0, 0, 0, 0.1);
-        }
-
-
-        .gallery-image {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* Popup Container */
-        .popup-container {
-            flex-direction:row;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background-color: white;
-            width: 100%;
-            max-width: 500px;
-            border-radius: 12px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
-            z-index: 1000;
-            display: none;
-            padding: 20px;
-        }
-
-        .exit-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        .popup-content {
-            padding: 16px;
-        }
-
-        .popup-image {
-            width: 100%;
-            border-top-left-radius: 12px;
-            border-top-right-radius: 12px;
-        }
-
-        .popup-caption h1,
-.popup-caption p {
-    display: inline;
-    margin-right: 10px;
-}
-        .popup-caption h1 {
-    font-size: 24px;
-}
-
-.popup-caption p {
-    font-size: 16px;
-}
-
-.popup-icons {
-    margin-bottom: 10px;
-    font-size: 2.5rem;
-    margin-top: 8px;
-    font-weight: bold;
-}
-
-.popup-icons {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-}
-
-.popup-icons i {
-    margin-right: 15px;
-}
-
-        .popup-comments {
-            font-size:1.5rem;
-            margin-top: 8px;
-        }
-
-        .user-comment {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .user-profile-picture {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-
-        .user-name {
-            font-weight: bold;
-        }
-
-        .user-comment-text {
-            margin: 0;
-        }
-
-        .popup-saved-items {
-            font-size:1.5rem;
-            margin-top: 8px;
-        }
-
-        .exit-icon {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            cursor: pointer;
-        }
-
-        /* Media Query */
-
-        @media screen and (max-width: 40rem) {
-
-            .profile {
-                display: flex;
-                flex-wrap: wrap;
-                padding: 4rem 0;
-            }
-
-            .profile::after {
-                display: none;
-            }
-
-            .profile-image,
-            .profile-user-settings,
-            .profile-bio,
-            .profile-stats,
-            .profile-name,
-            .profile-website {
-                float: none;
-                width: auto;
-            }
-
-            .profile-image img {
-                width: 7.7rem;
-            }
-
-            .profile-user-settings {
-                flex-basis: calc(100% - 10.7rem);
-                display: flex;
-                flex-wrap: wrap;
-                margin-top: 1rem;
-            }
-
-            .profile-user-name {
-                font-size: 2.2rem;
-            }
-
-            .profile-bio {
-                font-size: 1.4rem;
-                margin-top: 1.5rem;
-            }
-
-            .profile-bio,
-            .profile-stats,
-            .profile-name,
-            .profile-website {
-                flex-basis: 100%;
-            }
-
-            .profile-stats {
-                order: 1;
-                margin-top: 1.5rem;
-            }
-
-            .profile-stats ul {
-                display: flex;
-                text-align: center;
-                padding: 1.2rem 0;
-                border-top: 0.1rem solid #dadada;
-                border-bottom: 0.1rem solid #dadada;
-            }
-
-            .profile-stats li {
-                font-size: 1.4rem;
-                flex: 1;
-                margin: 0;
-            }
-
-            .profile-stat-count {
-                display: block;
-            }
-        }
-
-        @supports (display: grid) {
-
-            .profile {
-                display: grid;
-                grid-template-columns: 1fr 2fr;
-                grid-template-rows: repeat(5, auto);
-                grid-column-gap: 3rem;
-                align-items: center;
-            }
-
-            .profile-image {
-                grid-row: 1 / -1;
-            }
-
-            .gallery {
-                display: grid;
-                grid-template-columns: repeat(auto-fit, minmax(22rem, 1fr));
-                grid-gap: 2rem;
-            }
-
-            .profile-image,
-            .profile-user-settings,
-            .profile-stats,
-            .profile-bio,
-            .profile-name,
-            .profile-website,
-            .gallery-item,
-            .gallery {
-                width: auto;
-                margin:0.5rem;
-            }
-
-            @media (max-width: 40rem) {
-                .profile {
-                    grid-template-columns: auto 1fr;
-                    grid-row-gap: 1.5rem;
-                }
-
-                .profile-image {
-                    grid-row: 1 / 2;
-                }
-
-                .profile-user-settings {
-                    display: grid;
-                    grid-template-columns: auto 1fr;
-                    grid-gap: 1rem;
-                }
-
-                .profile-stats,
-                .profile-bio,
-                .profile-name,
-                .profile-website {
-                    grid-column: 1 / -1;
-                }
-
-                .profile-user-settings,
-                .profile-bio,
-                .profile-website,
-                .profile-stats,
-                .profile-name{
-                    margin: 0;
-                }
-            }
-        }
-
-        .btn.profile-edit-btn {
-            text-decoration: none;
-        }
-        .namebutooncontainer{
-            display: flex;
-        }
         /* //////////////////buttons/////////////// */
         .button-container {
             display: flex;
@@ -463,6 +127,12 @@
                      </div>
             </div>
 
+            
+
+            <div class="profile-name">
+                <p class="profile-real-name">{{$user->name}}</p>
+            </div>
+
             <div class="profile-stats">
 
                 <ul>
@@ -480,16 +150,12 @@
             </div>
 
 
-            <div class="profile-name">
-                <p class="profile-real-name">{{$user->name}}</p>
-            </div>
-
             <div class="profile-bio">
-                <p class="bio">{{$user->bio}}</p>
+                <p class="bio">{{$user->bio}}yedrdrtdyf</p>
             </div>
 
             <div class="profile-website">
-                <p class="website">{{$user->website}}</p>
+                <p class="website">{{$user->website}}dhrfhdhf</p>
             </div>
 
 
@@ -509,12 +175,13 @@
         <div class="container">
             <!-- start of gallery section -->
             <div class="gallery" class="photo-container">
-                @foreach(json_decode($jsonData) as $post)
-                    <div style="background-color: red;" class="gallery-item" tabindex="0">
+                @foreach(json_decode($jsonData) as $index => $post)
+                    <div class="gallery-item" tabindex="0"  onclick="displayPopup({{ json_encode($post->media_urls) }})">
                         @foreach($post->media_urls as $media_url)
                             {{info($post->media_urls)}}
                         <img src="{{asset('storage/'.$media_url)}}"
                         class="gallery-image" alt="">
+                        @break
                         @endforeach
                     <div class="gallery-item-info">
 
@@ -536,60 +203,55 @@
                 </div>
                 @endforeach
 
-                <div class="gallery-item" tabindex="0">
-                    <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop" class="gallery-image" alt="Gallery Image">
-                    <div class="gallery-item-info">
-
-                        <ul>
-
-                            <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                            aria-hidden="true"></i> {{$post->like_count}}</li>
-
-                            <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                            class="far fa-comment" aria-hidden="true"></i> {{$post->comment_count}}</li>
-
-                            <li class="gallery-item-save"><span class="visually-hidden"></span><i
-                            class="far fa-bookmark" aria-hidden="true"></i></li>
-
-                        </ul>
-                    </div>
-            </div>
-            <!-- end of gallery section -->
-
-        </div>
-        <!-- end of gallery container -->
-    </main>
+                </div>
+                    <!-- end of gallery section -->
+                </div>
+                <!-- end of gallery container -->
+            </main>
 
     <!-----------------------------------------popup------------------------------------------------->
 
-        <!-- start of container -->
-        <div class="container">
-            <!-- start of popup container -->
-            <div class="popup-container">
-
+       <!-- start of container -->
+    <div class="container">
+        <!-- start of popup container -->
+        <div class="popup-container">
                 <div class="popup-content">
-
-                    <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
-                    <img class="popup-image" src="" alt="Popup Image">
-
+                    <div class="popup-images">
+                        @foreach($post->media_urls as $index => $media_url)
+                            <img class="popup-img " src="{{ asset('storage/'.$media_url) }}" />
+                        @endforeach
+                    </div>
+                    
+                    <div class="navigation-arrows">
+                        <button class="prev-arrow" onclick="changeImage(-1)">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        <button class="next-arrow">
+                            <i class="fas fa-chevron-right"onclick="changeImage(1)"></i>
+                        </button>
+                    </div>
+                </div>
+                <i class="fas fa-times exit-icon" onclick="hidePopup()"></i>
+                <!-- popup details -->
+                <div class="popup-details">
                     <div class="popup-icons">
                         <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
                         <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
                     </div>
-
                     <div class="popup-caption"></div>
                     <div class="popup-comments"></div>
-
                 </div>
-
             </div>
-            <!-- end of popup container -->
         </div>
-        <!-- end of container -->
-
+    </div>
+  
+<!-- end of container -->
     <!-- ---------------------------------------------popupJS--------------------------------------->
     @extends('layouts.PopupJS')
-
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
     </body>
 </html>

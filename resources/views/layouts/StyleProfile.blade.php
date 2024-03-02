@@ -74,7 +74,8 @@
         clear: both;
     }
 
-    .profile-image {
+    .profile-image,
+    {
         float: left;
         width: calc(33.333% - 1rem);
         display: flex;
@@ -91,7 +92,8 @@
     .profile-stats,
     .profile-bio,
     .profile-name,
-    .profile-website  {
+    .profile-website
+     {
         float: left;
         width: calc(66.666% - 2rem);
         margin-top: 2rem;
@@ -126,7 +128,7 @@
     }
     
     .profile-website {
-    margin-top: 2rem;
+    margin-top: 0.rem;
     font-size: 1.3rem;
     font-weight: 200;
     line-height: 1.5;
@@ -243,25 +245,27 @@
 .popup-images .active {
     display: block; /* Display only the active image */
 }
-    .navigation-arrows {
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        padding: 0 20px;
-        box-sizing: border-box;
-    }
+.prev-arrow,
+.next-arrow {
+    background: rgba(255, 255, 255, 0.5);
+    border: none;
+    cursor: pointer;
+    outline: none;
+    padding: 10px;
+    border-radius: 5px;
+    position: absolute;
+    top: 30%;
+    transform: translateY(-50%);
+}
 
-    .navigation-arrows button {
-        background: rgba(255, 255, 255, 0.5);
-        border: none;
-        cursor: pointer;
-        outline: none;
-        padding: 10px;
-        border-radius: 5px;
-    }
+.prev-arrow {
+    left: 0;
+}
+
+.next-arrow {
+    right: 0;
+}
+
     .popup-content {
         padding: 16px;
         position: relative;
@@ -434,7 +438,7 @@
         .profile {
             display: grid;
             grid-template-columns: 1fr 2fr;
-            grid-template-rows: repeat(3, auto);
+            grid-template-rows: repeat(4, auto);
             grid-column-gap: 3rem;
             align-items: center;
         }
@@ -450,7 +454,7 @@
         }
 
         .profile-image,
-        .profile-user-settings,
+        .profile-user-settings ,
         .profile-stats,
         .profile-bio,
         .gallery-item,
@@ -467,7 +471,7 @@
 
             .profile-image {
                 grid-row: 1 / 2;
-            }
+                         }
 
             .profile-user-settings {
                 display: grid;
@@ -477,7 +481,8 @@
 
             .profile-edit-btn,
             .profile-stats,
-            .profile-bio {
+            .profile-bio,
+            .profile-website {
                 grid-column: 1 / -1;
             }
 
@@ -485,7 +490,8 @@
             .profile-edit-btn,
             .profile-settings-btn,
             .profile-bio,
-            .profile-stats {
+            .profile-stats,
+            .profile-website {
                 margin: 0;
             }
         }
