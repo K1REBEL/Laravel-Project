@@ -139,6 +139,9 @@ class UserController extends Controller
         if ($user->id === auth()->id()) {
             throw ValidationException::withMessages(['error' => 'You cannot follow your own profile.']);
         }
+        if (auth()->user()->blocks->contains($user)) {
+            return redirect()->back()->with('error', 'You need to unblock this user before following.');
+        }
         Log::info('Follow request for user ' . auth()->user()->id . ' to follow user ' . $user->id);
          auth()->user()->following()->attach($user->id);
          return redirect()->back();

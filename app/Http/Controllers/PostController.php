@@ -8,6 +8,7 @@ use App\Models\Post;
 use App\Models\User;
 use App\Models\Media;
 use App\Models\Savedpost;
+use App\Models\Hashtag;
 use Carbon\Carbon;
 
 use Illuminate\Http\Request;
@@ -29,7 +30,9 @@ class PostController extends Controller
                 $query->with(['user' => function ($query) {
                     $query->select('id', 'user_handle', 'profile_photo_path');
                 }]);
-            },'likes','hashtag','media','user'])
+            },'likes',
+            'hashtag',
+            'media','user'])
             ->get();
         // $posts = Post::whereIn('user_id', $followingIds)->orWhere('user_id', $user->id)
         //     ->with('comments','likes','hashtag','media','user')
@@ -37,6 +40,8 @@ class PostController extends Controller
         // log::info($posts);
         $filteredPosts = collect($posts)->map(function ($post) {
             $timeSinceUpdate = Carbon::parse($post->updated_at)->diffForHumans();
+            // $isLiked = $post->isliked();
+            // log::info($isLiked);
             return [
                 'id' => $post->id,
                 'caption' => $post->caption,
@@ -45,6 +50,8 @@ class PostController extends Controller
                 'comments' => $post->comments->sortByDesc('updated_at'),
                 'comment_count' => $post->comments->count(),
                 'like_count' => $post->likes->count(),
+                'is_liked' => $post->isliked(),
+                'is_saved' => $post->is_saved(),
                 'hashtag_names' => $post->hashtag->pluck('name'),
                 'media_urls' => $post->media->pluck('url'),
                 'user_id' => $post->user->id,
@@ -70,13 +77,13 @@ class PostController extends Controller
         // return view('userProfile.createpost');
 
         $users = auth()->id();
-        return view('userProfile.createpost',compact('users'));
+        return view('userProfile.createpost', compact('users'));
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request,Media $media)
+    public function store(Request $request, Media $media)
     {
         // Log::info('hello');
         $userId = auth()->id();
@@ -84,6 +91,21 @@ class PostController extends Controller
             'caption' => $request->caption,
             'user_id' => $userId,
         ]);
+        $ready_hashtags = [];
+        if($request->hashtag){
+            $pieces = explode(' ', $request->hashtag);
+            foreach ($pieces as $piece) {
+                $ready_hashtags[] = '#' . $piece;
+                $last = end($ready_hashtags);
+                $hash = new Hashtag();
+                $hash->hashtag = $last;
+                $hash->post_id = $post->id;
+                log::info($ready_hashtags);
+                $hash->save();
+            }
+            // $post->hashtag()->attach($ready_hashtags);
+            
+        }
 //        $path = $request->file('images');
 //        $url = $request->file('images')->storeAs('posts',$path,'public');
 //        $media->image=$url;
@@ -153,7 +175,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id,Post $post)
+    public function destroy(string $id, Post $post)
     {
         $post->delete();
         return redirect()->route('posts.index');
@@ -162,13 +184,15 @@ class PostController extends Controller
     public function like(Post $post)
     {
         $post->likes()->create(['user_id' => auth()->id()]);
-        return response()->json(['message' => 'Post liked successfully']);
+        return redirect()->route('posts.index');
+        // return response()->json(['message' => 'Post liked successfully']);
     }
 
     public function unlike(Post $post)
     {
         $post->likes()->where('user_id', auth()->id())->delete();
-        return response()->json(['message' => 'Post unliked successfully']);
+        return redirect()->route('posts.index');
+        // return response()->json(['message' => 'Post unliked successfully']);
     }
 
     public function comments(Request $request ,  Post $post , User $user)
@@ -183,17 +207,40 @@ class PostController extends Controller
             'user_id' => $userId,
         ]);
         return redirect()->route('posts.index');
-
     }
-    public function savepost(Request $request ,  Post $post )
+
+    public function savepost(Post $post)
     {
         $postId = $post->id;
         $userId = auth()->id();
-        Log::info($userId);
+        // Log::info($userId);
 
-        $existingSavedPost = Savedpost::where('post_id', $post->id)
-        ->where('user_id', $userId)
-        ->exists();
+        $existingSavedPost = Savedpost::where('post_id', $postId)
+            ->where('user_id', $userId)
+            ->exists();
+
+        if (!$existingSavedPost) {
+            Savedpost::create([
+                'post_id' => $post->id,
+                'user_id' => $userId,
+            ]);
+            // return response()->json(['message' => 'Post saved successfully']);
+        } else { return redirect()->route('posts.index'); }
+        // } else { return response()->json(['message' => 'Post already saved']); }
+
+        return redirect()->route('posts.index');
+    }    
+
+    public function unsavepost(Post $post)
+    {
+        $postId = $post->id;
+        $userId = auth()->id();
+
+        $existingSavedPost = Savedpost::where('post_id', $postId)->where('user_id', $userId);
+
+        if($existingSavedPost){ $existingSavedPost->delete(); }
+        return redirect()->route('posts.index');
+       
 
 if (!$existingSavedPost) {
 Savedpost::create([
@@ -204,12 +251,14 @@ Savedpost::create([
 // return response()->json(['message' => 'Post saved successfully']);
 }
 else{
-return response()->json(['message' => 'Post already saved']);
+// return response()->json(['message' => 'Post already saved']);
+return redirect()->route('posts.retreive');
+
 }
 return redirect()->route('posts.index');
 
 }    
-   public function retreiveSavedposts(){
+public function retreiveSavedposts(){
 
     $userId = auth()->id();
     Log::info($userId);
@@ -226,4 +275,4 @@ return redirect()->route('posts.index');
     });
     return response()->json($formattedSavedPosts);
 }
-   }
+}

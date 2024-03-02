@@ -24,51 +24,75 @@
 
         <!-- ========Posts=====  -->
 
-        @foreach(json_decode($jsonData) as $post)
-        <div class="border my-7 bg-white rounded-md">
-            <div class="flex items-center p-5 <div space-x-4 items-center">
-                @if($post->profile_photo_path==null)
-                <img class="h-12 rounded-full border p-1 mr-3" src="{{$post->profile_photo_url}}" />
-                @else
-                <img class="h-12 rounded-full object-cover border p-1 mr-3"
-                    src="{{asset('storage/'.$post->profile_photo_path)}}" />
-                @endif
-                <p class="font-bold flex-1">{{$post->user_handle}}
-                </p>
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
-                </svg>
-            </div>
-            <!-- =========================post1======================= -->
-            <div class="post   ">
-                <div class="slideshow-container">
-                    @foreach($post->media_urls as $index => $media_url)
-                    <img class="slideshow-image @if($index === 0) active @endif"
-                        src="{{ asset('storage/'.$media_url) }}" />
-                    @endforeach
-                    <div class="navigation-arrows">
-                        <button class="prev-arrow" onclick="changeImage(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
+@foreach(json_decode($jsonData) as $post)
+<div class="bg-white my-7 border rounded-md">
+    <div class="flex items-center p-5">
+        @if($post->profile_photo_path==null)
+        <img class="h-12 rounded-full object-cover border p-1 mr-3" src="{{$post->profile_photo_url}}" />
+        @else
+        <img class="h-12 rounded-full object-cover border p-1 mr-3"
+            src="{{asset('storage/'.$post->profile_photo_path)}}" />
+        @endif
+        <p class="font-bold flex-1">{{$post->user_handle}}
 
-                        <button class="next-arrow" onclick="changeImage(1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    </div>
-                </div>
-                <!-- ===============================icons=========================== -->
-                <div class="flex justify-between px-4 pt-4">
-                    <div class="cursor-pointer flex space-x-4 justify-end">
-                        <i class="far fa-heart fa-lg" onclick="toggleIconFill(this)"></i>
-                        <i class="far fa-comment fa-lg" onclick="toggleIconFill(this)"></i>
-                        <span style="margin-left:650px;">
-                            <i class="far fa-bookmark fa-lg" onclick="toggleIconFill(this)">
-                            </i>
-                        </span>
-                    </div>
-                </div>
+        </p>
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+                d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z" />
+        </svg>
+    </div>
+
+    @foreach($post->media_urls as $media_url)
+    
+    <img className="object-cover w-full" src="{{asset('storage/'.$media_url)}}" />
+    @endforeach
+    {{-- <img className="object-cover w-full" src="{{$post->media_urls}}"/> --}}
+
+    <div class="flex justify-between px-4 pt-4">
+        <div class="cursor-pointer flex space-x-4">
+            @if($post->is_liked == true)
+            <form action="{{route('posts.unlike', $post->id)}}" method="POST">
+                @csrf
+                @method('delete')
+                <span class="cursor-pointer flex space-x-4">
+                    <button type="submit"><i class="fas fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                    </button></span>
+            </form>
+            @elseif($post->is_liked == false)
+            <form action="{{route('posts.like', $post->id)}}" method="POST">
+                @csrf
+                <span class="cursor-pointer flex space-x-4">
+                    <button type="submit"><i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                    </button></span>
+            </form>
+            @endif
+            {{-- <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i> --}}
+            <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+        </div>
+        @if($post->is_saved == true)
+        <form action="{{route('posts.unsave', $post->id)}}" method="POST">
+            @csrf
+            @method('delete')
+            <span class="cursor-pointer flex space-x-4">
+                <button type="submit"><i class="fas fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                </button></span>
+        </form>
+        @elseif($post->is_saved == false)
+        <form action="{{route('posts.save', $post->id)}}" method="POST">
+            @csrf
+            <span class="cursor-pointer flex space-x-4">
+                <button type="submit"><i class="far fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                </button></span>
+        </form>
+        @endif
+        {{-- <form action="{{route('posts.save',$post->id)}}" method="POST">
+            @csrf
+            <span class="cursor-pointer flex space-x-4">
+                <button type="submit"><i class="far fa-bookmark" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+                </button></span>
+        </form> --}}
+           </div>
 
                 <!-- {/* Post comments */} -->
                 <div id="imageContainer" class="flex flex-wrap justify-center"></div>

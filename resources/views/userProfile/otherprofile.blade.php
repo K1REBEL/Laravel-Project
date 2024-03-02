@@ -344,7 +344,9 @@
         .btn.profile-edit-btn {
             text-decoration: none;
         }
-
+        .namebutooncontainer{
+            display: flex;
+        }
         /* //////////////////buttons/////////////// */
         .button-container {
             display: flex;
@@ -360,7 +362,7 @@
             background-color: #04AA6D;
             border: none;
             color: white;
-            padding: 10px 70px;
+            padding: 10px 30px;
             text-decoration: none;
             display: inline-block;
             font-size: 16px;
@@ -370,7 +372,9 @@
             margin-bottom: 10px;
             margin-right: 20px;
         }
-
+        .follow-btn{
+            margin-left: 20px
+        }
         .follow-btn:hover {
             background-color: #047049;
         }
@@ -386,6 +390,11 @@
 </head>
 
 <body>
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+@endif
 <!-- ---------------------------------------------header profile---------------------------------->
 <header>
     <!-- start of profile container -->
@@ -401,8 +410,40 @@
                 @endif
             </div>
 
-            <div class="profile-user-settings">
+            <div class="profile-user-settings namebutooncontainer">
                 <h1 class="profile-user-name">{{ $user->user_handle }}</h1>
+                <div class="button-container">
+
+                    @if (Auth::user()->id != $user->id)
+                        {{--{{ info($user) }}--}}
+                        @if (!Auth::user()->isFollowing($user))
+                        {{--{{ info($user->isFollowing($user)) }}--}}
+                            <form action="{{ route('users.follow', $user->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="follow-btn">Follow</button>
+                            </form>
+                        @else
+                            <form action="{{ route('users.unfollow', $user->id) }}" method="POST">
+                                @csrf
+                                <button type="submit" class="follow-btn">Unfollow</button>
+                            </form>
+                        @endif
+                    @endif
+                    <div class="button-container">
+                        @if (Auth::user()->id != $user->id)
+                            @if (!Auth::user()->blocks->contains($user))
+                                <form action="{{ route('users.block', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="block-btn">Block</button>
+                                </form>
+                            @else
+                                <form action="{{ route('users.unblock', $user->id) }}" method="POST">
+                                    @csrf
+                                    <button type="submit" class="block-btn">Unblock</button>
+                                </form>
+                            @endif
+                        @endif
+                    </div>        </div>
             </div>
 
             <div class="profile-stats">
@@ -439,38 +480,7 @@
         <!-- End of profile section -->
 
         <!-- -----------------------follow/block------------------------------------ -->
-        <div class="button-container">
 
-            @if (Auth::user()->id != $user->id)
-                {{--{{ info($user) }}--}}
-                @if (!Auth::user()->isFollowing($user))
-                {{--{{ info($user->isFollowing($user)) }}--}}
-                    <form action="{{ route('users.follow', $user->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="follow-btn">Follow</button>
-                    </form>
-                @else
-                    <form action="{{ route('users.unfollow', $user->id) }}" method="POST">
-                        @csrf
-                        <button type="submit" class="follow-btn">Unfollow</button>
-                    </form>
-                @endif
-            @endif
-            <div class="button-container">
-                @if (Auth::user()->id != $user->id)
-                    @if (!Auth::user()->blocks->contains($user))
-                        <form action="{{ route('users.block', $user->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="block-btn">Block</button>
-                        </form>
-                    @else
-                        <form action="{{ route('users.unblock', $user->id) }}" method="POST">
-                            @csrf
-                            <button type="submit" class="block-btn">Unblock</button>
-                        </form>
-                    @endif
-                @endif
-            </div>        </div>
     </div>
     <!-- End of profile container -->
 
@@ -553,5 +563,6 @@
 
     <!-- ---------------------------------------------popupJS--------------------------------------->
     @extends('layouts.PopupJS')
+
     </body>
 </html>
