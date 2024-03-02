@@ -65,6 +65,14 @@
     }
 </style>
 <body>
+    <div>
+            
+        <a href="{{route('posts.index')}}">
+            <button  class="prev-arrow btn btn-primary">
+                <i class="fas fa-chevron-left"></i> Home
+            </button>
+        </a>
+    </div>
 <div class="container">
     <div class="card">
         <h2>Edit Post</h2>

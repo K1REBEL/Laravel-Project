@@ -24,8 +24,8 @@ instagram
 
 <!-- ===================navbar================== -->
 <header class="shadow-sm border-b sticky top-0 bg-white z-30">
-    <div class="flex h-24 items-center justify-between xl:max-w-6xl mx-4 xl:mx-auto">
-
+    <div class="d-flex h-24 items-center justify-between xl:max-w-6xl mx-4 xl:mx-auto">
+        
         <div class="cursor-pointer w-24 relative hidden lg:inline-grid">
             <img src="http://www.jennexplores.com/wp-content/uploads/2015/09/Instagram_logo_black.png" />
         </div>
@@ -37,22 +37,23 @@ instagram
         <!-- ============================icons========================= -->
 
        
-        <div class="dropdown m-4">
-    <button class="btn btn-light dropdown-toggle" type="search" id="dropdownMenuButton1" data-bs-toggle="dropdown"
-            aria-expanded="false">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search " viewBox="0 0 16 16">
-            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-        </svg>
-    </button>
-    <ul class="dropdown-menu pt-2" aria-labelledby="dropdownMenuButton1">
-        <input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..."
-               oninput="handleInput()">
-    </ul>
-</div>
 
 
+		
         
         <div class="flex space-x-4 items-center">
+			<div class="dropdown m-4">
+				<button class="btn btn-light dropdown-toggle" type="search" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+						aria-expanded="false">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search " viewBox="0 0 16 16">
+						<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+					</svg>
+				</button>
+				<ul class="dropdown-menu pt-2" aria-labelledby="dropdownMenuButton1">
+					<input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..."
+						   oninput="handleInput()">
+				</ul>
+			</div>
             <a href="{{route('posts.index')}}">
                 <svg xmlns="http://www.w3.org/2000/svg"
                     class="hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
