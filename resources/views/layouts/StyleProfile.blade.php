@@ -64,7 +64,7 @@
         border: 0.1rem solid #dbdbdb;
         border-radius: 0.3rem;
         padding: 0; 
-        margin-left: 0;  
+        margin-left: 90px;  
         margin-top: 1rem; 
     }
 
@@ -95,6 +95,9 @@
         float: left;
         width: calc(66.666% - 2rem);
         margin-top: 2rem;
+    }
+    .profile-real-name{
+        font-size: 1.9rem;
     }
 
     .profile-user-name {
@@ -149,6 +152,7 @@
         margin: 1rem;
         color: #fff;
         cursor: pointer;
+        max-height:335px;
     }
 
     .gallery-item:hover .gallery-item-info,
@@ -204,12 +208,14 @@
         transform: translate(-50%, -50%);
         background-color: white;
         width: 100%;
-        max-width: 500px;
+        max-width: 600px;
         border-radius: 12px;
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
         z-index: 1000;
         display: none;
         padding: 20px;
+        overflow: hidden;
+        
     }
 
     .exit-icon {
@@ -219,14 +225,53 @@
         cursor: pointer;
     }
 
-    .popup-content {
-        padding: 16px;
+
+    .popup-images {
+    position: relative; 
+    display: flex;
+    justify-content: center;/* Center align images*/
+    align-items: center; /* Center align images */
+    overflow: hidden;
+
     }
 
-    .popup-image {
+    .popup-images img {
+    height:300px;
+    display: none; /* Hide all images by default */
+}
+
+.popup-images .active {
+    display: block; /* Display only the active image */
+}
+    .navigation-arrows {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
         width: 100%;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        box-sizing: border-box;
+    }
+
+    .navigation-arrows button {
+        background: rgba(255, 255, 255, 0.5);
+        border: none;
+        cursor: pointer;
+        outline: none;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    .popup-content {
+        padding: 16px;
+        position: relative;
+        height: 500px;
+    }
+  
+    .popup-image  {
+    width:100%; 
+    height: 100%; 
+    margin-right: 10px; 
     }
 
     .popup-caption h1,
@@ -241,6 +286,15 @@
 
     .popup-caption p {
         font-size: 16px;
+    }
+
+    .popup-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
     }
 
     .popup-icons {
