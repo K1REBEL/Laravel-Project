@@ -7,7 +7,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Post;
-use App\Models\Follower;
+use App\Models\Savedpost;
 use Carbon\Carbon;
 
 use Illuminate\Support\Facades\Auth;
@@ -87,8 +87,32 @@ class UserController extends Controller
         });
         $jsonData = $filteredPosts->toJson();
 
+        $userId = $user->id;
+        // $userId = auth()->id();
+        // Log::info($userId);
+
+        $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
+        $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
+            $timeSinceUpdate = Carbon::parse($savedPost->post->updated_at)->diffForHumans();
+            return[
+                'id'=>$savedPost->post->id,
+                'caption' => $savedPost->post->caption,
+                'time_since_update' => $timeSinceUpdate,
+                'comments' => $savedPost->post->comments->sortByDesc('updated_at'),
+                'comment_count' => $savedPost->post->comments->count(),
+                'like_count' => $savedPost->post->likes->count(),
+                'hashtag_names' => $savedPost->post->hashtag->pluck('name'),
+                'media_urls' => $savedPost->post->media->pluck('url'),
+                'user_id' => $savedPost->post->user->id,
+                'user_handle' => $savedPost->post->user->user_handle,
+                'profile_photo_url' => $savedPost->post->user->profile_photo_url,
+                'profile_photo_path' =>$savedPost->post->user->profile_photo_path
+            ];
+        });
+        // return response()->json($formattedSavedPosts);
+
         if ($user->id === auth()->id()) {
-            return view('userProfile.myprofile', compact('user','post_count','follower_count','following_count', 'jsonData'));
+            return view('userProfile.myprofile', compact('user','post_count','follower_count','following_count', 'jsonData', 'formattedSavedPosts'));
         }else{
             return view('userProfile.otherprofile', compact('user','post_count','follower_count','following_count', 'jsonData'));
         }
