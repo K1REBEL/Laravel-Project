@@ -19,33 +19,10 @@ use Laravel\Fortify\Features;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-// Route::get('/welcome', function () {
-//     return view('welcomepage.instawelcome');
-// });
 
 Route::get('/', function () {
     return view('welcomepage.instawelcome');
 });
-
-// Route::middleware([
-//     'auth:sanctum',
-//     config('jetstream.auth_session'),
-//     'verified',
-// ])->resource('users', UserController::class);
-
-//Route::middleware([
-//    'auth:sanctum',
-//    config('jetstream.auth_session'),
-//    'verified',
-//])->group(function () {
-//    Route::get('/dashboard', function () {
-//        return view('dashboard');
-//    })->name('dashboard');
-//});
-
 
  Route::middleware([
      'auth:sanctum',
@@ -56,98 +33,33 @@ Route::get('/', function () {
  });
 
 Route::middleware('auth')->group(function (){
-//    Route::resource('users',UserController::class);
-//    Route::resource('posts',PostController::class);
     storage::disk('public');
 });
 
-Route::resource('users',UserController::class);
-Route::resource('posts',PostController::class);
+Route::resource('users', UserController::class);
+Route::resource('posts', PostController::class);
 
-Route::get('/users/search', [UserController::class,'search'])->name('users.search');
+// Route::get('/posts/{id}', [PostController::class, 'show']);
+
+Route::post('posts/{post}/like',[PostController::class, 'like'] )->name('posts.like');
+Route::delete('posts/{post}/unlike',[PostController::class, 'unlike'] )->name('posts.unlike');
+
 Route::post('/posts/{post}/comment',[PostController::class , 'comments'])->name('posts.comment');
+Route::post('/comments/{post}/{comment}/like',[PostController::class, 'like_comment'] )->name('comments.like');
+Route::delete('/comments/{comment}/unlike',[PostController::class, 'unlike_comment'] )->name('comments.unlike');
 
-Route::get('/users/home', function(){
-    return view('users.home');
-});
-Route::get('/posts/{id}', [PostController::class, 'show']);
-
-
-// Route::get('/users/follower', function(){
-//     return view('users.follower');
-// });
-
-
-//Route::resource('/posts', PostController::class);
-//Route::resource('/users', UserController::class);
-
-Route::post('posts/{post}/like',[PostController::class,'like'] )->name('posts.like');
-Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('posts.unlike');
-
-Route::post('/comments/{post}/{comment}/like',[PostController::class,'like_comment'] )->name('comments.like');
-Route::delete('/comments/{comment}/unlike',[PostController::class,'unlike_comment'] )->name('comments.unlike');
-
-Route::post('users/{user}/follow',[UserController::class,'follow'])->name('users.follow');
-Route::post('users/{user}/unfollow',[UserController::class,'unfollow'])->name('users.unfollow');
-
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-// Route::get('/welcome', function () {
-//     return view('welcome');
-// });
-
-//Route::middleware([
-//    'auth:sanctum',
-//    config('jetstream.auth_session'),
-//    'verified',
-//])->group(function () {
-//    Route::get('/dashboard', function () {
-//        return view('dashboard');
-//    })->name('dashboard');
-//});
-
-
-
-Route::get('/user/home-page', function(){
-    return view('user.home-page');
-});
-
+Route::post('users/{user}/follow',[UserController::class, 'follow'])->name('users.follow');
+Route::post('users/{user}/unfollow',[UserController::class, 'unfollow'])->name('users.unfollow');
 
 Route::get('/users/{id}/social', [UserController::class, 'social'])->name('users.social'); //For Alaa, Use this route to access the page you're developing
-
-
-Route::get('/user/following', function(){
-    return view('user.following');
-});
 
 Route::post('/users/{user}/block', [UserController::class, 'block'])->name('users.block');
 Route::post('/users/{user}/unblock', [UserController::class, 'unblock'])->name('users.unblock');
 
-// hello
-
-Route::get('/profile', function () {
-    return view('userProfile.myprofile');
-});
-
-Route::get('/edit', function () {
-    return view('userProfile.edit');
-});
-
-Route::get('/profile/user', function () {
-    return view('userProfile.otherprofile');
-});
-
-Route::get('/create', function () {
-    return view('userProfile.createpost');
-});
-
-// Route::post('/posts/save/{post}', [PostController::class, 'savepost'])->name('posts.save');
 Route::get('/retreive', [PostController::class, 'retreiveSavedposts'])->name('posts.retreive');
 Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('posts.save');
 Route::delete('/posts/{post}/unsave', [PostController::class, 'unsavepost'])->name('posts.unsave');
 
-
 Route::get('/posts/tags/{tag}', [PostController::class, 'get_tag'])->name('posts.tag');
 
-Route::get("/search",[UserController::class,'search']);
+Route::get("/search",[UserController::class, 'search']);
