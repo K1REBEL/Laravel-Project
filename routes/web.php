@@ -142,5 +142,8 @@ Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('po
 Route::get('/retreive', [PostController::class, 'retreiveSavedposts'])->name('posts.retreive');
 Route::delete('/posts/{post}/unsave', [PostController::class, 'unsavepost'])->name('posts.unsave');
 
+
 Route::get('/posts/tags/{tag}', [PostController::class, 'get_tag'])->name('posts.tag');
 
+
+Route::get("/search",[UserController::class,'search']);
