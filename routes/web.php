@@ -19,12 +19,12 @@ use Laravel\Fortify\Features;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-Route::get('/welcome', function () {
-    return view('welcomepage.instawelcome');
+Route::get('/', function () {
+    return view('welcome');
 });
+// Route::get('/welcome', function () {
+//     return view('welcomepage.instawelcome');
+// });
 
 // Route::middleware([
 //     'auth:sanctum',
