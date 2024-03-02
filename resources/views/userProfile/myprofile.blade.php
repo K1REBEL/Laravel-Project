@@ -52,8 +52,17 @@
         <!-- ---------------------------------------------header profile---------------------------------->
 
         <header>
+            <div>
+            
+                <a href="{{route('posts.index')}}">
+                    <button  class="prev-arrow btn btn-primary">
+                        <i class="fas fa-chevron-left"></i> Home
+                    </button>
+                </a>
+            </div>
             <!-- start of profile container -->
             <div class="container">
+
                 <!-- start of profile section -->
                 <div class="profile">
 
@@ -67,10 +76,11 @@
 
                     <div class="profile-user-settings">
 
-                        <h1 class="profile-user-name">{{$user->user_handle}}</h1>
-                        <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
+                    <h1 class="profile-user-name"><span>@</span>{{ $user->user_handle }}</h1>                        <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
+                
+                        <a href="{{route('posts.create')}}"class="fas fa-camera fa-2x"  style="margin-left: 1.5rem;"></a>
 
-                        <a href="{{route('posts.create')}}"class="btn profile-create-btn">create post</a>
+
                     </div>
 
 
@@ -175,33 +185,37 @@
                 <div class="container">
                     <!-- start of gallery section -->
                     <div class="gallery" class="photo-container">
-
-
+                   @foreach(json_decode($jsonData2) as $post)
+                   
+                   {{-- {{info($post)}} --}}
                     <div  class="gallery-item" tabindex="0">
+                       
+                        @foreach($post->media_urls as $index => $media_url)
+                        <img class="popup-img " src="{{ asset('storage/'.$media_url) }}" />
 
-                            <img src=""
-                                class="gallery-image" alt="">
-
+                    @endforeach
 
 
                             <div class="gallery-item-info">
 
                                 <ul>
 
-                                    <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                                    aria-hidden="true"></i></li>
+                                     <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
+                                aria-hidden="true"></i> {{$post->like_count}}</li>
 
-                                    <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                                    class="far fa-comment" aria-hidden="true"></i> </li>
+                                <li class="gallery-item-comments"><span class="visually-hidden"></span><i
+                                class="far fa-comment" aria-hidden="true"></i> {{$post->comment_count}}</li>
 
-                                    <li class="gallery-item-save"><span class="visually-hidden"></span><i
-                                    class="far fa-bookmark" aria-hidden="true"></i></li>
+                                <li class="gallery-item-save"><span class="visually-hidden"></span><i
+                                class="far fa-bookmark" aria-hidden="true"></i></li>
+
 
                                 </ul>
 
                             </div>
 
                         </div>
+                        @endforeach
 
                     </div>
                     <!-- end of gallery section -->

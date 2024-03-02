@@ -8,11 +8,11 @@ use App\Models\Post;
 use App\Models\Savedpost;
 use Carbon\Carbon;
 
-use Illuminate\Support\Facades\Auth;
+// use Illuminate\Support\Facades\Storage;
+// use Illuminate\Support\Facades\Validator;
+// use Illuminate\Validation\Rule;
+// use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
 use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
@@ -87,7 +87,7 @@ class UserController extends Controller
         $userId = $user->id;
 
         $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
-        $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
+        $formattedSavedPosts = collect($savedPosts)->map(function ($savedPost) {
             $timeSinceUpdate = Carbon::parse($savedPost->post->updated_at)->diffForHumans();
             return [
                 'id' => $savedPost->post->id,
@@ -106,8 +106,9 @@ class UserController extends Controller
         });
         // return response()->json($formattedSavedPosts);
 
+        $jsonData2 = $formattedSavedPosts->toJson();
         if ($user->id === auth()->id()) {
-            return view('userProfile.myprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData', 'formattedSavedPosts'));
+            return view('userProfile.myprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData', 'jsonData2'));
         } else {
             return view('userProfile.otherprofile', compact('user', 'post_count', 'follower_count', 'following_count', 'jsonData'));
         }

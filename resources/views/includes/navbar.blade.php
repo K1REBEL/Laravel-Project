@@ -24,8 +24,8 @@ instagram
 
 <!-- ===================navbar================== -->
 <header class="shadow-sm border-b sticky top-0 bg-white z-30">
-    <div class="flex h-24 items-center justify-between xl:max-w-6xl mx-4 xl:mx-auto">
-
+    <div class="d-flex h-24 items-center justify-between xl:max-w-6xl mx-4 xl:mx-auto">
+        
         <div class="cursor-pointer w-24 relative hidden lg:inline-grid">
             <img src="http://www.jennexplores.com/wp-content/uploads/2015/09/Instagram_logo_black.png" />
         </div>

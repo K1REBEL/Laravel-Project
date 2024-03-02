@@ -27,6 +27,14 @@
         <!-- ---------------------------------------------header profile---------------------------------->
 
         <header>
+            <div>
+            
+                <a href="{{route('posts.index')}}">
+                    <button  class="prev-arrow btn btn-primary">
+                        <i class="fas fa-chevron-left"></i> Home
+                    </button>
+                </a>
+            </div>
             <!-- start of profile container -->
             <div class="container">
                 <!-- start of profile section -->
@@ -45,21 +53,25 @@
        <!-----------------------------------------gallery------------------------------------------------->
        <div class="container">
             <div class="gallery">
-                <div class="gallery-item" tabindex="0">
-                        <img src="https://images.unsplash.com/photo-1511765224389-37f0e77cf0eb?w=500&h=500&fit=crop"
+                @foreach(json_decode($tagPosts) as $post)
+                <div class="gallery-item" tabindex="0" onclick="displayPopup({{ json_encode($post->media_urls) }})">>
+                    @foreach($post->media_urls as $media_url)    
+                        <img src="{{asset('storage/'.$media_url)}}"
                             class="gallery-image" alt="">
+                    @break
+                    @endforeach
                         <div class="gallery-item-info">
                             <ul>
                                 <li class="gallery-item-likes"><span class="visually-hidden"></span><i class="far fa-heart"
-                                        aria-hidden="true"></i> 56</li>
+                                        aria-hidden="true"></i>{{$post->like_count}}</li>
                                 <li class="gallery-item-comments"><span class="visually-hidden"></span><i
-                                        class="far fa-comment" aria-hidden="true"></i> 2</li>
+                                        class="far fa-comment" aria-hidden="true"></i>{{$post->comment_count}}</li>
                                 <li class="gallery-item-save"><span class="visually-hidden"></span><i
                                         class="far fa-bookmark" aria-hidden="true"></i></li>
                             </ul>
                         </div>
                 </div>
-
+                @endforeach
             </div>
             <!-- End of gallery -->
 
@@ -111,5 +123,4 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     
-    </body>
-</html>
+
