@@ -142,6 +142,9 @@ class UserController extends Controller
         if (auth()->user()->blocks->contains($user)) {
             return redirect()->back()->with('error', 'You need to unblock this user before following.');
         }
+        if (($user)->blocks->contains(auth()->user())) {
+            return redirect()->back()->with('error', 'You cant follow this account ... it maybe be because it is not found or it blocked you');
+        }
         Log::info('Follow request for user ' . auth()->user()->id . ' to follow user ' . $user->id);
          auth()->user()->following()->attach($user->id);
          return redirect()->back();
@@ -175,6 +178,8 @@ class UserController extends Controller
 
     public function block(User $user)
 {
+    auth()->user()->following()->detach($user->id);
+    $user->following()->detach(auth()->user()->id);
     auth()->user()->following()->detach($user->id);
     auth()->user()->blocks()->attach($user->id);
     return redirect()->back();

@@ -18,13 +18,9 @@ instagram
 
         <!-- =================search=================== -->
 
-        <div class="relative mt-1">
+        <div class="search-container relative mt-1">
             <div class="absolute top-2 left-2">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24"
-                    stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round"
-                        d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                </svg>
+                
             </div>
             <input type="text" placeholder="Search"
                 class="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md" id="search" name="search"/>
@@ -86,7 +82,7 @@ instagram
                     text-align: center;
                 }
 
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: 950px) {
                     .dropdown {
                         display: block;
                     }

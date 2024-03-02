@@ -19,9 +19,9 @@ use Laravel\Fortify\Features;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/welcome', function () {
     return view('welcomepage.instawelcome');
 });
@@ -83,12 +83,12 @@ Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('po
 Route::post('users/{user}/follow',[UserController::class,'follow'])->name('users.follow');
 Route::post('users/{user}/unfollow',[UserController::class,'unfollow'])->name('users.unfollow');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 
 //Route::middleware([
 //    'auth:sanctum',
