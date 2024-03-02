@@ -109,7 +109,7 @@ class UserController extends Controller
                 'profile_photo_path' =>$savedPost->post->user->profile_photo_path
             ];
         });
-        return response()->json($formattedSavedPosts);
+        // return response()->json($formattedSavedPosts);
 
         if ($user->id === auth()->id()) {
             return view('userProfile.myprofile', compact('user','post_count','follower_count','following_count', 'jsonData', 'formattedSavedPosts'));
