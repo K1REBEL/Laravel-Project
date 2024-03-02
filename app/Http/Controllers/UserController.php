@@ -113,15 +113,15 @@ class UserController extends Controller
         $user = auth()->user();
 
         // Validate the input
-        $validator = Validator::make($request->all(), [
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
-            'image' => ['nullable', 'image', 'max:1024'],
-        ]);
-
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
+//        $validator = Validator::make($request->all(), [
+//            'name' => ['required', 'string', 'max:255'],
+//            'email' => ['required', 'email', 'max:255', Rule::unique('users')->ignore($user->id)],
+//            'image' => ['nullable', 'image', 'max:1024'],
+//        ]);
+//
+//        if ($validator->fails()) {
+//            return back()->withErrors($validator)->withInput();
+//        }
 
         // Update the user
         $user->update([
@@ -141,8 +141,8 @@ class UserController extends Controller
 
 
         // Handle profile photo upload if provided
-        if ($request->hasFile('images')) {
-            $image = $request->file('images')[0];
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
             $path = $image->store('users', 'public');
             $user->profile_photo_path = $path;
             $user->save();
