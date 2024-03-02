@@ -121,7 +121,11 @@
             </form>
             @endif
             {{-- <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i> --}}
-            <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+            <div>          
+                  <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
+      
+        </div>
+
         </div>
         @if($post->is_saved == true)
         <form action="{{route('posts.unsave', $post->id)}}" method="POST">
@@ -181,10 +185,14 @@
                         <img class="h-7 rounded-full object-cover"
                             src="{{asset('storage/'.$comment->user->profile_photo_path)}}" alt="user-image" />
                         @endif
-                        <div>
+                        {{-- <div style="display: flex ; align-items:center" > --}}
                             <p class="font-semibold">{{$comment->user->user_handle}}</p>
-                            <p class="flex-1 truncate">{{$comment->comment}}</p>
-                        </div>
+                            <p style="margin-left:10px" class="flex-1 truncate">{{$comment->comment}}</p>
+                            <div class="d-flex align-items-center">
+                            <button style="margin-left:10px; align-self:flex-end" type="submit"><i class="far fa-heart" style="font-size: 16px;" onclick="toggleIconFill(this)"></i>
+                            </button>                             <span style="font-size: 12px" >16</span>
+                        </div></span>
+                        {{-- </div> --}}
                     </div>
                     @endforeach
 

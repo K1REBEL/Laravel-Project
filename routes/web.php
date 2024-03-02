@@ -19,9 +19,9 @@ use Laravel\Fortify\Features;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 Route::get('/welcome', function () {
     return view('welcomepage.instawelcome');
 });
@@ -83,12 +83,12 @@ Route::delete('posts/{post}/unlike',[PostController::class,'unlike'] )->name('po
 Route::post('users/{user}/follow',[UserController::class,'follow'])->name('users.follow');
 Route::post('users/{user}/unfollow',[UserController::class,'unfollow'])->name('users.unfollow');
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+// Route::get('/welcome', function () {
+//     return view('welcome');
+// });
 
 //Route::middleware([
 //    'auth:sanctum',
@@ -142,3 +142,8 @@ Route::post('/posts/{post}/save', [PostController::class, 'savepost'])->name('po
 Route::get('/retreive', [PostController::class, 'retreiveSavedposts'])->name('posts.retreive');
 Route::delete('/posts/{post}/unsave', [PostController::class, 'unsavepost'])->name('posts.unsave');
 
+
+Route::get('/posts/tags/{tag}', [PostController::class, 'get_tag'])->name('posts.tag');
+
+
+Route::get("/search",[UserController::class,'search']);
