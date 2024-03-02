@@ -63,9 +63,9 @@
         line-height: 1.8;
         border: 0.1rem solid #dbdbdb;
         border-radius: 0.3rem;
-        padding: 0; 
+        /* padding: 0;  */
         margin-left: 90px;  
-        margin-top: 1rem; 
+        margin-bottom: 1rem; 
     }
 
     .profile::after {

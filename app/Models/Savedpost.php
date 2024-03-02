@@ -9,18 +9,15 @@ class Savedpost extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'post_id','user_id',
+        'post_id', 'user_id',
     ];
     public function owner()
     {
         return $this->belongsTo(User::class);
-
     }
-    
+
     public function post()
     {
         return $this->belongsTo(Post::class);
-
     }
-    
 }
