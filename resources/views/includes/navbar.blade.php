@@ -27,8 +27,9 @@ instagram
                 </svg>
             </div>
             <input type="text" placeholder="Search"
-                class="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md" />
+                class="bg-gray-50 pl-10 border-gray-500 text-sm focus:ring-black focus:border-black rounded-md" id="search" name="search"/>
         </div>
+        <div id="search_list"></div>
 
         <!-- ============================icons========================= -->
         <div class="flex space-x-4 items-center">
@@ -128,3 +129,20 @@ instagram
         </div>
     </div>
 </header>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+        $('#search').on('keyup',function(){
+            var query= $(this).val();
+            $.ajax({
+                url:"search",
+                type:"GET",
+                data:{'search':query},
+                success:function(data){
+                    $('#search_list').html(data);
+                }
+            });
+            //end of ajax call
+        });
+        });
+</script>

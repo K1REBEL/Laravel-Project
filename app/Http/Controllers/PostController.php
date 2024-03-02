@@ -98,13 +98,13 @@ class PostController extends Controller
                 $ready_hashtags[] = '#' . $piece;
                 $last = end($ready_hashtags);
                 $hash = new Hashtag();
-                $hash->hashtag = $last;
+                $hash->hashtag = $piece;
                 $hash->post_id = $post->id;
                 log::info($ready_hashtags);
                 $hash->save();
             }
             // $post->hashtag()->attach($ready_hashtags);
-            
+
         }
 //        $path = $request->file('images');
 //        $url = $request->file('images')->storeAs('posts',$path,'public');
@@ -112,6 +112,7 @@ class PostController extends Controller
 //        $media->save();
         if ($request->hasFile('images')) {
             $images = $request->file('images');
+            log::info($images);
             foreach ($images as $image) {
                 $path = $image->store('posts', 'public');
                 $media = new Media();
@@ -155,9 +156,16 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Post $post)
     {
-        //
+        if ($post->user_id !== auth()->id()) {
+            abort(403);
+        }
+        $posts = Post::findOrFail($post->id);
+        $existingHashtags = Hashtag::where('post_id', $post->id)->pluck('hashtag')->toArray();
+        $posts->hashtag = implode(' ', $existingHashtags);
+        $existingMedia = Media::where('post_id', $post->id)->get();
+        return view('userProfile.editPost', compact('posts', 'existingMedia'));
     }
 
     /**
@@ -165,12 +173,40 @@ class PostController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        if ($post->user_id == auth()->id()){
-            $post->update([
-                'user_id' => $post->user_id,
-            ]);
+        if ($post->user_id !== auth()->id()) {
+            abort(403);
         }
+        $posts = Post::findOrFail($post->id);
+        $posts->caption = $request->caption;
+        $posts->save();
+        Hashtag::where('post_id', $post->id)->delete();
+        $ready_hashtags = [];
+        if($request->hashtag){
+            $pieces = explode(' ', $request->hashtag);
+            foreach ($pieces as $piece) {
+                $ready_hashtags[] = '#' . $piece;
+                $last = end($ready_hashtags);
+                $hash = new Hashtag();
+                $hash->hashtag = $last;
+                $hash->post_id = $post->id;
+//                log::info($ready_hashtags);
+                $hash->save();
+            }
+        }
+        if ($request->hasFile('images')) {
+            $images = $request->file('images');
+            log::info($images);
+            foreach ($images as $image) {
+                $path = $image->store('posts', 'public');
+                $media = new Media();
+                $media->url = $path;
+                $media->post_id = $post->id;
+                $media->save();
+            }
+        }
+        return redirect()->route('users.show',auth()->id());
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -229,7 +265,7 @@ class PostController extends Controller
         // } else { return response()->json(['message' => 'Post already saved']); }
 
         return redirect()->route('posts.index');
-    }    
+    }
 
     public function unsavepost(Post $post)
     {
@@ -240,7 +276,7 @@ class PostController extends Controller
 
         if($existingSavedPost){ $existingSavedPost->delete(); }
         return redirect()->route('posts.index');
-       
+
 
 if (!$existingSavedPost) {
 Savedpost::create([
@@ -257,21 +293,21 @@ return redirect()->route('posts.retreive');
 }
 return redirect()->route('posts.index');
 
-}    
+}
 public function retreiveSavedposts(){
 
     $userId = auth()->id();
     Log::info($userId);
 
     $savedPosts = Savedpost::where('user_id', $userId)->with('post')->get();
-    $formattedSavedPosts = $savedPosts->map(function ($savedPost) {       
+    $formattedSavedPosts = $savedPosts->map(function ($savedPost) {
         return[
             'post_id'=>$savedPost->post->id,
             'caption' => $savedPost->post->caption,
 
         ];
 
-      
+
     });
     return response()->json($formattedSavedPosts);
 }
