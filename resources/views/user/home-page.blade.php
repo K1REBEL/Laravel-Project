@@ -164,7 +164,7 @@
     <div class="hashtag-container" style="margin-left:600px;">
         @foreach($post->hashtags as $index => $x)
     <div style="display: inline; margin: 3px; border: 4px">
-        <span class="hashtag ">#{{$x}}</span>
+        <a href="{{ route('posts.tag', $x) }}"><span class="hashtag ">#{{$x}}</span></a>
     </div>
     @endforeach
     </div>
