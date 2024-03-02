@@ -1,0 +1,151 @@
+@section('title')
+instagram
+@stop
+
+@extends('layouts.main')
+@extends('layouts.StyleHome')
+
+<head>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+
+<style>
+    .btn-light.dropdown-toggle::after {
+        display: none;
+
+    }
+
+    .btn-light.dropdown-toggle {
+        background-color: transparent;
+        border-color: transparent;
+    }
+</style>
+</head>
+
+<!-- ===================navbar================== -->
+<header class="shadow-sm border-b sticky top-0 bg-white z-30">
+    <div class="d-flex h-24 items-center justify-between xl:max-w-6xl mx-4 xl:mx-auto">
+        
+        <div class="cursor-pointer w-24 relative hidden lg:inline-grid">
+            <img src="http://www.jennexplores.com/wp-content/uploads/2015/09/Instagram_logo_black.png" />
+        </div>
+        <div class="cursor-pointer w-10 relative lg:hidden">
+            <img src="https://logos-world.net/wp-content/uploads/2020/04/Instagram-icon-Logo-2016-present.png" />
+        </div>
+
+        
+        <!-- ============================icons========================= -->
+
+       
+
+
+		
+        
+        <div class="flex space-x-4 items-center">
+			<div class="dropdown m-4">
+				<button class="btn btn-light dropdown-toggle" type="search" id="dropdownMenuButton1" data-bs-toggle="dropdown"
+						aria-expanded="false">
+					<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-search " viewBox="0 0 16 16">
+						<path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+					</svg>
+				</button>
+				<ul class="dropdown-menu pt-2" aria-labelledby="dropdownMenuButton1">
+					<input type="text" class="form-control border-0 border-bottom shadow-none mb-2" placeholder="Search..."
+						   oninput="handleInput()">
+				</ul>
+			</div>
+            <a href="{{route('posts.index')}}">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="hidden md:inline-flex h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out"
+                    viewBox="0 0 20 20" fill="currentColor">
+                    <path
+                        d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" />
+                </svg>
+            </a>
+            <a href="{{route('posts.create')}}">
+                <svg xmlns="http://www.w3.org/2000/svg"
+                    class="h-6 cursor-pointer hover:scale-125 transition-transform duration-200 ease-out" fill="none"
+                    viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </a>
+
+
+            <a href="{{route('users.show',auth()->id())}}">
+            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+         <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+         </svg>
+            </a>
+
+        </div>
+    </div>
+</header>
+<script>
+const handleInput = () => {
+	const inputValue =
+		document
+			.querySelector('.form-control').value;
+	const results =
+		["apple", "banana", "cherry",
+			"date", "elderberry"];
+	const parentElement =
+		document
+			.querySelector(".dropdown-menu");
+	const elementsToRemove =
+		document.querySelectorAll("li");
+	elementsToRemove.forEach(element => {
+		element.remove();
+	});
+	if (inputValue) {
+		const matchingWords =
+			results
+				.filter(word => word
+					.includes(inputValue));
+		matchingWords.sort((a, b) => {
+			const indexA =
+				a.indexOf(inputValue);
+			const indexB =
+				b.indexOf(inputValue);
+			return indexA - indexB;
+		});
+		matchingWords.forEach(word => {
+			const listItem =
+				document.createElement("li");
+			const link =
+				document.createElement("a");
+			link.classList.add("dropdown-item");
+			link.href = "#";
+			link.textContent = word;
+			listItem.appendChild(link);
+			parentElement.appendChild(listItem);
+		});
+		if (matchingWords.length == 0) {
+			const listItem =
+				document.createElement('li');
+			listItem.textContent = "No Item";
+			listItem.classList.add('dropdown-item');
+			parentElement.appendChild(listItem);
+		}
+	} else {
+		results.forEach(word => {
+			const listItem =
+				document.createElement("li");
+			const link =
+				document.createElement("a");
+			link.classList.add("dropdown-item");
+			link.href = "#";
+			link.textContent = word;
+			listItem.appendChild(link);
+			parentElement.appendChild(listItem);
+		});
+	}
+}
+handleInput();
+
+</script>
+
+
+<script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
