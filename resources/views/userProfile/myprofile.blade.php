@@ -52,8 +52,14 @@
         <!-- ---------------------------------------------header profile---------------------------------->
 
         <header>
+            <div>
+            <button class="prev-arrow btn btn-primary">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            </div>
             <!-- start of profile container -->
             <div class="container">
+
                 <!-- start of profile section -->
                 <div class="profile">
 
