@@ -232,41 +232,26 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function search(Request $request)
-    {
+    public function search(Request $request){
 
-        if ($request->ajax()) {
+        if($request->ajax()){
 
-            $data = User::where('id', 'like', '%' . $request->search . '%')
-                ->orwhere('name', 'like', '%' . $request->search . '%')
-                ->orwhere('user_handle', 'like', '%' . $request->search . '%')->get();
+            $data=User::where('email','like','%'.$request->search.'%')
+                ->orwhere('user_handle','like','%'.$request->search.'%')
+                ->orwhere('id','like','%'.$request->search.'%')
+                ->get();
 
-            $output = '';
-            if (count($data) > 0) {
-                $output = '
-                    <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Name</th>
-                        <th scope="col">User handle</th>
-                    </tr>
-                    </thead>
-                    <tbody>';
-                foreach ($data as $row) {
-                    $output .= '
-                            <tr>
-                            <th scope="row">' . $row->id . '</th>
-                            <td>' . $row->name . '</td>
-                            <td>' . $row->user_handle . '</td>
-                            </tr>
-                            ';
+            $output='';
+            if(count($data)>0){
+                foreach($data as $row){
+                    log::info($row);
+                    $output .= '<a href="' . url('http://localhost:8000/users/' . $row->id) . '">' . $row->user_handle . '</a>';
+
                 }
-                $output .= '
-                    </tbody>
-                    </table>';
-            } else {
-                $output .= 'No results';
+                $output .= ' ';
+            }
+            else{
+                $output .='No results';
             }
             return $output;
         }
