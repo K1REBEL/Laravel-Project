@@ -31,19 +31,26 @@
         <div class="tab-pane show active" id="followers" role="tabpanel" aria-labelledby="followers-tab">
             @foreach($followers as $follower)
             <div class="flex items-center justify-between mt-14 ml-10">
-                <img class="h-16 rounded-full border p-[2px]"
-                    src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
+                @if($follower->profile_photo_path==null)
+                    <img class="h-16 rounded-full border p-[2px]"
+                         src="{{$follower->profile_photo_url}}" alt="user-image" />
+                    {{--                    <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">--}}
+                @else
+                    <img class="h-16 rounded-full border p-[2px]"
+                         src="{{asset('storage/'.$follower->profile_photo_path)}}" alt="user-image" />
+                    {{--                    <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">--}}
+                @endif
                 <div class="flex-1 ml-4">
-                    <h2 class="font-bold">ID: {{$follower->id}}</h2>
-                    <h2 class="font-bold">{{$follower->user_handle}}</h2>
+{{--                    <h2 class="font-bold"> {{$follower->id}}</h2>--}}
+                    <h2 class="font-bold">{{$follower->name}}</h2>
                 </div>
                 <div class="flex items-center">
-                    
+
 
                         @if (Auth::user()->id != $follower->id)
                         {{--{{ info($user) }}--}}
                             <div class="button-container">
-                                
+
                                 @if (!Auth::user()->isFollowing($follower))
                                     {{--{{ info($user->isFollowing($user)) }}--}}
                                     <form action="{{ route('users.follow', $follower->id) }}" method="POST">
@@ -57,7 +64,7 @@
                                     </form>
                                 @endif
                             </div>
-                            
+
                             <div class="button-container">
                                     @if (!Auth::user()->blocks->contains($follower))
                                         <form action="{{ route('users.block', $follower->id) }}" method="POST">
@@ -70,7 +77,7 @@
                                             <button type="submit" class="block-btn">Unblock</button>
                                         </form>
                                     @endif
-                            </div>  
+                            </div>
                         @elseif (Auth::user()->id == $follower->id)
                                 <a href="{{ route('users.show', $follower->id) }}"><button>My Profile</button></a>
                         @endif
@@ -95,11 +102,21 @@
         <!-- =======================start following============= -->
         <div class="tab-pane show" id="following" role="tabpanel" aria-labelledby="following-tab">
             @foreach($following as $followee)
+{{--                {{info($followee)}}--}}
             <div class="flex items-center justify-between mt-14 ml-10">
-                <img class="h-16 rounded-full border p-[2px]"
-                    src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
+                @if($followee->profile_photo_path==null)
+                    <img class="h-16 rounded-full border p-[2px]"
+                         src="{{$followee->profile_photo_url}}" alt="user-image" />
+{{--                    <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">--}}
+                @else
+                    <img class="h-16 rounded-full border p-[2px]"
+                         src="{{asset('storage/'.$followee->profile_photo_path)}}" alt="user-image" />
+{{--                    <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">--}}
+                @endif
+{{--                <img class="h-16 rounded-full border p-[2px]"--}}
+{{--                    src="{{$followee->profile_photo_url}}" alt="user-image" />--}}
                 <div class="flex-1 ml-4">
-                    <h2 class="font-bold">ID: {{$followee->id}}</h2>
+{{--                    <h2 class="font-bold">ID: {{$followee->id}}</h2>--}}
                     <h2 class="font-bold">{{$followee->name}}</h2>
                 </div>
                 <div class="flex items-center">
@@ -125,8 +142,15 @@
         <div class="tab-pane show" id="blocked" role="tabpanel" aria-labelledby="blocked-tab">
             @foreach($blocked as $blocked_user)
             <div class="flex items-center justify-between mt-14 ml-10">
-                <img class="h-16 rounded-full border p-[2px]"
-                    src="https://icon-library.com/images/person-icon-png/person-icon-png-13.jpg" alt="user-image" />
+                @if($blocked_user->profile_photo_path==null)
+                    <img class="h-16 rounded-full border p-[2px]"
+                         src="{{$blocked_user->profile_photo_url}}" alt="user-image" />
+                    {{--                    <img src="{{$user->profile_photo_url}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">--}}
+                @else
+                    <img class="h-16 rounded-full border p-[2px]"
+                         src="{{asset('storage/'.$blocked_user->profile_photo_path)}}" alt="user-image" />
+                    {{--                    <img src="{{asset('storage/'.$user->profile_photo_path)}}" class="avatar rounded-circle img-thumbnail" alt="avatar"  style="width: 150px; height: 150px;">--}}
+                @endif
                 <div class="flex-1 ml-4">
                     <h2 class="font-bold">{{$blocked_user->user_handle}}</h2>
                 </div>
@@ -143,9 +167,9 @@
                     </div>
                 </div>
             </div>
-            @endforeach 
+            @endforeach
         </div>
-        
+
 
         @endif
     </div>

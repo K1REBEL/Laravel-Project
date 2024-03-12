@@ -67,9 +67,17 @@
 @endif
 <!-- ---------------------------------------------header profile---------------------------------->
 <header>
+    <div>
+
+        <a href="{{route('posts.index')}}">
+            <button  class="prev-arrow btn btn-primary">
+                <i class="fas fa-chevron-left"></i> Home
+            </button>
+        </a>
+    </div>
     <!-- start of profile container -->
     <div class="container">
-        <!-- start of profile section -->    
+        <!-- start of profile section -->
         <div class="profile">
 
             <div class="profile-image">
@@ -87,10 +95,9 @@
 
                 <div class="d-flex buttoncontainers  " >
                 <div class="button-container d-block">
-                    {{ info(Auth::user()) }}
-                    {{ info($user) }}
-                    
-                    @if ($user->isFollowing(Auth::user()) && !Auth::user()->isFollowing($user))
+{{--                    {{ info(Auth::user()) }}--}}
+{{--                    {{ info($user) }}--}}
+                @if ($user->isFollowing(Auth::user()) && !Auth::user()->isFollowing($user))
                     <form action="{{ route('users.follow', $user->id) }}" method="POST">
                         @csrf
                         <button type="submit" class="follow-btn">Follow Back</button>
@@ -121,14 +128,14 @@
                                 </form>
                             @endif
                         @endif
-                    </div>   
+                    </div>
                      </div>
             </div>
-            
+
             <div class="profile-bio">
-                <p class="bio">{{$user->bio}}kfhfhgf</p>
+                <p class="bio">{{$user->bio}}</p>
             </div>
-           
+
             <div class="profile-stats">
 
                 <ul>
@@ -136,17 +143,17 @@
                     <li><span class="profile-stat-count">{{$post_count}}</span> posts</li>
                 @endif
                                             @if(isset($follower_count))
-                    <li><span class="profile-stat-count">{{$follower_count}}</span> followers</li>
+                    <li><span class="profile-stat-count">{{$follower_count}}</span><a href="{{ route('users.social',$user->id) }}" style="text-decoration: none; color: black ">  followers</a></li>
                 @endif
                                             @if(isset($following_count))
-                    <li><span class="profile-stat-count">{{$following_count}}</span> followings</li>
+                            <li><span class="profile-stat-count">{{$following_count}}</span><a href="{{ route('users.social',$user->id) }}" style="text-decoration: none; color: black "> followings </a></li>
                 @endif
                 </ul>
 
             </div>
 
             <div class="profile-website">
-                <p class="website">{{$user->website}}dhrfhdhf</p>
+                <p class="website">{{$user->website}}</p>
             </div>
 
         </div>
@@ -211,7 +218,7 @@
                             <img class="popup-img " src="{{ asset('storage/'.$media_url) }}" />
                         @endforeach
                     </div>
-                    
+
                     <div class="navigation-arrows">
                         <button class="prev-arrow" onclick="changeImage(-1)">
                             <i class="fas fa-chevron-left"></i>
@@ -235,13 +242,10 @@
             </div>
         </div>
     </div>
-  
+
 <!-- end of container -->
     <!-- ---------------------------------------------popupJS--------------------------------------->
-    @extends('layouts.PopupJS')
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    
+    @include('layouts.PopupJS')
+
     </body>
 </html>

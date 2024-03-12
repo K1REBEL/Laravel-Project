@@ -36,8 +36,8 @@ Route::middleware('auth')->group(function (){
     storage::disk('public');
 });
 
-Route::resource('users', UserController::class);
-Route::resource('posts', PostController::class);
+Route::Resource('users', UserController::class);
+Route::Resource('posts', PostController::class);
 
 // Route::get('/posts/{id}', [PostController::class, 'show']);
 

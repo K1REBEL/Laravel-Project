@@ -25,7 +25,6 @@ class UserController extends Controller
         if (auth()->id()) {
             // Log::info(auth()->user());
             $user = User::where('id', auth()->id())->get()->first();
-
             return view('userProfile.myprofile', compact('user'));
         }
     }

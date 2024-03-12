@@ -127,7 +127,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 ->where('followed_id', $user->id)
                 ->first();
 
-            // dd($followerEntry);
+//             dd($followerEntry);
             if ($followerEntry) {
                 return true;
             } else {

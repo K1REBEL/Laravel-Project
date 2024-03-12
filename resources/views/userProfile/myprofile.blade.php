@@ -53,7 +53,7 @@
 
         <header>
             <div>
-            
+
                 <a href="{{route('posts.index')}}">
                     <button  class="prev-arrow btn btn-primary">
                         <i class="fas fa-chevron-left"></i> Home
@@ -77,7 +77,7 @@
                     <div class="profile-user-settings">
 
                     <h1 class="profile-user-name"><span>@</span>{{ $user->user_handle }}</h1>                        <a href="{{route('users.edit', $user->id)}}" class="btn profile-edit-btn">Edit Profile</a>
-                
+
                         <a href="{{route('posts.create')}}"class="fas fa-camera fa-2x"  style="margin-left: 1.5rem;"></a>
 
 
@@ -141,7 +141,7 @@
                 <!-- start of gallery container -->
                 <div class="container">
                     <!-- start of gallery section -->
-                    <div class="gallery" class="photo-container">
+                    <div class="gallery" class="photo-container"  >
 
                     @foreach(json_decode($jsonData) as $index => $post)
                     <div  class="gallery-item" tabindex="0" onclick="displayPopup({{ json_encode($post->media_urls) }})">
@@ -184,15 +184,19 @@
                 <!-- start of gallery container -->
                 <div class="container">
                     <!-- start of gallery section -->
-                    <div class="gallery" class="photo-container">
-                   @foreach(json_decode($jsonData2) as $post)
-                   
-                   {{-- {{info($post)}} --}}
-                    <div  class="gallery-item" tabindex="0">
-                       
-                        @foreach($post->media_urls as $index => $media_url)
-                        <img class="popup-img " src="{{ asset('storage/'.$media_url) }}" />
+                    <div class="gallery" class="photo-container"  >
+                        {{-- @isset(json_decode($jsonData2)) --}}
+                        @foreach(json_decode($jsonData2) as $index => $post)
 
+                        {{-- @endisset --}}
+                        {{-- @foreach(json_decode($jsonData2) as $post) --}}
+
+                   {{-- {{info($post)}} --}}
+                   <div  class="gallery-item" tabindex="0" onclick="displayPopup({{ json_encode($post->media_urls) }})">
+                    @foreach($post->media_urls as $media_url)
+                        <img src="{{asset('storage/'.$media_url)}}"
+                            class="gallery-image" alt="">
+                        @break
                     @endforeach
 
 
@@ -231,8 +235,10 @@
         <div class="popup-container">
                 <div class="popup-content">
                     <div class="popup-images">
-                        @foreach($post->media_urls as $index => $media_url)
+                        @foreach(json_decode($jsonData2) as $index => $post)
+                        @foreach($post->media_urls as $media_url)
                             <img class="popup-img " src="{{ asset('storage/'.$media_url) }}" />
+                        @endforeach
                         @endforeach
                     </div>
 

@@ -333,7 +333,7 @@ class PostController extends Controller
             ];
         });
         $tagPosts = $filteredPosts->toJson();
-        return view('userProfile.tag', compact('tagPosts'));
+        return view('userProfile.tag', compact('tagPosts', 'tag_name'));
         // return response()->json($filteredPosts);
     }
 }

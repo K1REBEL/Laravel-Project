@@ -18,13 +18,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
 
     <style>
-   
+
     .slideshow-container {
         position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
-       
+
         overflow: hidden;
     }
 
@@ -32,14 +32,14 @@
         display:none;
     }
 
-   
+
 
     .slideshow-image.active {
         display:block;
     }
-   
 
-   
+
+
     .navigation-arrows {
         position: absolute;
         top: 50%;
@@ -62,7 +62,6 @@
     }
 </style>
 </head>
-
 <main class="grid grid-cols-1 md:grid-cols-3 md:max-w-6xl mx-auto">
     <section class="md:col-span-2">
 
@@ -71,12 +70,16 @@
 
 @foreach(json_decode($jsonData) as $post)
 <div class="bg-white my-7 border rounded-md">
-    <div class="flex items-center p-5">
+    <div class="flex items-center p-2">
         @if($post->profile_photo_path==null)
-        <img class="h-12 rounded-full object-cover border p-1 mr-3" src="{{$post->profile_photo_url}}" />
+        <img class="h-12 rounded-full object-cover border p-1 mr-3" src="{{$post->profile_photo_url}}"
+             style="width: 60px; height: 60px;"
+        />
         @else
         <img class="h-12 rounded-full object-cover border p-1 mr-3"
-            src="{{asset('storage/'.$post->profile_photo_path)}}" />
+            src="{{asset('storage/'.$post->profile_photo_path)}}"
+             style="width: 60px; height: 60px;"
+        />
         @endif
         <p class="font-bold flex-1">{{$post->user_handle}}
 
@@ -121,9 +124,9 @@
             </form>
             @endif
             {{-- <i class="far fa-heart" style="font-size: 24px;" onclick="toggleIconFill(this)"></i> --}}
-            <div>          
+            <div>
                   <i class="far fa-comment" style="font-size: 24px;" onclick="toggleIconFill(this)"></i>
-      
+
         </div>
 
         </div>
@@ -244,7 +247,7 @@
 
             </div>
 
-          
+
         @endforeach
 
 
@@ -349,10 +352,10 @@
         <div class="w-[380px] fixed">
             <div class="profile-image">
                 @if($user->profile_photo_path==null)
-                <img class="h-16 rounded-full border p-[2px]" src="{{$user->profile_photo_url}}" alt="user-image" />
+                <img class="h-16 rounded-full border p-[2px]" src="{{$user->profile_photo_url}}" alt="user-image" style="height: 70px ; width: 70px"/>
                 @else
                 <img class="h-16 rounded-full border p-[2px]" src="{{asset('storage/'.$user->profile_photo_path)}}"
-                    alt="user-image" />
+                    alt="user-image" style="height: 70px ; width: 70px"/>
                 @endif
                 <div class="flex-1 ml-4">
                     <h2 class="font-mute">{{$user->user_handle}}</h2>
@@ -361,7 +364,7 @@
                         Welcome to instagram</h3>
                     </span>
                     </div>
-                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"> 
+                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     <button class="font-semibold text-blue-400 text-sm cursor-pointer hover:scale-125" style="margin-top:10px; white-space: nowrap; margin-left:50px;">
         Log Out
     </button>
@@ -372,7 +375,7 @@
 
 
 
-</div>          
+</div>
     </section>
 
 </main>

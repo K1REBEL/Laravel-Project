@@ -11,13 +11,17 @@ function displayPopup(mediaUrls) {
     const imagesContainer = popupContainer.querySelector(".popup-images");
     const popupCaption = document.querySelector(".popup-caption");
     const popupComments = document.querySelector(".popup-comments");
-    const profileUserName = document.querySelector(".profile-user-name").textContent;
+    const profileUserName = document.querySelector(".gallery-item").textContent;
+    // const profileUserName = document.querySelector(".profile-user-name").textContent;
+
+    // const popuptagimage = document.querySelector(".profile-tag").textContent;
+    // const popuptagimage = document.querySelector(".profile-user-name").textContent;
 
     // Update imageUrls with the mediaUrls passed from the gallery item
     let imageUrls = mediaUrls.map(url => `{{ asset("storage") }}/${url}`);
 
     // Clear previous images
-    imagesContainer.innerHTML = ''; 
+    imagesContainer.innerHTML = '';
 
     // Populate images
     imageUrls.forEach(function (imageUrl, index) {
@@ -33,13 +37,13 @@ function displayPopup(mediaUrls) {
     });
 
     // Update popup content
-    popupCaption.innerHTML = `<h1>${profileUserName}</h1><p>hiiiiii</p>`;
+    // popupCaption.innerHTML = `<h1>${profileUserName}</h1><p>hiiiiii</p>`;
 
     // Clear previous comments and add new dummy comments
     popupComments.innerHTML = '';
     const dummyComments = [
-        { profilePic: 'path_to_profile_picture_1.jpg', username: 'User1', comment: 'Comment 1' },
-        { profilePic: 'path_to_profile_picture_2.jpg', username: 'User2', comment: 'Comment 2' },
+        // { profilePic: 'path_to_profile_picture_1.jpg', username: 'User1', comment: 'Comment 1' },
+        // { profilePic: 'path_to_profile_picture_2.jpg', username: 'User2', comment: 'Comment 2' },
     ];
     dummyComments.forEach(comment => {
         const userComment = document.createElement('div');
@@ -53,11 +57,11 @@ function displayPopup(mediaUrls) {
         `;
         popupComments.appendChild(userComment);
     });
-    
+
     // Update popup icons
     const popupIcons = document.querySelector(".popup-icons");
     popupIcons.innerHTML = `
-        <i class="far fa-heart" onclick="toggleIconFill(this)"></i> 
+        <i class="far fa-heart" onclick="toggleIconFill(this)"></i>
         <i class="far fa-comment" onclick="toggleIconFill(this)"></i>
         <i class="far fa-bookmark" onclick="toggleIconFill(this)"></i>
     `;
@@ -75,7 +79,7 @@ function hidePopup() {
 function changeImage(direction) {
     const imagesContainer = document.querySelector('.popup-images');
     const totalImages = imagesContainer.children.length;
-    
+
     // Remove active class from all images
     document.querySelectorAll('.popup-image').forEach(img => {
         img.classList.remove('active');
